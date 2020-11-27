@@ -1,0 +1,3 @@
+[submodule "src/lib/SSAtool"]
+	path = src/lib/SSAtool
+	url = https://github.com/EE-modders/SSA-tool.git
