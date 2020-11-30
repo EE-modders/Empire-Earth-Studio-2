@@ -3,3 +3,5 @@
 *.ssa
 
 testing
+src/__pycache__
+src/lib/__pycache__
