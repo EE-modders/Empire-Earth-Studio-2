@@ -1,0 +1,43 @@
+name: Python packager
+
+on: [push]
+
+jobs:
+  Windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install PyQt5
+
+    - name: python version
+      run: python --version
+    - name: pyinstaller version
+      run: pyinstaller --version
+      
+    - name: compile C library "blast"
+      run: gcc -fPIC -shared .\src\lib\SSAtool\src\lib\libblast.c -o .\src\lib\SSAtool\src\lib\libblast.dll
+    
+    - name: run SSAtool directly
+      run: python .\src\EEStudio2.py -v
+    
+    - name: compile EEStudio2
+      run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." .\src\EEStudio2.py
+      
+    - name: run compiled version
+      run: .\dist\EEStudio2.exe -v
+
+    - name: save compiled executable
+      uses: actions/upload-artifact@master
+      with:
+        name: SSAtool_windows
+        path: .\dist\
