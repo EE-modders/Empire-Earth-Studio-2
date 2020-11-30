@@ -8,106 +8,136 @@ Created on 10.11.2020 22:17 CET
 @author: zocker_160
 """
 
+import os
 import sys
+from PyQt5.QtGui import QWindow
+from PyQt5.QtWidgets import QApplication, QErrorMessage, QFileDialog, QMainWindow, QMessageBox
 
-#import PySimpleGUI as gui
-import PySimpleGUIQt as gui
-from PySimpleGUIQt.PySimpleGUIQt import Button
+#import qdarkstyle
 
-# Empire Earth tools
+from lib import Ui_mainWindow
+
 from lib.SSAtool.src import SSAtool
 
-#print( gui.ListOfLookAndFeelValues() )
-#print(gui.LOOK_AND_FEEL_TABLE.get("SystemDefault"))
+class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
+    def __init__(self) -> None:
+        super().__init__()
 
-gui.LOOK_AND_FEEL_TABLE["custom"] = {
-    'BACKGROUND': 'grey',
-    'TEXT': 'black',
-    'INPUT': '#DDE0DE',
-    'SCROLL': '#E3E3E3',
-    'TEXT_INPUT': 'black',
-    'BUTTON': ('black', 'darkgrey'),
-    'PROGRESS': gui.DEFAULT_PROGRESS_BAR_COLOR,
-    'BORDER': 1,
-    'SLIDER_DEPTH': 0,
-    'PROGRESS_DEPTH': 0
-}
+        self.setupUi(self)
+        self.initButtons()
 
-BUTTON_SIZE = (15, 1)
-#gui.theme("DarkTeal2")
-#gui.theme("Dark2")
-gui.theme("custom")
 
-### window layouts
-main_layout = [
-    [
-        gui.Button("Main", size=BUTTON_SIZE),
-        gui.Button("Archives (SSA)", size=BUTTON_SIZE, key="SSA"),
-        gui.Button("Textures (SST)", size=BUTTON_SIZE, key="SST"),
-        gui.Button("3D Models (CEM)", size=BUTTON_SIZE, key="CEM"),
-        gui.Button("About", size=(7, 1)),
-        gui.Button("Exit", size=(7, 1)),
-    ],
-    #[gui.Output(visible=True, key="OO")],
-]
+    def initButtons(self):
+        self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
+        self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
+        self.tab_ssa_unpack.clicked.connect(self.SSAconvert)
 
-ssa_layout = [
-    [gui.Text("Select SSA file", text_color="white")],
-    [gui.Text("Inputfile       "), gui.Input(key="IN"), gui.FileBrowse("Browse", file_types=(("SSA archives", "*.ssa"),)) ],
-    [gui.Text("Outputfolder"), gui.Input(key="OUT"), gui.FolderBrowse("Browse")],
-    [gui.Checkbox("decompress files", default=True, key="decompress")],
-    [gui.Button("Convert", size=BUTTON_SIZE), gui.Button("Show filelist"), gui.Button("Cancel", size=BUTTON_SIZE, key="ssa_exit")]
-]
+        #self.testbutton.clicked.connect(self.clickedTestButton)
 
-###
+    def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText(msg_str)
+        msg.setWindowTitle(title_msg)
+        msg.setDefaultButton(QMessageBox.Close)
+        msg.exec_()
 
-main_window = gui.Window(
-    "Empire Earth Studio II - Empire Earth Reborn",
-    main_layout,
-)
+    def showInfoMSG(self, msg_str: str, title_msg="INFO"):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText(msg_str)
+        msg.setWindowTitle(title_msg)
+        msg.setDefaultButton(QMessageBox.Close)
+        msg.exec_()
 
-ssa_window = gui.Window(
-    "SSA Extractor",
-    ssa_layout,
-)
+    ### SSA
+    def SSAinSelector(self):
+        dlg = QFileDialog.getOpenFileName(
+            self,
+            caption="Select SSA file",
+            filter="SSA Archives (*.ssa)",
+        )
 
-###
+        print(dlg)
 
-def ssatool():
-    ssa_window.un_hide()
-    while True:
-        event, value = ssa_window.read()
+        filepath = dlg[0]
 
-        # events SSA
-        if event == "ssa_exit":
-            print("WINDOW CLOSE!")
-            #main_window["OO"].update(visible=False)
-            
-            ssa_window.hide()
-            break
-        if event == "Convert":
-            #main_window["OO"].update(visible=True)
-            print(value)
+        # add file list to listWidget
+        try:
+            filelist = SSAtool.getFileList(filepath)
+            #print(filelist)
+        except ImportError as e:
+            self.showErrorMSG(e.args[0])
+            return
+        except FileNotFoundError:
+            return
 
-            SSAtool.main(inputfile=value["IN"], outputfolder=value["OUT"], decompress=value["decompress"])
-            #ssafake.main(infile=value["IN"], outfile=value["OUT"])
+        self.tab_ssa_label_in.setText(filepath)
 
-            ssa_window.hide()
-            break
+        # add files to file list
+        self.tab_ssa_list.clear()
+        for file in filelist:
+            self.tab_ssa_list.addItem(file[0])
+
+        self.SSAcheckButton()
+
+    def SSAoutSelector(self):
+        dlg = QFileDialog.getExistingDirectory(
+            self,
+            caption="Select output folder"
+        )
+
+        self.tab_ssa_label_out.setText(dlg)
+        print(dlg)
+
+        self.SSAcheckButton()
+
+    def SSAcheckButton(self):
+        if self.tab_ssa_label_in.text() and self.tab_ssa_label_out.text():
+            self.tab_ssa_unpack.setEnabled(True)
+        else:
+            self.tab_ssa_unpack.setEnabled(False)
+
+    def SSAconvert(self):
+        SSAtool.main(
+            inputfile=self.tab_ssa_label_in.text(),
+            outputfolder=self.tab_ssa_label_out.text(),
+            decompress=self.tab_ssa_decompress.isChecked(),
+            log=False
+        )
+        self.showInfoMSG("Done!")
+        #self.tab_ssa_label_clear.click()
+
+    ### SST
+    ### SST Slicer
+    ### CEM
+
+    ### TEST
+    def clickedTestButton(self):
+        pass
+        #self.testlabel.setText("Leck mir die Eier!!!")
+
+
+
+def main():
+    app = QApplication(sys.argv)
+    #app.setStyleSheet(qdarkstyle.load_stylesheet())
+
+    Window = MainWindow()
+    Window.show()
+
+    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
-    
-    while True:
-        event, value = main_window.read()
-        print("event", event)
-        print("values", value)
+    # this is only needed for the CI / CD
+    try:
+        testmode = sys.argv[1] == "-v"
+    except:
+        testmode = False
 
-        # events main window
-        if event == "Exit" or gui.WINDOW_CLOSED or not event:
-            break
-        if event == "SSA":
-            ssatool()
-
-
-    main_window.close()
+    if testmode:
+        print("THIS SHOULD WORK!")
+        sys.exit()
+    else:
+        main()
