@@ -26,7 +26,6 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.setupUi(self)
         self.initButtons()
 
-
     def initButtons(self):
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
