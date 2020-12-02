@@ -274,11 +274,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         maxX = self.tab_slc_gridview.width()
         maxY = self.tab_slc_gridview.height()
 
-        print(maxX, maxY)
+        #print(maxX, maxY)
 
         # update aspect ratio of the GridView, target is 4:3 # does not work, but this does fix some other shit for some reason, so do not remove!
-        if maxX >= maxY:
-            self.tab_slc_gridview.setMaximumSize(5000, round( (maxX / 4) * 3 ))
+        #if maxX >= maxY:
+        #    self.tab_slc_gridview.setMaximumSize(5000, round( (maxX / 4) * 3 ))
         #else:
         #    self.tab_slc_gridview.setMaximumSize(round( (maxY / 3) * 4 ))
 

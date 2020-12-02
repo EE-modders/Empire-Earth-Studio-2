@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>763</width>
-    <height>703</height>
+    <width>766</width>
+    <height>711</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -567,10 +567,16 @@ border-radius: 10;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>5000</width>
-              <height>16777215</height>
+              <width>16777215</width>
+              <height>300</height>
              </size>
             </property>
             <property name="verticalScrollBarPolicy">
@@ -934,7 +940,7 @@ border-radius: 10;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>763</width>
+     <width>766</width>
      <height>34</height>
     </rect>
    </property>
