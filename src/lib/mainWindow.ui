@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>778</width>
-    <height>685</height>
+    <width>763</width>
+    <height>703</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -567,6 +567,12 @@ border-radius: 10;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>5000</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="verticalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
@@ -598,6 +604,12 @@ border-radius: 10;
             </item>
             <item>
              <widget class="QPushButton" name="tab_slc_row_plus">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>30</width>
@@ -636,6 +648,12 @@ border-radius: 10;
             </item>
             <item>
              <widget class="QPushButton" name="tab_slc_row_minus">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>30</width>
@@ -697,6 +715,12 @@ border-radius: 10;
           </item>
           <item>
            <widget class="QPushButton" name="tab_slc_col_minus">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>30</width>
@@ -735,6 +759,12 @@ border-radius: 10;
           </item>
           <item>
            <widget class="QPushButton" name="tab_slc_col_plus">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>30</width>
@@ -904,7 +934,7 @@ border-radius: 10;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>778</width>
+     <width>763</width>
      <height>34</height>
     </rect>
    </property>

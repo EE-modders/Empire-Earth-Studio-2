@@ -271,13 +271,19 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     ### SST Slicer
     def SLCupdateGridview(self):
-        scene = QGraphicsScene(self)
-        self.tab_slc_gridview.setScene(scene)
-        
         maxX = self.tab_slc_gridview.width()
         maxY = self.tab_slc_gridview.height()
 
-        #print(maxX, maxY)
+        print(maxX, maxY)
+
+        # update aspect ratio of the GridView, target is 4:3 # does not work, but this does fix some other shit for some reason, so do not remove!
+        if maxX >= maxY:
+            self.tab_slc_gridview.setMaximumSize(5000, round( (maxX / 4) * 3 ))
+        #else:
+        #    self.tab_slc_gridview.setMaximumSize(round( (maxY / 3) * 4 ))
+
+        scene = QGraphicsScene(self)
+        self.tab_slc_gridview.setScene(scene)
 
         rows = int(self.tab_slc_row_count.text())
         colums = int(self.tab_slc_col_count.text())
