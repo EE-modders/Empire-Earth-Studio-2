@@ -11,7 +11,7 @@ Created on 10.11.2020 22:17 CET
 import os
 import sys
 from PyQt5.QtGui import QWindow
-from PyQt5.QtWidgets import QApplication, QErrorMessage, QFileDialog, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QErrorMessage, QFileDialog, QGraphicsScene, QMainWindow, QMessageBox
 
 #import qdarkstyle
 
@@ -24,10 +24,15 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self) -> None:
         super().__init__()
 
-        self.setupUi(self)
-        self.initButtons()
+        self.gridMax = 10
+        self.gridMin = 2
 
-    def initButtons(self):
+        self.setupUi(self)
+        self.initGUIControlls()
+        self.SLCupdateGridview()
+
+    def initGUIControlls(self):
+        self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
         self.tab_ssa_unpack.clicked.connect(self.SSAconvert)
@@ -38,7 +43,15 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_sst_convert.clicked.connect(self.SSTconvert)
         self.tab_sst_droplabel.onDrop.connect(self.SSTdropHandler)
 
+        self.tab_slc_gridview.onResize.connect(self.SLCupdateGridview)
+
+        self.tab_slc_row_plus.clicked.connect(self._SLCaddRow)            
+        self.tab_slc_row_minus.clicked.connect(self._SLCsubRow)
+        self.tab_slc_col_plus.clicked.connect(self._SLCaddCol)
+        self.tab_slc_col_minus.clicked.connect(self._SLCsubCol)
+
         #self.testbutton.clicked.connect(self.clickedTestButton)
+
 
     def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
         msg = QMessageBox()
@@ -79,12 +92,16 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             self.tab_ssa_unpack.setEnabled(False)
 
-    def SSAinSelector(self):
-        dlg = QFileDialog.getOpenFileName(
-            self,
-            caption="Select SSA file",
-            filter="SSA Archives (*.ssa)",
-        )
+    def SSAinSelector(self, event):
+        # event is not False, when called from CDropWidget
+        if not event:
+            dlg = QFileDialog.getOpenFileName(
+                self,
+                caption="Select SSA file",
+                filter="SSA Archives (*.ssa)",
+            )
+        else:
+            dlg = event
 
         print(dlg)
 
@@ -253,10 +270,71 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             return ""
 
     ### SST Slicer
+    def SLCupdateGridview(self):
+        scene = QGraphicsScene(self)
+        self.tab_slc_gridview.setScene(scene)
+        
+        maxX = self.tab_slc_gridview.width()
+        maxY = self.tab_slc_gridview.height()
+
+        #print(maxX, maxY)
+
+        rows = int(self.tab_slc_row_count.text())
+        colums = int(self.tab_slc_col_count.text())
+
+        boxH = maxY // rows
+        boxB = maxX // colums
+
+        #scene.addRect(100, -50, maxX, maxY)
+        #scene.addLine(0, 0, 0, maxY)
+        #scene.addLine(0, 0, 50, 50)
+        #scene.addLine(50, 0, 0, 50)
+        #scene.addLine(0, 0, 50, 50)
+
+        for r in range(rows):
+            scene.addLine( 0, r*boxH, maxX, r*boxH )
+
+        for c in range(colums):
+            scene.addLine( c*boxB, 0, c*boxB, maxY )
+
+    def _SLCaddRow(self):
+        c = int(self.tab_slc_row_count.text()) + 1
+        if c >= self.gridMax:
+            self.tab_slc_row_plus.setDisabled(True)
+        self.tab_slc_row_minus.setEnabled(True)
+        self.tab_slc_row_count.setNum(c)
+        self.SLCupdateGridview()
+
+    def _SLCsubRow(self):
+        c = int(self.tab_slc_row_count.text()) - 1
+        if c <= self.gridMin:
+            self.tab_slc_row_minus.setDisabled(True)
+        self.tab_slc_row_plus.setEnabled(True)
+        self.tab_slc_row_count.setNum(c)
+        self.SLCupdateGridview()
+
+    def _SLCaddCol(self):
+        c = int(self.tab_slc_col_count.text()) + 1
+        if c >= self.gridMax:
+            self.tab_slc_col_plus.setDisabled(True)
+        self.tab_slc_col_minus.setEnabled(True)
+        self.tab_slc_col_count.setNum(c)
+        self.SLCupdateGridview()
+
+    def _SLCsubCol(self):
+        c = int(self.tab_slc_col_count.text()) - 1
+        if c <= self.gridMin:
+            self.tab_slc_col_minus.setDisabled(True)
+        self.tab_slc_col_plus.setEnabled(True)
+        self.tab_slc_col_count.setNum(c)
+        self.SLCupdateGridview()
+
+
+
     ### CEM
 
     ### TEST
-    def test(self, event):
+    def test(self, event=None):
         print("nice")
         print(event)
         #self.testlabel.setText("Leck mir die Eier!!!")
