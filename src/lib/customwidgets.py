@@ -1,6 +1,7 @@
 
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
+from PyQt5.QtCore import pyqtSignal
 
 class CDropWidget(QtWidgets.QListWidget):
     def __init__(self, parent):
@@ -23,7 +24,21 @@ class CDropWidget(QtWidgets.QListWidget):
             self.addItem(f)
 
 class CDropLabel(QtWidgets.QLabel):
+    onDrop = pyqtSignal(list)
+
     def __init__(self, parent) -> None:
         super().__init__(parent)
 
-    
+    def dragEnterEvent(self, a0: QtGui.QDragEnterEvent) -> None:
+        if a0.mimeData().hasUrls():
+            #print(a0.mimeData().formats())
+            a0.accept()
+
+    def dragMoveEvent(self, a0: QtGui.QDragMoveEvent) -> None:
+        a0.accept()
+
+    def dropEvent(self, a0: QtGui.QDropEvent) -> None:
+        files = [u.toLocalFile() for u in a0.mimeData().urls()]
+
+        #print("dropped")
+        self.onDrop.emit(files)

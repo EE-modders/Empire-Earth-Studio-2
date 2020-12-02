@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>841</width>
-    <height>708</height>
+    <width>742</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +42,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -293,12 +296,18 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="CDropLabel" name="label_4">
+         <widget class="CDropLabel" name="tab_sst_droplabel">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="acceptDrops">
+           <bool>true</bool>
           </property>
           <property name="styleSheet">
            <string notr="true">border-color: rgb(197, 197, 197);
@@ -311,7 +320,7 @@ border-radius: 10;
            <enum>QFrame::Raised</enum>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;DRAG &amp;amp; DROP HERE!!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;You can drop TGA, SST and folders!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;DRAG &amp;amp; DROP HERE!!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;You can drop TGA and SST files!&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;(autoconvert on drop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -340,7 +349,10 @@ border-radius: 10;
            <number>0</number>
           </property>
           <item>
-           <widget class="QCheckBox" name="checkBox_4">
+           <widget class="QCheckBox" name="tab_sst_viewonly">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="font">
              <font>
               <weight>75</weight>
@@ -348,7 +360,7 @@ border-radius: 10;
              </font>
             </property>
             <property name="text">
-             <string>view only</string>
+             <string>view only (SST only)</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -359,108 +371,54 @@ border-radius: 10;
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_2">
+           <widget class="QCheckBox" name="tab_sst_overwrite">
             <property name="text">
-             <string>autoconvert on Drop</string>
+             <string>force overwrite output</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_3">
+           <widget class="QCheckBox" name="tab_sst_firstonly">
             <property name="text">
-             <string>overwrite output</string>
+             <string>first resolution only</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="tab_sst_donemessage">
+            <property name="text">
+             <string>disable success message</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QGridLayout" name="gridLayout">
           <property name="horizontalSpacing">
            <number>6</number>
           </property>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Bulk convert Folder</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="Line" name="line_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="checkBox_7">
-            <property name="text">
-             <string>use input folder as output</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_5">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Select File</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QPushButton" name="pushButton_12">
-            <property name="text">
-             <string>Output Folder</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
-             <widget class="QRadioButton" name="radioButton">
+             <widget class="QRadioButton" name="tab_sst_radio_1">
               <property name="text">
                <string>SST -&gt; TGA</string>
               </property>
@@ -470,18 +428,91 @@ border-radius: 10;
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_2">
+             <widget class="QRadioButton" name="tab_sst_radio_2">
               <property name="text">
                <string>TGA -&gt; SST</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
            </layout>
           </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="tab_sst_select_in">
+            <property name="maximumSize">
+             <size>
+              <width>220</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Bulk convert Folder</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="tab_sst_label_in">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="tab_sst_label_out">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="tab_sst_select_out">
+            <property name="maximumSize">
+             <size>
+              <width>220</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Output Folder</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="tab_sst_input_checkbox">
+            <property name="text">
+             <string>use input location for output</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_7">
+         <widget class="QPushButton" name="tab_sst_convert">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>CONVERT</string>
           </property>
@@ -600,7 +631,7 @@ border-radius: 10;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>841</width>
+     <width>742</width>
      <height>34</height>
     </rect>
    </property>
@@ -667,7 +698,7 @@ border-radius: 10;
    <hints>
     <hint type="sourcelabel">
      <x>51</x>
-     <y>461</y>
+     <y>482</y>
     </hint>
     <hint type="destinationlabel">
      <x>203</x>
@@ -683,11 +714,11 @@ border-radius: 10;
    <hints>
     <hint type="sourcelabel">
      <x>46</x>
-     <y>460</y>
+     <y>481</y>
     </hint>
     <hint type="destinationlabel">
      <x>503</x>
-     <y>528</y>
+     <y>549</y>
     </hint>
    </hints>
   </connection>
@@ -699,11 +730,11 @@ border-radius: 10;
    <hints>
     <hint type="sourcelabel">
      <x>61</x>
-     <y>470</y>
+     <y>491</y>
     </hint>
     <hint type="destinationlabel">
      <x>464</x>
-     <y>498</y>
+     <y>519</y>
     </hint>
    </hints>
   </connection>
@@ -715,7 +746,7 @@ border-radius: 10;
    <hints>
     <hint type="sourcelabel">
      <x>48</x>
-     <y>466</y>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -736,6 +767,38 @@ border-radius: 10;
     <hint type="destinationlabel">
      <x>420</x>
      <y>353</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_sst_input_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>tab_sst_select_out</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>73</x>
+     <y>550</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>120</x>
+     <y>591</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_sst_input_checkbox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>tab_sst_label_out</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>548</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>576</y>
     </hint>
    </hints>
   </connection>

@@ -18,6 +18,7 @@ from PyQt5.QtWidgets import QApplication, QErrorMessage, QFileDialog, QMainWindo
 from lib import Ui_mainWindow
 
 from lib.SSAtool.src import SSAtool
+from lib.SSTtool.src import SSTtool
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self) -> None:
@@ -30,6 +31,12 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
         self.tab_ssa_unpack.clicked.connect(self.SSAconvert)
+
+        self.tab_sst_select_in.clicked.connect(self.SSTinSelector)
+        self.tab_sst_select_out.clicked.connect(self.SSToutSelector)
+        self.tab_sst_input_checkbox.clicked.connect(self.SSTcheckButton)
+        self.tab_sst_convert.clicked.connect(self.SSTconvert)
+        self.tab_sst_droplabel.onDrop.connect(self.SSTdropHandler)
 
         #self.testbutton.clicked.connect(self.clickedTestButton)
 
@@ -50,6 +57,12 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         msg.exec_()
 
     ### SSA
+    def SSAcheckButton(self):
+        if self.tab_ssa_label_in.text() and self.tab_ssa_label_out.text():
+            self.tab_ssa_unpack.setEnabled(True)
+        else:
+            self.tab_ssa_unpack.setEnabled(False)
+
     def SSAinSelector(self):
         dlg = QFileDialog.getOpenFileName(
             self,
@@ -91,12 +104,6 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.SSAcheckButton()
 
-    def SSAcheckButton(self):
-        if self.tab_ssa_label_in.text() and self.tab_ssa_label_out.text():
-            self.tab_ssa_unpack.setEnabled(True)
-        else:
-            self.tab_ssa_unpack.setEnabled(False)
-
     def SSAconvert(self):
         SSAtool.main(
             inputfile=self.tab_ssa_label_in.text(),
@@ -107,13 +114,122 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.showInfoMSG("Done!")
         #self.tab_ssa_label_clear.click()
 
+
     ### SST
+    def SSTinSelector(self):
+        dlg = QFileDialog.getExistingDirectory(
+            self,
+            caption="Select source folder"
+        )
+
+        self.tab_sst_label_in.setText(dlg)
+        print(dlg)
+
+        self.SSTcheckButton()
+
+    def SSToutSelector(self):
+        dlg = QFileDialog.getExistingDirectory(
+            self,
+            caption="Select destination folder"
+        )
+
+        self.tab_sst_label_out.setText(dlg)
+        print(dlg)
+
+        self.SSTcheckButton()
+
+    def SSTconvert(self):
+        filelist = [ self.tab_sst_label_in.text() ]
+        print(filelist)
+
+        if self.tab_sst_radio_1.isChecked():
+            selection = "1"
+        else:
+            selection = "2"
+
+        output = self.SSTcheckOutput()
+
+        try:
+            SSTtool.main(
+                inputfiles=filelist,
+                outputlocation=output,
+                selection=selection,
+                overwrite=self.tab_sst_overwrite.isChecked(),
+                single_res=self.tab_sst_firstonly.isChecked()
+            )
+        except Exception as e:
+            self.showErrorMSG(e.args[0])
+            return
+
+        if not self.tab_sst_donemessage.isChecked():
+            self.showInfoMSG("Done!")
+
+    def _SSTdropConvert(self, filelist: list, ext: str):
+        output = self.SSTcheckOutput()
+
+        if ext == ".sst":
+            selection = "1"
+        else:
+            selection = "2"
+
+        try:
+            SSTtool.main(
+                inputfiles=filelist,
+                outputlocation=output,
+                selection=selection,
+                overwrite=self.tab_sst_overwrite.isChecked(),
+                single_res=self.tab_sst_firstonly.isChecked()
+            )
+        except Exception as e:
+            self.showErrorMSG(e.args[0])
+            return
+
+        if not self.tab_sst_donemessage.isChecked():
+            self.showInfoMSG("Done!")
+
+    def SSTdropHandler(self, event):
+        print(event)
+
+        # check of output is set
+        if not self.tab_sst_input_checkbox.isChecked():
+            if not self.tab_sst_label_out.text():
+                self.showErrorMSG("No output destination specified!")
+                return
+
+        # check if all files have the same ext otherwise show error
+        ext = os.path.splitext(event[0])[1]
+
+        if any( os.path.splitext(f)[1] != ext for f in event ):
+            self.showErrorMSG("All files have to have the same file type!")
+            return
+        elif ext not in [".sst", ".tga"]:
+            self.showErrorMSG("only TGA and SST files are supported")
+            return
+        else:
+            print(ext)
+
+        self._SSTdropConvert(filelist=event, ext=ext)
+
+
+    def SSTcheckButton(self):
+        self.tab_sst_convert.setEnabled(False)
+        if self.tab_sst_label_in.text():
+            if self.tab_sst_input_checkbox.isChecked() or self.tab_sst_label_out.text():
+                self.tab_sst_convert.setEnabled(True)
+
+    def SSTcheckOutput(self):
+        if not self.tab_sst_input_checkbox.isChecked():
+            return self.tab_sst_label_out.text()
+        else:
+            return ""
+
     ### SST Slicer
     ### CEM
 
     ### TEST
-    def clickedTestButton(self):
-        pass
+    def test(self, event):
+        print("nice")
+        print(event)
         #self.testlabel.setText("Leck mir die Eier!!!")
 
 
