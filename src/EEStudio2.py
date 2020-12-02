@@ -155,7 +155,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 outputlocation=output,
                 selection=selection,
                 overwrite=self.tab_sst_overwrite.isChecked(),
-                single_res=self.tab_sst_firstonly.isChecked()
+                single_res=self.tab_sst_firstonly.isChecked(),
+                bundling=False
             )
         except Exception as e:
             self.showErrorMSG(e.args[0])
@@ -178,7 +179,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 outputlocation=output,
                 selection=selection,
                 overwrite=self.tab_sst_overwrite.isChecked(),
-                single_res=self.tab_sst_firstonly.isChecked()
+                single_res=self.tab_sst_firstonly.isChecked(),
+                bundling=( not self.tab_sst_bundling.isChecked() )
             )
         except Exception as e:
             self.showErrorMSG(e.args[0])
