@@ -56,6 +56,22 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         msg.setDefaultButton(QMessageBox.Close)
         msg.exec_()
 
+    def showQuestionMSG(self, msg_str: str, title_msg="QUESTION"):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Question)
+        msg.setText(msg_str)
+        msg.setWindowTitle(title_msg)
+        msg.addButton(QMessageBox.Yes)
+        msg.addButton(QMessageBox.No)
+        msg.setDefaultButton(QMessageBox.Yes)
+        
+        reply = msg.exec_()
+
+        if reply == QMessageBox.Yes:
+            return True
+        else:
+            return False
+
     ### SSA
     def SSAcheckButton(self):
         if self.tab_ssa_label_in.text() and self.tab_ssa_label_out.text():
@@ -167,11 +183,22 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     def _SSTdropConvert(self, filelist: list, ext: str):
         output = self.SSTcheckOutput()
+        bundling = not self.tab_sst_bundling.isChecked()
 
         if ext == ".sst":
             selection = "1"
         else:
             selection = "2"
+
+            if bundling:
+                _msg = "Following files will get bundeled into one SST\n"
+                _msg += "please confirm this order:\n\n"
+
+                for i, file in enumerate(filelist):
+                    _msg += f"[{i+1}] => {os.path.basename(file)}\n"
+
+                if not self.showQuestionMSG(_msg):
+                    return
 
         try:
             SSTtool.main(
@@ -180,7 +207,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 selection=selection,
                 overwrite=self.tab_sst_overwrite.isChecked(),
                 single_res=self.tab_sst_firstonly.isChecked(),
-                bundling=( not self.tab_sst_bundling.isChecked() )
+                bundling=bundling
             )
         except Exception as e:
             self.showErrorMSG(e.args[0])
