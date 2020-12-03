@@ -11,7 +11,7 @@ Created on 10.11.2020 22:17 CET
 import os
 import sys
 from PyQt5.QtGui import QWindow
-from PyQt5.QtWidgets import QApplication, QErrorMessage, QFileDialog, QGraphicsScene, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QAction, QApplication, QErrorMessage, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox
 
 #import qdarkstyle
 
@@ -19,6 +19,7 @@ from lib import Ui_mainWindow
 
 from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
+from lib.SSTslicer.src import SSTslicer
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self) -> None:
@@ -49,6 +50,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_slc_row_minus.clicked.connect(self._SLCsubRow)
         self.tab_slc_col_plus.clicked.connect(self._SLCaddCol)
         self.tab_slc_col_minus.clicked.connect(self._SLCsubCol)
+
+        self.tab_slc_select_in.clicked.connect(self.SLCinSelector)
+        self.tab_slc_select_out.clicked.connect(self.SLCoutSelector)
+        self.tab_slc_join.clicked.connect(self.SLCjoiner)
+        self.tab_slc_slice.clicked.connect(self.SLCslicer)
 
         #self.testbutton.clicked.connect(self.clickedTestButton)
 
@@ -98,7 +104,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             dlg = QFileDialog.getOpenFileName(
                 self,
                 caption="Select SSA file",
-                filter="SSA Archives (*.ssa)",
+                filter="SSA Archive (*.ssa)",
             )
         else:
             dlg = event
@@ -276,7 +282,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         #print(maxX, maxY)
 
-        # update aspect ratio of the GridView, target is 4:3 # does not work, but this does fix some other shit for some reason, so do not remove!
+        # update aspect ratio of the GridView, target is 4:3 # does not work for some reason, so fuck it
         #if maxX >= maxY:
         #    self.tab_slc_gridview.setMaximumSize(5000, round( (maxX / 4) * 3 ))
         #else:
@@ -335,7 +341,95 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_slc_col_count.setNum(c)
         self.SLCupdateGridview()
 
+    def _SLCnewInfiles(self, files: list, filetype: str):
 
+        if "tga" in filetype:
+            self.tab_slc_label_in.setText(os.path.basename(files[0]))
+        else:
+            #self.tab_slc_label_in.setText('; '.join( [ os.path.basename(p) for p in files ] ) )
+            # or maybe this is better
+            pass
+
+        # add files to the file list wiget
+        self.tab_slc_list.clear()
+        self.tab_slc_list.addItems(files)
+
+        self.tab_slc_label_in.setText(f"{len(files)} file(s) imported")
+
+    def SLCinSelector(self):
+        dlg = QFileDialog.getOpenFileNames(
+            self,
+            caption="Select TGA / SST file(s)",
+            filter="SST Image (*.sst);;TGA Image (*.tga)"
+        )
+
+        #print(dlg)
+        print(dlg[1])
+
+        self._SLCnewInfiles(files=dlg[0], filetype=dlg[1])
+        self.SLCcheckButtons()
+
+    def SLCoutSelector(self):
+        dlg = QFileDialog.getExistingDirectory(
+            self,
+            caption="Select destination folder"
+        )
+
+        print(dlg)
+
+        self.tab_slc_label_out.setText(dlg)
+        self.SLCcheckButtons()
+
+    def SLCjoiner(self):
+        inputfiles = [ self.tab_slc_list.item(i).text() for i in range(self.tab_slc_list.count()) ]
+
+        _msg = "Following files will be joined:\n"
+        _msg += "Please confirm this order.\n\n"
+
+        for i, file in enumerate(inputfiles):
+            _msg += f"[{i+1}] => {os.path.basename(file)}\n"
+
+        if not self.showQuestionMSG(msg_str=_msg, title_msg="Please confirm"):
+            return
+        else:
+            self.SLCslicer()
+
+
+    def SLCslicer(self):
+        inputfiles = [ self.tab_slc_list.item(i).text() for i in range(self.tab_slc_list.count()) ]
+
+        # all files have to have the same file type at this point, so we can do this
+        if ".sst" in inputfiles[0]:
+            fileType = "sst"
+        else:
+            fileType = "tga"
+
+        try:
+            SSTslicer.main(
+                inputfiles=inputfiles,
+                outputlocation=self.tab_slc_label_out.text(),
+                filetype=fileType,
+                xTiles=int(self.tab_slc_col_count.text()),
+                yTiles=int(self.tab_slc_row_count.text())
+            )
+        except Exception as e:
+            self.showErrorMSG(e.args[0])
+            return
+
+        self.showInfoMSG("Done!")
+
+    def SLCcheckButtons(self):
+        nListItems = self.tab_slc_list.count()
+
+        if nListItems > 1:
+            self.tab_slc_join.setEnabled(True)
+            self.tab_slc_slice.setEnabled(False)
+        elif nListItems == 1:
+            self.tab_slc_join.setEnabled(False)
+            self.tab_slc_slice.setEnabled(True)
+        else:
+            self.tab_slc_join.setEnabled(False)
+            self.tab_slc_slice.setEnabled(False)
 
     ### CEM
 

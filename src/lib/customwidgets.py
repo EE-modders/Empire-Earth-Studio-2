@@ -29,13 +29,23 @@ class CDropLabel(QtWidgets.QLabel):
     def __init__(self, parent) -> None:
         super().__init__(parent)
 
+        #self.setStyleSheet("background-color: rgb(255, 255, 255);border: 4px dashed rgb(97, 97, 97);border-radius: 10;")
+
     def dragEnterEvent(self, a0: QtGui.QDragEnterEvent) -> None:
         if a0.mimeData().hasUrls():
             #print(a0.mimeData().formats())
             a0.accept()
-
+            #self.setStyleSheet("background-color: rgb(255, 255, 255);border: 4px dashed rgb(97, 255, 97);border-radius: 10;")
+        else:
+            pass
+            #self.setStyleSheet("background-color: rgb(255, 255, 255);border: 4px dashed rgb(255, 97, 97);border-radius: 10;")
+        
     def dragMoveEvent(self, a0: QtGui.QDragMoveEvent) -> None:
         a0.accept()
+
+    def dragLeaveEvent(self, a0: QtGui.QDragLeaveEvent) -> None:
+        a0.accept()
+        #self.setStyleSheet("background-color: rgb(255, 255, 255);border: 4px dashed rgb(97, 97, 97);border-radius: 10;")
 
     def dropEvent(self, a0: QtGui.QDropEvent) -> None:
         files = [u.toLocalFile() for u in a0.mimeData().urls()]
