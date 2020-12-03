@@ -34,9 +34,12 @@ jobs:
     - name: run EEStudio II directly
       run: python .\src\EEStudio2.py -v
     
-    - name: compile EEStudio2
+    - name: compile EEStudio2 standalone
       run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." .\src\EEStudio2.py
       
+    - name: compile EEStudio2 for installer
+      run: pyinstaller --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." .\src\EEStudio2.py
+
     - name: run compiled version
       run: .\dist\EEStudio2.exe -v
 
@@ -44,4 +47,10 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: SSAtool_windows
-        path: .\dist\
+        path: .\dist\EEStudio2.exe
+
+    - name: save compiled executable
+      uses: actions/upload-artifact@master
+      with:
+        name: SSAtool_windows_forInstaller
+        path: .\dist\EEStudio2
