@@ -21,6 +21,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pyinstaller
         pip install PyQt5
+        pip install Pillow
 
     - name: python version
       run: python --version
@@ -30,7 +31,7 @@ jobs:
     - name: compile C library "blast"
       run: gcc -fPIC -shared .\src\lib\SSAtool\src\lib\libblast.c -o .\src\lib\SSAtool\src\lib\libblast.dll
     
-    - name: run SSAtool directly
+    - name: run EEStudio II directly
       run: python .\src\EEStudio2.py -v
     
     - name: compile EEStudio2
