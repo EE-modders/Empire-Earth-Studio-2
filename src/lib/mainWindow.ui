@@ -54,7 +54,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -114,11 +114,6 @@
           <property name="dragDropMode">
            <enum>QAbstractItemView::DragDrop</enum>
           </property>
-          <item>
-           <property name="text">
-            <string> just a test</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item>
@@ -563,22 +558,55 @@ border-radius: 10;
             <item>
              <widget class="CDropWidget" name="tab_slc_list"/>
             </item>
-            <item alignment="Qt::AlignHCenter">
-             <widget class="QPushButton" name="pushButton">
-              <property name="maximumSize">
-               <size>
-                <width>75</width>
-                <height>25</height>
-               </size>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <property name="topMargin">
+               <number>0</number>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 0, 0);
+              <item>
+               <widget class="QPushButton" name="clear">
+                <property name="maximumSize">
+                 <size>
+                  <width>75</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 0, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>clear</string>
-              </property>
-             </widget>
+                </property>
+                <property name="text">
+                 <string>clear</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="tab_slc_moveup">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>up</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="tab_slc_movedown">
+                <property name="maximumSize">
+                 <size>
+                  <width>45</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>down</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -597,19 +625,6 @@ border-radius: 10;
                <property name="topMargin">
                 <number>0</number>
                </property>
-               <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
                <item>
                 <widget class="CGraphicsView" name="tab_slc_gridview">
                  <property name="sizePolicy">
@@ -990,14 +1005,6 @@ border-radius: 10;
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_cem">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <attribute name="title">
-        <string>3D Models (CEM)</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
     <item>
@@ -1087,18 +1094,18 @@ border-radius: 10;
  <resources/>
  <connections>
   <connection>
-   <sender>tab_ssa_label_clear</sender>
-   <signal>clicked()</signal>
-   <receiver>tab_ssa_list</receiver>
-   <slot>clear()</slot>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>61</x>
-     <y>477</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>203</x>
-     <y>393</y>
+     <x>420</x>
+     <y>353</y>
     </hint>
    </hints>
   </connection>
@@ -1119,6 +1126,38 @@ border-radius: 10;
    </hints>
   </connection>
   <connection>
+   <sender>clear</sender>
+   <signal>clicked()</signal>
+   <receiver>tab_slc_list</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>428</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>54</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clear</sender>
+   <signal>clicked()</signal>
+   <receiver>tab_slc_label_in</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>516</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>tab_ssa_label_clear</sender>
    <signal>clicked(bool)</signal>
    <receiver>tab_ssa_unpack</receiver>
@@ -1135,18 +1174,18 @@ border-radius: 10;
    </hints>
   </connection>
   <connection>
-   <sender>actionExit</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
+   <sender>clear</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>tab_slc_join</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>94</x>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
-     <x>420</x>
-     <y>353</y>
+     <x>545</x>
+     <y>606</y>
     </hint>
    </hints>
   </connection>
@@ -1167,55 +1206,23 @@ border-radius: 10;
    </hints>
   </connection>
   <connection>
-   <sender>tab_sst_input_checkbox</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>tab_sst_label_out</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>172</x>
-     <y>548</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>339</x>
-     <y>576</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
+   <sender>tab_ssa_label_clear</sender>
    <signal>clicked()</signal>
-   <receiver>tab_slc_list</receiver>
+   <receiver>tab_ssa_list</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>143</x>
-     <y>429</y>
+     <x>61</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
-     <x>54</x>
-     <y>402</y>
+     <x>203</x>
+     <y>393</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>tab_slc_label_in</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>137</x>
-     <y>435</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>229</x>
-     <y>516</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
+   <sender>clear</sender>
    <signal>clicked(bool)</signal>
    <receiver>tab_slc_slice</receiver>
    <slot>setEnabled(bool)</slot>
@@ -1231,18 +1238,18 @@ border-radius: 10;
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>tab_sst_input_checkbox</sender>
    <signal>clicked(bool)</signal>
-   <receiver>tab_slc_join</receiver>
-   <slot>setEnabled(bool)</slot>
+   <receiver>tab_sst_label_out</receiver>
+   <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>434</y>
+     <x>172</x>
+     <y>548</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>606</y>
+     <x>339</x>
+     <y>576</y>
     </hint>
    </hints>
   </connection>

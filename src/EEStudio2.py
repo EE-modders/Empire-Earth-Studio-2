@@ -51,6 +51,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_slc_col_plus.clicked.connect(self._SLCaddCol)
         self.tab_slc_col_minus.clicked.connect(self._SLCsubCol)
 
+        self.tab_slc_moveup.clicked.connect(self._SLCmoveItemUp)
+        self.tab_slc_movedown.clicked.connect(self._SLCmoveItemDown)
         self.tab_slc_select_in.clicked.connect(self.SLCinSelector)
         self.tab_slc_select_out.clicked.connect(self.SLCoutSelector)
         self.tab_slc_join.clicked.connect(self.SLCjoiner)
@@ -430,6 +432,20 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             self.tab_slc_join.setEnabled(False)
             self.tab_slc_slice.setEnabled(False)
+
+    def _SLCmoveItemDown(self):
+        currRow = self.tab_slc_list.currentRow()
+        currItem = self.tab_slc_list.takeItem(currRow)
+        newRow = currRow + 1
+        self.tab_slc_list.insertItem(newRow, currItem)
+        self.tab_slc_list.setCurrentRow(newRow)
+
+    def _SLCmoveItemUp(self):
+        currRow = self.tab_slc_list.currentRow()
+        currItem = self.tab_slc_list.takeItem(currRow)
+        newRow = currRow - 1
+        self.tab_slc_list.insertItem(newRow, currItem)
+        self.tab_slc_list.setCurrentRow(newRow)
 
     ### CEM
 
