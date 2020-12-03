@@ -284,7 +284,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         #print(maxX, maxY)
 
-        # update aspect ratio of the GridView, target is 4:3 # does not work for some reason, so fuck it
+        # update aspect ratio of the GridView, target is 4:3 # does not work for some reason :(
         #if maxX >= maxY:
         #    self.tab_slc_gridview.setMaximumSize(5000, round( (maxX / 4) * 3 ))
         #else:
@@ -453,8 +453,6 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def test(self, event=None):
         print("nice")
         print(event)
-        #self.testlabel.setText("Leck mir die Eier!!!")
-
 
 
 def main():
@@ -475,7 +473,7 @@ if __name__ == "__main__":
         testmode = False
 
     if testmode:
-        print("THIS SHOULD WORK!")
+        print("STARTED!")
         sys.exit()
     else:
         main()
