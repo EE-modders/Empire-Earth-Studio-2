@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Empire Earth Studio II</string>
+   <string>Empire Earth Studio II - BETA</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -1010,7 +1010,7 @@ border-radius: 10;
     <item>
      <widget class="QLabel" name="label_8">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team- EE-modders - v0.1 | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team- EE-modders - v0.1 &lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;BETA&lt;/span&gt; | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

@@ -477,7 +477,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Empire Earth Studio II"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Empire Earth Studio II - BETA"))
         self.MainTabs.setAccessibleName(_translate("MainWindow", "some random name"))
         self.MainTabs.setAccessibleDescription(_translate("MainWindow", "some random description"))
         self.main_description.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600; text-decoration: underline;\">SOME FUCKING RANDOM TEXT</span></p><p>oiahsdikujashd lkjash dlkajshdlakjshd lkasjhdlkasjh dlaskjdh alskjdh </p><p>aslkjdh aslkhd jalkshd lajksh dlkash dlkash dlkash dlkajsh dalksjh</p><p>dlaksh dlkashlkjdghsgkjdfshgre</p><p><br/></p><p><span style=\" font-weight:600;\">FOLLOW OUR FUCKING DISCORD OK!!?!??!!</span></p></body></html>"))
@@ -520,7 +520,7 @@ class Ui_MainWindow(object):
         self.tab_slc_slice.setText(_translate("MainWindow", "SLICE THAT BABY"))
         self.tab_slc_join.setText(_translate("MainWindow", "JOIN"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab), _translate("MainWindow", "Slicer (SST)"))
-        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Empire Earth Studio II</span> by the Empire Earth: Reborn Team- EE-modders - v0.1 | 2020</p></body></html>"))
+        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Empire Earth Studio II</span> by the Empire Earth: Reborn Team- EE-modders - v0.1 <span style=\" font-weight:600; color:#ff0000;\">BETA</span> | 2020</p></body></html>"))
         self.menuAbout.setTitle(_translate("MainWindow", "Help"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionAbout_Studio_II.setText(_translate("MainWindow", "About EEStudio II"))
