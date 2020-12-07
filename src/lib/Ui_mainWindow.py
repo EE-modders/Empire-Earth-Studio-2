@@ -494,7 +494,7 @@ class Ui_MainWindow(object):
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_ssa), _translate("MainWindow", "Archives (SSA)"))
         self.tab_sst_droplabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">DRAG &amp; DROP HERE!!</span></p><p align=\"center\"><br/>You can drop TGA and SST files!</p><p align=\"center\">(autoconvert on drop)</p></body></html>"))
         self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">options:</span></p></body></html>"))
-        self.tab_sst_viewonly.setText(_translate("MainWindow", "view only (1 SST only)"))
+        self.tab_sst_viewonly.setText(_translate("MainWindow", "view only (first dropped)"))
         self.tab_sst_firstonly.setText(_translate("MainWindow", "first resolution only"))
         self.tab_sst_donemessage.setText(_translate("MainWindow", "disable success message"))
         self.tab_sst_overwrite.setText(_translate("MainWindow", "force overwrite output"))

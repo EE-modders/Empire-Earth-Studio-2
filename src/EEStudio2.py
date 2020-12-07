@@ -26,10 +26,11 @@ from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
 class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
-    def __init__(self, parent, images: list) -> None:
+    def __init__(self, parent, images: list, filename: str = "") -> None:
         super().__init__(parent)
 
         self.setupUi(self)
+        self.view_label_filename.setText(filename)
         self.view_nextTile.clicked.connect(self.nextIndex)
         self.view_prevTile.clicked.connect(self.prevIndex)
 
@@ -160,22 +161,25 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             return False
 
     def showImageViewer(self, imagepath: str = None):
+        # check if file tye is SST
         if imagepath:
-            SSText = SST()
-            SSText.read_from_file(imagepath)
-            imageData = SSText.unpack()
-            imageTiles = imageData.get_Image_parts()
-
             imageList = list()
+            if imagepath.endswith("sst"):
+                SSText = SST()
+                SSText.read_from_file(imagepath)
+                imageData = SSText.unpack()
+                imageTiles = imageData.get_Image_parts()
 
-            for img in imageTiles:
-                if isinstance(img, tuple):
-                    raise TypeError("ERROR: SST Images from EE BETA are not supported in the viewer!")
-                imageList.append( Image.open(BytesIO(img)) )
+                for img in imageTiles:
+                    if isinstance(img, tuple):
+                        raise TypeError("ERROR: SST Images from EE BETA are not supported in the viewer!")
+                    imageList.append( Image.open(BytesIO(img)) )
+            else:
+                imageList.append( Image.open(imagepath) )
         else:
             imageList = None
 
-        Viewer = ViewerWindow(self, imageList)
+        Viewer = ViewerWindow(self, images=imageList, filename=os.path.basename(imagepath))
         Viewer.show()
 
     ### SSA

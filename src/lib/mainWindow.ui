@@ -360,7 +360,7 @@ border-radius: 10;
              </font>
             </property>
             <property name="text">
-             <string>view only (1 SST only)</string>
+             <string>view only (first dropped)</string>
             </property>
             <property name="checked">
              <bool>false</bool>
