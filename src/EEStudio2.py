@@ -29,10 +29,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.gridMin = 2
 
         self.setupUi(self)
-        self.initGUIControlls()
+        self.initGUIControls()
         self.SLCupdateGridview()
 
-    def initGUIControlls(self):
+    def initGUIControls(self):
         self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
@@ -459,8 +459,8 @@ def main():
     app = QApplication(sys.argv)
     #app.setStyleSheet(qdarkstyle.load_stylesheet())
 
-    Window = MainWindow()
-    Window.show()
+    main_Window = MainWindow()
+    main_Window.show()
 
     sys.exit(app.exec_())
 
