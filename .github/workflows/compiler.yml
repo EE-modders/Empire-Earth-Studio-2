@@ -2,15 +2,6 @@ name: Python packager
 
 on: [push]
 
-jobs:
-  delete-artifacts:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: kolpav/purge-artifacts-action@v1
-        with:
-          token: ${{ secrets.ARTIFACT_CLEANER }}
-          expire-in: 0days # Set this to 0 to delete all artifacts
-
   Windows:
     runs-on: windows-latest
 
