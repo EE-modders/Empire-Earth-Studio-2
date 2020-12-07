@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>766</width>
-    <height>711</height>
+    <height>644</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1036,7 +1036,7 @@ border-radius: 10;
    </property>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
-     <string>Help</string>
+     <string>About</string>
     </property>
     <addaction name="actionHelp_from_GitHUb"/>
     <addaction name="actionReport_Issue"/>
@@ -1047,6 +1047,8 @@ border-radius: 10;
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpen_Image_Viewer"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -1060,7 +1062,7 @@ border-radius: 10;
   </action>
   <action name="actionHelp_from_GitHUb">
    <property name="text">
-    <string>Help from GitHub</string>
+    <string>Help</string>
    </property>
   </action>
   <action name="actionExit">
@@ -1071,6 +1073,11 @@ border-radius: 10;
   <action name="actionReport_Issue">
    <property name="text">
     <string>Report Issue</string>
+   </property>
+  </action>
+  <action name="actionOpen_Image_Viewer">
+   <property name="text">
+    <string>Open Image Viewer</string>
    </property>
   </action>
  </widget>
