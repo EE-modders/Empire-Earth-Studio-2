@@ -54,7 +54,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -353,9 +353,6 @@ border-radius: 10;
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
            <widget class="QCheckBox" name="tab_sst_viewonly">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
             <property name="font">
              <font>
               <weight>75</weight>
@@ -363,7 +360,7 @@ border-radius: 10;
              </font>
             </property>
             <property name="text">
-             <string>view only (SST only)</string>
+             <string>view only (1 SST only)</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -1064,10 +1061,16 @@ border-radius: 10;
    <property name="text">
     <string>Help</string>
    </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
   <action name="actionReport_Issue">
@@ -1078,6 +1081,9 @@ border-radius: 10;
   <action name="actionOpen_Image_Viewer">
    <property name="text">
     <string>Open Image Viewer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>

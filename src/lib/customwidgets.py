@@ -1,6 +1,8 @@
 
+from PIL import Image, ImageQt
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
+from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 
 class CDropWidget(QtWidgets.QListWidget):
@@ -52,7 +54,6 @@ class CDropLabel(QtWidgets.QLabel):
         #print("dropped")
         self.onDrop.emit(files)
 
-
 class CGraphicsView(QtWidgets.QGraphicsView):
     onResize = pyqtSignal()
 
@@ -62,3 +63,27 @@ class CGraphicsView(QtWidgets.QGraphicsView):
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         #print("resize event")
         self.onResize.emit()
+
+
+class CImageLabel(QtWidgets.QLabel):
+    def __init__(self, parent) -> None:
+        super().__init__(parent)
+
+        self.LabelImage = list()
+
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        #super().resizeEvent(a0)
+
+        x, y = self.width(), self.height()
+
+        if x < y:
+            for LImage in self.LabelImage:
+                self.setPixmap( LImage.scaled(x, x, QtCore.Qt.KeepAspectRatio) )
+        else:
+            for LImage in self.LabelImage:
+                self.setPixmap( LImage.scaled(y, y, QtCore.Qt.KeepAspectRatio) )
+
+    def setImage(self, image: Image):
+        LabelImage = QtGui.QPixmap.fromImage( ImageQt.ImageQt(image) )
+        self.LabelImage.append(LabelImage)
+        self.setPixmap(LabelImage)

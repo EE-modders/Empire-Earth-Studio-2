@@ -8,18 +8,82 @@ Created on 10.11.2020 22:17 CET
 @author: zocker_160
 """
 
+from typing import List
+from lib.SSTtool.src.lib.SST import SST
 import os
 import sys
-from PyQt5.QtGui import QWindow
-from PyQt5.QtWidgets import QAction, QApplication, QErrorMessage, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox
+from io import BytesIO
+from PIL import Image
+from PyQt5.QtGui import QPixmap, QWindow
+from PyQt5.QtWidgets import QAction, QApplication, QDialog, QErrorMessage, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox, QStyledItemDelegate
 
 #import qdarkstyle
 
-from lib import Ui_mainWindow
+from lib import Ui_mainWindow, Ui_viewerWindow
 
 from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
+
+class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
+    def __init__(self, parent, images: list) -> None:
+        super().__init__(parent)
+
+        self.setupUi(self)
+        self.view_nextTile.clicked.connect(self.nextIndex)
+        self.view_prevTile.clicked.connect(self.prevIndex)
+
+        self.currImageIndex = 0
+        self.images = images
+
+        if images:
+            self.showImage(images[0]) # show the first tile of the image list
+            self.currImageIndex = 1
+            self._setIndexLabel()
+
+    def showImage(self, image: Image):
+        #imagePath = os.path.join("/home/bene", "800px-TuxFlat.svg.png")
+        #image = Image.open(imagepath)
+
+        self.view_image_rgb.setImage(image)
+        self.view_image_alpha.setImage(image.split()[-1])
+
+        self._setResLabel(image)
+
+    def _setResLabel(self, image):
+        xRes, yRes = image.width, image.height
+
+        self.view_res_rgb.setText(f"{xRes} x {yRes}")
+        self.view_res_alpha.setText(f"{xRes} x {yRes}")
+
+    def _setIndexLabel(self):
+        self.view_label_tiles.setText(f"{self.currImageIndex} / {len(self.images)}")
+        self._checkButtons()
+
+    def _checkButtons(self):
+        # check buttons
+        if self.currImageIndex >= len(self.images):
+            self.view_prevTile.setEnabled(True)
+            self.view_nextTile.setEnabled(False)
+        elif self.currImageIndex <= 1:
+            self.view_prevTile.setEnabled(False)
+            self.view_nextTile.setEnabled(True)
+
+    def nextIndex(self):
+        if self.currImageIndex + 1 <= len(self.images):
+            self.currImageIndex += 1
+            self.showImage(self.images[self.currImageIndex-1]) # currImageIndex starts at 1 and the array starts at 0
+            self._setIndexLabel()
+        else:
+            self._checkButtons()
+
+    def prevIndex(self):
+        if self.currImageIndex - 1 >= 1:
+            self.currImageIndex -= 1
+            self.showImage(self.images[self.currImageIndex-1]) # currImageIndex starts at 1 and the array starts at 0
+            self._setIndexLabel()
+        else:
+            self._checkButtons()
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self) -> None:
@@ -33,6 +97,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.SLCupdateGridview()
 
     def initGUIControls(self):
+        self.actionOpen_Image_Viewer.triggered.connect(self.showImageViewer)
+
         self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
@@ -92,6 +158,25 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             return True
         else:
             return False
+
+    def showImageViewer(self, imagepath: str = None):
+        if imagepath:
+            SSText = SST()
+            SSText.read_from_file(imagepath)
+            imageData = SSText.unpack()
+            imageTiles = imageData.get_Image_parts()
+
+            imageList = list()
+
+            for img in imageTiles:
+                if isinstance(img, tuple):
+                    raise TypeError("ERROR: SST Images from EE BETA are not supported in the viewer!")
+                imageList.append( Image.open(BytesIO(img)) )
+        else:
+            imageList = None
+
+        Viewer = ViewerWindow(self, imageList)
+        Viewer.show()
 
     ### SSA
     def SSAcheckButton(self):
@@ -244,7 +329,16 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def SSTdropHandler(self, event):
         print(event)
 
-        # check of output is set
+        # check if view only is set
+        if self.tab_sst_viewonly.isChecked():
+            try:
+                self.showImageViewer(event[0]) # open only the first dropped file
+            except Exception as e:
+                self.showErrorMSG(e.args[0])
+            finally:
+                return
+
+        # check if output is set
         if not self.tab_sst_input_checkbox.isChecked():
             if not self.tab_sst_label_out.text():
                 self.showErrorMSG("No output destination specified!")
