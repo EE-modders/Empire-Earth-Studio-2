@@ -54,7 +54,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -1007,7 +1007,7 @@ border-radius: 10;
     <item>
      <widget class="QLabel" name="label_8">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team- EE-modders - v0.1 &lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;BETA&lt;/span&gt; | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team - EE-modders - v0.1 &lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;BETA&lt;/span&gt; | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1083,7 +1083,7 @@ border-radius: 10;
     <string>Open Image Viewer</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+V</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

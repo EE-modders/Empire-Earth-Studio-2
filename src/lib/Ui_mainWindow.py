@@ -465,7 +465,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.MainTabs.setCurrentIndex(2)
+        self.MainTabs.setCurrentIndex(0)
         self.actionExit.triggered.connect(MainWindow.close)
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear)
         self.clear.clicked.connect(self.tab_slc_list.clear)
@@ -523,7 +523,7 @@ class Ui_MainWindow(object):
         self.tab_slc_slice.setText(_translate("MainWindow", "SLICE THAT BABY"))
         self.tab_slc_join.setText(_translate("MainWindow", "JOIN"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab), _translate("MainWindow", "Slicer (SST)"))
-        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Empire Earth Studio II</span> by the Empire Earth: Reborn Team- EE-modders - v0.1 <span style=\" font-weight:600; color:#ff0000;\">BETA</span> | 2020</p></body></html>"))
+        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Empire Earth Studio II</span> by the Empire Earth: Reborn Team - EE-modders - v0.1 <span style=\" font-weight:600; color:#ff0000;\">BETA</span> | 2020</p></body></html>"))
         self.menuAbout.setTitle(_translate("MainWindow", "About"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionAbout_Studio_II.setText(_translate("MainWindow", "About EEStudio II"))
@@ -533,5 +533,5 @@ class Ui_MainWindow(object):
         self.actionExit.setShortcut(_translate("MainWindow", "Ctrl+X"))
         self.actionReport_Issue.setText(_translate("MainWindow", "Report Issue"))
         self.actionOpen_Image_Viewer.setText(_translate("MainWindow", "Open Image Viewer"))
-        self.actionOpen_Image_Viewer.setShortcut(_translate("MainWindow", "Ctrl+V"))
+        self.actionOpen_Image_Viewer.setShortcut(_translate("MainWindow", "Ctrl+O"))
 from .customwidgets import CDropLabel, CDropWidget, CGraphicsView
