@@ -3,6 +3,14 @@ name: Python packager
 on: [push]
 jobs:
 
+delete-artifacts:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: kolpav/purge-artifacts-action@v1
+      with:
+        token: ${{ secrets.ARTIFACT_CLEANER }}
+        expire-in: 0days # Set this to 0 to delete all artifacts
+
   Windows:
     runs-on: windows-latest
 
@@ -55,44 +63,45 @@ jobs:
         path: .\dist\EEStudio2
 
 
-  Linux:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: clone repo
-      uses: actions/checkout@v1
-      with:
-        submodules: 'true'
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pyinstaller
-        pip install PyQt5
-        pip install Pillow
-
-    - name: python version
-      run: python --version
-    - name: pyinstaller version
-      run: pyinstaller --version
-      
-    - name: compile C library "blast"
-      run: gcc -fPIC -shared ./src/lib/SSAtool/src/lib/libblast.c -o ./src/lib/SSAtool/src/lib/libblast.so
-    
-    - name: run EEStudio II directly
-      run: python ./src/EEStudio2.py -v
-      
-    - name: compile EEStudio2
-      run: pyinstaller --add-data "./src/lib/SSAtool/src/lib/libblast.so:." ./src/EEStudio2.py
-
-    - name: run compiled version
-      run: ./dist/EEStudio2/EEStudio2 -v
-
-    - name: save compiled executable
-      uses: actions/upload-artifact@master
-      with:
-        name: SSAtool_linux
-        path: ./dist/EEStudio2
+#  Linux:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - name: clone repo
+#      uses: actions/checkout@v1
+#      with:
+#        submodules: 'true'
+#    - name: Set up Python 3.7
+#      uses: actions/setup-python@v1
+#      with:
+#        python-version: 3.7
+#    - name: Install dependencies
+#      run: |
+#        python -m pip install --upgrade pip
+#        pip install pyinstaller
+#        pip install PyQt5
+#        pip install Pillow
+#
+#    - name: python version
+#      run: python --version
+#    - name: pyinstaller version
+#      run: pyinstaller --version
+#      
+#    - name: compile C library "blast"
+#      run: gcc -fPIC -shared ./src/lib/SSAtool/src/lib/libblast.c -o ./src/lib/SSAtool/src/lib/libblast.so
+#    
+#    - name: run EEStudio II directly
+#      run: python ./src/EEStudio2.py -v
+#      
+#    - name: compile EEStudio2
+#      run: pyinstaller --add-data "./src/lib/SSAtool/src/lib/libblast.so:." ./src/EEStudio2.py
+#
+#    - name: run compiled version
+#      run: ./dist/EEStudio2/EEStudio2 -v
+#
+#    - name: save compiled executable
+#      uses: actions/upload-artifact@master
+#      with:
+#        name: SSAtool_linux
+#        path: ./dist/EEStudio2
+#
