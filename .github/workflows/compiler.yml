@@ -1,6 +1,7 @@
 name: Python packager
 
 on: [push]
+jobs:
 
   Windows:
     runs-on: windows-latest
