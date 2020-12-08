@@ -42,7 +42,7 @@ jobs:
       run: python .\src\EEStudio2.py -v
     
     - name: pyinstaller icon workaround
-      run: copy .\icons\icon128.ico .
+      run: copy .\src\icons\icon128.ico .
 
     - name: compile EEStudio2 standalone
       run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icon128.ico .\src\EEStudio2.py
