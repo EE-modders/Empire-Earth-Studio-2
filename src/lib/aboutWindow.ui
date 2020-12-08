@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>607</width>
+    <width>625</width>
     <height>178</height>
    </rect>
   </property>
@@ -18,6 +18,10 @@
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="mainWindowAssets.qrc">
+    <normaloff>:/icons/assets/icon128.png</normaloff>:/icons/assets/icon128.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
@@ -46,20 +50,36 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empire Earth Studio II - v0.1 &lt;span style=&quot; color:#ff0000;&quot;&gt;BETA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;made by zocker_160 from the &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; team&lt;/p&gt;&lt;p&gt;licensed under GPLv3 | 2020&lt;/p&gt;&lt;p&gt;source code can be found: &lt;a href=&quot;https://github.com/EE-modders/Empire-Earth-Studio-2&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders/Empire-Earth-Studio-2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="mainWindowAssets.qrc">:/icons/assets/icon128.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empire Earth Studio II - v0.1 &lt;span style=&quot; color:#ff0000;&quot;&gt;BETA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;made by zocker_160 from the &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; team&lt;/p&gt;&lt;p&gt;licensed under GPLv3 | 2020&lt;/p&gt;&lt;p&gt;source code: &lt;a href=&quot;https://github.com/EE-modders/Empire-Earth-Studio-2&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders/Empire-Earth-Studio-2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="textInteractionFlags">
+        <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="mainWindowAssets.qrc"/>
+ </resources>
  <connections/>
 </ui>

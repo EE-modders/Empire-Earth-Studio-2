@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
-    <height>655</height>
+    <width>777</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,6 +27,10 @@
   </property>
   <property name="windowTitle">
    <string>Empire Earth Studio II - BETA</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="mainWindowAssets.qrc">
+    <normaloff>:/icons/assets/icon128.png</normaloff>:/icons/assets/icon128.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -1024,7 +1028,7 @@ border-radius: 10;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>772</width>
+     <width>777</width>
      <height>34</height>
     </rect>
    </property>
@@ -1107,7 +1111,9 @@ border-radius: 10;
    <header>.customwidgets</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="mainWindowAssets.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>
