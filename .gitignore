@@ -5,3 +5,5 @@
 testing
 src/__pycache__
 src/lib/__pycache__
+
+src/assets/
