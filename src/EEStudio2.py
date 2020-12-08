@@ -9,6 +9,7 @@ Created on 10.11.2020 22:17 CET
 """
 
 from typing import List
+
 from lib.SSTtool.src.lib.SST import SST
 import os
 import sys
@@ -69,6 +70,11 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
         elif self.currImageIndex <= 1:
             self.view_prevTile.setEnabled(False)
             self.view_nextTile.setEnabled(True)
+        
+        # disable all buttons, when image has only one tile
+        if len(self.images) == 1:
+            self.view_prevTile.setEnabled(False)
+            self.view_nextTile.setEnabled(False)
 
     def nextIndex(self):
         if self.currImageIndex + 1 <= len(self.images):

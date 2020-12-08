@@ -166,6 +166,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="view_prevTile">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -201,6 +204,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="view_nextTile">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
