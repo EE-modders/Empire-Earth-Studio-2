@@ -13,6 +13,7 @@ from typing import List
 from lib.SSTtool.src.lib.SST import SST
 import os
 import sys
+import webbrowser
 from io import BytesIO
 from PIL import Image
 from PyQt5.QtGui import QPixmap, QWindow
@@ -20,11 +21,18 @@ from PyQt5.QtWidgets import QAction, QApplication, QDialog, QErrorMessage, QFile
 
 #import qdarkstyle
 
-from lib import Ui_mainWindow, Ui_viewerWindow
+from lib import Ui_mainWindow, Ui_viewerWindow, Ui_aboutWindow
 
 from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
+
+class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
+    def __init__(self, parent) -> None:
+        super().__init__(parent)
+
+        self.setupUi(self)
+
 
 class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
     def __init__(self, parent, images: list, filename: str = "") -> None:
@@ -92,6 +100,8 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
         else:
             self._checkButtons()
 
+
+
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self) -> None:
         super().__init__()
@@ -105,6 +115,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     def initGUIControls(self):
         self.actionOpen_Image_Viewer.triggered.connect(self.showImageViewer)
+        self.actionReport_Issue.triggered.connect(self.showReportIssue)
+        self.actionHelp_from_GitHUb.triggered.connect(self.showHelp)
+        self.actionAbout_Studio_II.triggered.connect(self.showAbout)
 
         self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
@@ -133,7 +146,14 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         #self.testbutton.clicked.connect(self.clickedTestButton)
 
+    ### menu actions
+    def showHelp(self):
+        webbrowser.open_new("https://github.com/EE-modders/Empire-Earth-Studio-2")
 
+    def showReportIssue(self):
+        webbrowser.open_new("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
+
+    ### windows
     def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
@@ -188,6 +208,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         Viewer = ViewerWindow(self, images=imageList, filename=os.path.basename(imagepath))
         Viewer.show()
+
+    def showAbout(self):
+        About = AboutWindow(self)
+        About.show()
 
     ### SSA
     def SSAcheckButton(self):
