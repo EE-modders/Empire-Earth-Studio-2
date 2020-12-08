@@ -41,11 +41,14 @@ jobs:
     - name: run EEStudio II directly
       run: python .\src\EEStudio2.py -v
     
+    - name: pyinstaller icon workaround
+      run: copy .\icons\icon128.ico .
+
     - name: compile EEStudio2 standalone
-      run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icons\icon128.ico .\src\EEStudio2.py
+      run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icon128.ico .\src\EEStudio2.py
       
     - name: compile EEStudio2 for installer
-      run: pyinstaller --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icons\icon128.ico .\src\EEStudio2.py
+      run: pyinstaller --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icon128.ico .\src\EEStudio2.py
 
     - name: run compiled version
       run: .\dist\EEStudio2.exe -v
