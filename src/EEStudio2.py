@@ -160,7 +160,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             return False
 
-    def showImageViewer(self, imagepath: str = None):
+    def showImageViewer(self, imagepath: str):
         # check if file tye is SST
         if imagepath:
             imageList = list()
@@ -177,6 +177,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             else:
                 imageList.append( Image.open(imagepath) )
         else:
+            imagepath = ""
             imageList = None
 
         Viewer = ViewerWindow(self, images=imageList, filename=os.path.basename(imagepath))
