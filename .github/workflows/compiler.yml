@@ -56,13 +56,13 @@ jobs:
     - name: save compiled executable
       uses: actions/upload-artifact@master
       with:
-        name: SSAtool_windows
+        name: EEStudioII_windows
         path: .\dist\EEStudio2.exe
 
     - name: save compiled executable
       uses: actions/upload-artifact@master
       with:
-        name: SSAtool_windows_forInstaller
+        name: EEStudioII_windows_forInstaller
         path: .\dist\EEStudio2
 
 
@@ -105,6 +105,6 @@ jobs:
 #    - name: save compiled executable
 #      uses: actions/upload-artifact@master
 #      with:
-#        name: SSAtool_linux
+#        name: EEStudioII_linux
 #        path: ./dist/EEStudio2
 #
