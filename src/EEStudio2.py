@@ -16,7 +16,7 @@ import sys
 import webbrowser
 from io import BytesIO
 from PIL import Image
-from PyQt5.QtGui import QPixmap, QWindow
+from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent, QPixmap, QWindow
 from PyQt5.QtWidgets import QAction, QApplication, QDialog, QErrorMessage, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox, QStyledItemDelegate
 
 #import qdarkstyle
@@ -39,14 +39,19 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
         super().__init__(parent)
 
         self.setupUi(self)
-        self.view_label_filename.setText(filename)
         self.view_nextTile.clicked.connect(self.nextIndex)
         self.view_prevTile.clicked.connect(self.prevIndex)
 
         self.currImageIndex = 0
         self.images = images
 
+        self.initImage(images, filename)
+
+    def initImage(self, images: list, filename: str):
+        self.view_label_filename.setText(filename)
+
         if images:
+            self.images = images
             self.showImage(images[0]) # show the first tile of the image list
             self.currImageIndex = 1
             self._setIndexLabel()
@@ -59,6 +64,43 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
         self.view_image_alpha.setImage(image.split()[-1])
 
         self._setResLabel(image)
+
+
+    ### mouse move and drop events
+    def dragEnterEvent(self, a0: QDragEnterEvent) -> None:
+        if a0.mimeData().hasUrls():
+            a0.accept()
+
+    def dragMoveEvent(self, a0: QDragMoveEvent) -> None:
+        a0.accept()
+
+    def dropEvent(self, a0: QDropEvent) -> None:
+        files = [u.toLocalFile() for u in a0.mimeData().urls()]
+        imagepath = files[0]
+
+        # check if file tye is SST
+        if imagepath:
+            imageList = list()
+            if imagepath.endswith("sst"):
+                SSText = SST()
+                SSText.read_from_file(imagepath)
+                imageData = SSText.unpack()
+                imageTiles = imageData.get_Image_parts()
+
+                for img in imageTiles:
+                    if isinstance(img, tuple):
+                        self.showErrorMSG("ERROR: SST Images from EE BETA are not supported in the viewer!")
+                        return
+                    imageList.append( Image.open(BytesIO(img)) )
+            else:
+                imageList.append( Image.open(imagepath) )
+        else:
+            imagepath = ""
+            imageList = None
+
+        self.initImage(images=imageList, filename=os.path.basename(imagepath))
+
+    ###
 
     def _setResLabel(self, image):
         xRes, yRes = image.width, image.height
@@ -101,6 +143,13 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
             self._checkButtons()
 
 
+    def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText(msg_str)
+        msg.setWindowTitle(title_msg)
+        msg.setDefaultButton(QMessageBox.Close)
+        msg.exec_()
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self) -> None:
