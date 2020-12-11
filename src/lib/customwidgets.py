@@ -87,3 +87,4 @@ class CImageLabel(QtWidgets.QLabel):
         LabelImage = QtGui.QPixmap.fromImage( ImageQt.ImageQt(image) )
         self.LabelImage.append(LabelImage)
         self.setPixmap(LabelImage)
+        self.resizeEvent(None)
