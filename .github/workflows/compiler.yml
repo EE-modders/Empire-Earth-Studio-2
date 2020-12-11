@@ -54,7 +54,7 @@ jobs:
       run: .\dist\EEStudio2.exe -v
 
     - name: rename portable exe
-      run: rename .\dist\EEStudio2.exe .\dist\EEStudioII-Portable.exe
+      run: ren .\dist\EEStudio2.exe .\dist\EEStudioII-Portable.exe
 
     - name: save portable exe
       uses: actions/upload-artifact@master
