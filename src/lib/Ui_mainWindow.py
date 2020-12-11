@@ -469,7 +469,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.MainTabs.setCurrentIndex(2)
+        self.MainTabs.setCurrentIndex(0)
         self.actionExit.triggered.connect(MainWindow.close)
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear)
         self.clear.clicked.connect(self.tab_slc_list.clear)
