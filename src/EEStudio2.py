@@ -8,7 +8,6 @@ Created on 10.11.2020 22:17 CET
 @author: zocker_160
 """
 
-from lib.SSTtool.src.lib.SST import SST
 import os
 import sys
 import webbrowser
@@ -21,6 +20,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QGraphicsScene, 
 
 from lib import Ui_mainWindow, Ui_viewerWindow, Ui_aboutWindow
 
+from lib.SSTtool.src.lib.SST import SST
 from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
