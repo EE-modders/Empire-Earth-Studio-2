@@ -125,11 +125,14 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
 
     def _checkButtons(self):
         # check buttons
-        if self.currImageIndex >= len(self.images):
+        if self.currImageIndex == 1:
+            self.view_prevTile.setEnabled(False)
+            self.view_nextTile.setEnabled(True)
+        elif self.currImageIndex == len(self.images):
             self.view_prevTile.setEnabled(True)
             self.view_nextTile.setEnabled(False)
-        elif self.currImageIndex <= 1:
-            self.view_prevTile.setEnabled(False)
+        else:
+            self.view_prevTile.setEnabled(True)
             self.view_nextTile.setEnabled(True)
         
         # disable all buttons, when image has only one tile
