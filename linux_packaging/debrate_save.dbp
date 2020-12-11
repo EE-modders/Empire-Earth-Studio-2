@@ -15,17 +15,17 @@ Description: Tool for modding Empire Earth
 <</CTRL>>
 <<FILES>>
 1
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/EEStudio2.py* -> EEStudio2.py -> /usr/lib/EEStudio2
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_aboutWindow.py* -> Ui_aboutWindow.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_mainWindow.py* -> Ui_mainWindow.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_viewerWindow.py* -> Ui_viewerWindow.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/__init__.py* -> __init__.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/customwidgets.py* -> customwidgets.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/mainWindowAssets_rc.py* -> mainWindowAssets_rc.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSAtool -> SSAtool -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTslicer -> SSTslicer -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTtool -> SSTtool -> /usr/lib/EEStudio2/lib
 /media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/linux_packaging/deb/icons -> icons -> /usr/share
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTtool -> SSTtool -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTslicer -> SSTslicer -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSAtool -> SSAtool -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/mainWindowAssets_rc.py* -> mainWindowAssets_rc.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/customwidgets.py* -> customwidgets.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/__init__.py* -> __init__.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_viewerWindow.py* -> Ui_viewerWindow.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_mainWindow.py* -> Ui_mainWindow.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_aboutWindow.py* -> Ui_aboutWindow.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/EEStudio2.py* -> EEStudio2.py -> /usr/lib/EEStudio2
 <</FILES>>
 <<SCRIPTS>>
 <<PREINST>>
