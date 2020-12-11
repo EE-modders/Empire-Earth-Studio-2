@@ -405,6 +405,16 @@ border-radius: 10;
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;you can also view images with:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;File &amp;gt; Open Image Viewer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -889,32 +899,8 @@ border-radius: 10;
          </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>options:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>I have no fucking idea which options to put, so there are none</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="tab_slc_select_out">
             <property name="maximumSize">
              <size>
@@ -927,20 +913,7 @@ border-radius: 10;
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="tab_slc_select_in">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Select SST / TGA</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
+          <item row="1" column="1">
            <widget class="CDropLabel" name="tab_slc_label_in">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
@@ -959,13 +932,43 @@ border-radius: 10;
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <widget class="QLabel" name="tab_slc_label_out">
             <property name="text">
              <string/>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="tab_slc_select_in">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Select SST / TGA</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>options:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>(there are no options for now)</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -985,7 +988,7 @@ border-radius: 10;
              </size>
             </property>
             <property name="text">
-             <string>SLICE THAT BABY</string>
+             <string>SLICE</string>
             </property>
            </widget>
           </item>
