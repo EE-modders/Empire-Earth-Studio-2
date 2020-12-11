@@ -53,7 +53,7 @@ jobs:
     - name: run compiled version
       run: .\dist\EEStudio2.exe -v
 
-    - name: "rename" portable exe
+    - name: rename portable exe
       run: copy .\dist\EEStudio2.exe .\dist\EEStudioII-Portable.exe
 
     - name: save portable exe
