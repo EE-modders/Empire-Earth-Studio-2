@@ -33,5 +33,3 @@ If you find any bug or if you want to request a new feature, please feel free to
 
 - [create a new issue](https://github.com/EE-modders/Empire-Earth-Studio-2/issues) on GitHub or
 - join our [Empire Earth: Reborn Discord](https://discord.gg/BjUXbFB) server
-
-<iframe src="https://discord.com/widget?id=614154073759023104&theme=dark" width="350" height="350" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
