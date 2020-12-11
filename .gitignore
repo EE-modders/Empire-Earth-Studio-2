@@ -1,6 +1,7 @@
 .directory 
 
 *.ssa
+*.vscode
 
 testing
 src/__pycache__
