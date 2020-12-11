@@ -56,6 +56,12 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
             self.view_label_filename.setText("DRAG & DROP the image!")
 
         if images:
+            # convert 24bit images to 32bit (weird bugs otherwise)
+            for i, img in enumerate(images):
+                if img.mode == "RGB":
+                    a_channel = Image.new('L', img.size, 255)
+                    images[i].putalpha(a_channel)
+
             self.images = images
             self.showImage(images[0]) # show the first tile of the image list
             self.currImageIndex = 1
