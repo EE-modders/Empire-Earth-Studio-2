@@ -1,0 +1,4 @@
+#! /bin/bash -e
+
+ln -fs "/usr/lib/SSTviewer/SSTviewer.py" "/usr/bin/SSTviewer"
+python3 -m compileall /usr/lib/SSTviewer

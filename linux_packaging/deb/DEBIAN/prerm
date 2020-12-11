@@ -1,0 +1,5 @@
+#! /bin/bash -e
+
+rm -f "/usr/bin/SSTviewer"
+find /usr/lib/SSTviewer -type f -iname \*.pyc -delete
+find /usr/lib/SSTviewer -type d -iname __pycache__ -delete
