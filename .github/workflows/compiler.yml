@@ -53,11 +53,14 @@ jobs:
     - name: run compiled version
       run: .\dist\EEStudio2.exe -v
 
+    - name: rename portable exe
+      run: rename .\dist\EEStudio2.exe .\dist\EEStudioII-Portable.exe
+
     - name: save portable exe
       uses: actions/upload-artifact@master
       with:
         name: EEStudioII_windows
-        path: .\dist\EEStudio2.exe
+        path: .\dist\EEStudioII-Portable.exe
 
     - name: save installer data
       uses: actions/upload-artifact@master
@@ -66,7 +69,7 @@ jobs:
         path: .\dist\EEStudio2
 
 
-#  Linux:
+#  Linux-standalone:
 #    runs-on: ubuntu-latest
 #
 #    steps:
