@@ -53,13 +53,13 @@ jobs:
     - name: run compiled version
       run: .\dist\EEStudio2.exe -v
 
-    - name: save compiled executable
+    - name: save portable exe
       uses: actions/upload-artifact@master
       with:
         name: EEStudioII_windows
         path: .\dist\EEStudio2.exe
 
-    - name: save compiled executable
+    - name: save installer data
       uses: actions/upload-artifact@master
       with:
         name: EEStudioII_windows_forInstaller
