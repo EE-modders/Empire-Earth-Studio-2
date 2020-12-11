@@ -27,12 +27,16 @@ from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
+VERSION = "v0.2"
+PLACEHOLDER_STR = "$$$"
+
 class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
     def __init__(self, parent) -> None:
         super().__init__(parent)
 
         self.setupUi(self)
 
+        self.about_maintext.setText( self.about_maintext.text().replace(PLACEHOLDER_STR, VERSION) )
 
 class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
     def __init__(self, parent, images: list, filename: str = "") -> None:
@@ -164,6 +168,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.setupUi(self)
         self.initGUIControls()
         self.SLCupdateGridview()
+        self.main_infotext.setText( self.main_infotext.text().replace(PLACEHOLDER_STR, VERSION) )
 
     def initGUIControls(self):
         self.actionOpen_Image_Viewer.triggered.connect(self.showImageViewer)

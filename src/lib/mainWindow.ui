@@ -1012,9 +1012,9 @@ border-radius: 10;
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_8">
+     <widget class="QLabel" name="main_infotext">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team - EE-modders - v0.1 &lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;BETA&lt;/span&gt; | GPLv3 | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team - EE-modders - $$$ | GPLv3 | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
