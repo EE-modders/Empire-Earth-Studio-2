@@ -48,7 +48,10 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
         self.initImage(images, filename)
 
     def initImage(self, images: list, filename: str):
-        self.view_label_filename.setText(filename)
+        if filename:
+            self.view_label_filename.setText(filename)
+        else:
+            self.view_label_filename.setText("DRAG & DROP the image!")
 
         if images:
             self.images = images
@@ -251,11 +254,12 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                     imageList.append( Image.open(BytesIO(img)) )
             else:
                 imageList.append( Image.open(imagepath) )
+            filename = os.path.basename(imagepath)
         else:
-            imagepath = ""
+            filename = ""
             imageList = None
 
-        Viewer = ViewerWindow(self, images=imageList, filename=os.path.basename(imagepath))
+        Viewer = ViewerWindow(self, images=imageList, filename=filename)
         Viewer.show()
 
     def showAbout(self):
