@@ -200,10 +200,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     ### menu actions
     def showHelp(self):
-        webbrowser.open_new("https://github.com/EE-modders/Empire-Earth-Studio-2")
+        webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2")
 
     def showReportIssue(self):
-        webbrowser.open_new("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
+        webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
 
     ### windows
     def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
