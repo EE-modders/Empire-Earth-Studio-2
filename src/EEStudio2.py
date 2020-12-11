@@ -8,16 +8,14 @@ Created on 10.11.2020 22:17 CET
 @author: zocker_160
 """
 
-from typing import List
-
 from lib.SSTtool.src.lib.SST import SST
 import os
 import sys
 import webbrowser
 from io import BytesIO
 from PIL import Image
-from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent, QPixmap, QWindow
-from PyQt5.QtWidgets import QAction, QApplication, QDialog, QErrorMessage, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox, QStyledItemDelegate
+from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent
+from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox
 
 #import qdarkstyle
 
