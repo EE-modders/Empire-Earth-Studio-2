@@ -110,4 +110,3 @@ jobs:
       with:
         name: EEStudioII_linux
         path: ./dist/EEStudio2
-<
