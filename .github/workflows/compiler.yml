@@ -108,5 +108,5 @@ jobs:
     - name: save compiled executable
       uses: actions/upload-artifact@master
       with:
-        name: EEStudioII_linux
+        name: EEStudioII_Linux_Portable
         path: ./dist/EEStudio2
