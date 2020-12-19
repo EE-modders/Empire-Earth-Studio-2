@@ -150,9 +150,6 @@
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
              <item row="0" column="1">
               <widget class="QLabel" name="tab_ssa_label_in">
                <property name="sizePolicy">
@@ -262,17 +259,38 @@
             </layout>
            </item>
            <item>
-            <widget class="QCheckBox" name="tab_ssa_decompress">
-             <property name="text">
-              <string>decompress</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-             <property name="tristate">
-              <bool>false</bool>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>options:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="tab_ssa_decompress">
+               <property name="text">
+                <string>decompress</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+               <property name="tristate">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="tab_ssa_kyrillicencode">
+               <property name="toolTip">
+                <string>check this for Russian files</string>
+               </property>
+               <property name="text">
+                <string>use CP1251 encoding</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QPushButton" name="tab_ssa_unpack">
@@ -544,7 +562,7 @@ border-radius: 10;
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_slicer">
        <attribute name="title">
         <string>Slicer (SST)</string>
        </attribute>

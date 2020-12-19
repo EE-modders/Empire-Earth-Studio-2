@@ -25,7 +25,7 @@ from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
-VERSION = "v0.2"
+VERSION = "v0.2.1"
 PLACEHOLDER_STR = "$$$"
 
 class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
@@ -302,7 +302,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         # add file list to listWidget
         try:
-            filelist = SSAtool.getFileList(filepath)
+            if self.tab_ssa_kyrillicencode.isChecked():
+                filelist = SSAtool.getFileList(filepath, encoding="CP1251")
+            else:
+                filelist = SSAtool.getFileList(filepath)
             #print(filelist)
         except ImportError as e:
             self.showErrorMSG(e.args[0])
@@ -331,11 +334,17 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.SSAcheckButton()
 
     def SSAconvert(self):
+        if self.tab_ssa_kyrillicencode.isChecked():
+            encoding = "CP1251"
+        else:
+            encoding = None
+
         SSAtool.main(
             inputfile=self.tab_ssa_label_in.text(),
             outputfolder=self.tab_ssa_label_out.text(),
             decompress=self.tab_ssa_decompress.isChecked(),
-            log=False
+            log=False,
+            encoding=encoding
         )
         self.showInfoMSG("Done!")
         #self.tab_ssa_label_clear.click()
