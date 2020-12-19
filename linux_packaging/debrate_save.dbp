@@ -1,7 +1,7 @@
 [DEBREATE-0.7.13]
 <<CTRL>>
 Package: EE-Studio-II
-Version: 0.2
+Version: 0.2.1
 Maintainer: zocker_160 <zocker1600@posteo.net>
 Section: Utility
 Homepage: https://github.com/EE-modders/Empire-Earth-Studio-2
@@ -15,17 +15,17 @@ Description: Tool for modding Empire Earth
 <</CTRL>>
 <<FILES>>
 1
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/linux_packaging/deb/icons -> icons -> /usr/share
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTtool -> SSTtool -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTslicer -> SSTslicer -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSAtool -> SSAtool -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/mainWindowAssets_rc.py* -> mainWindowAssets_rc.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/customwidgets.py* -> customwidgets.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/__init__.py* -> __init__.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_viewerWindow.py* -> Ui_viewerWindow.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_mainWindow.py* -> Ui_mainWindow.py -> /usr/lib/EEStudio2/lib
-/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_aboutWindow.py* -> Ui_aboutWindow.py -> /usr/lib/EEStudio2/lib
 /media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/EEStudio2.py* -> EEStudio2.py -> /usr/lib/EEStudio2
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_aboutWindow.py* -> Ui_aboutWindow.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_mainWindow.py* -> Ui_mainWindow.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/Ui_viewerWindow.py* -> Ui_viewerWindow.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/__init__.py* -> __init__.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/customwidgets.py* -> customwidgets.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/mainWindowAssets_rc.py* -> mainWindowAssets_rc.py -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSAtool -> SSAtool -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTslicer -> SSTslicer -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/lib/SSTtool -> SSTtool -> /usr/lib/EEStudio2/lib
+/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/linux_packaging/deb/icons -> icons -> /usr/share
 <</FILES>>
 <<SCRIPTS>>
 <<PREINST>>
@@ -59,6 +59,13 @@ find /usr/lib/EEStudio2 -type d -iname __pycache__ -delete
 <</SCRIPTS>>
 <<CHANGELOG>>
 <<DEST>>DEFAULT<</DEST>>
+EE-Studio-II (0.2.1) ; urgency=low
+
+  * add support for Russian SSA files
+
+ -- zocker_160 <zocker1600@posteo.net>  Sat, 19 Dec 2020 23:44:39 +0100
+
+
 EE-Studio-II (v0.2) focal; urgency=low
 
   * first public release
