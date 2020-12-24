@@ -339,13 +339,18 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             encoding = None
 
-        SSAtool.main(
-            inputfile=self.tab_ssa_label_in.text(),
-            outputfolder=self.tab_ssa_label_out.text(),
-            decompress=self.tab_ssa_decompress.isChecked(),
-            log=False,
-            encoding=encoding
-        )
+        try:
+            SSAtool.main(
+                inputfile=self.tab_ssa_label_in.text(),
+                outputfolder=self.tab_ssa_label_out.text(),
+                decompress=self.tab_ssa_decompress.isChecked(),
+                log=False,
+                encoding=encoding
+            )
+        except Exception as e:
+            self.showErrorMSG(e.args[0])
+            return
+            
         self.showInfoMSG("Done!")
         #self.tab_ssa_label_clear.click()
 
