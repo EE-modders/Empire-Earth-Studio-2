@@ -218,10 +218,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
 
     ### windows
-    def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
+    def showErrorMSG(self, msg_str, title_msg="ERROR"):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
-        msg.setText(msg_str)
+        msg.setText(str(msg_str))
         msg.setWindowTitle(title_msg)
         msg.setDefaultButton(QMessageBox.Close)
         msg.exec_()
@@ -350,7 +350,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         except Exception as e:
             self.showErrorMSG(e.args[0])
             return
-            
+
         self.showInfoMSG("Done!")
         #self.tab_ssa_label_clear.click()
 
