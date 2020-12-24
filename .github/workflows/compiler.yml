@@ -36,21 +36,21 @@ jobs:
       run: pyinstaller --version
       
     - name: compile C library "blast"
-      run: gcc -fPIC -shared .\src\lib\SSAtool\src\lib\libblast.c -o .\src\lib\SSAtool\src\lib\libblast.dll
+      run: gcc -fPIC -shared .\src\lib\SSAtool\src\lib\blast_args.c -o .\src\lib\SSAtool\src\lib\blast_args.exe
     
-    - name: run EEStudio II directly
+    - name: run source EEStudio II
       run: python .\src\EEStudio2.py -v
     
     - name: pyinstaller icon workaround
       run: copy .\src\icons\icon128.ico .
 
-    - name: compile EEStudio2 standalone
-      run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icon128.ico .\src\EEStudio2.py
+    - name: pack EEStudio2 standalone
+      run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\blast_args.exe;." --icon=icon128.ico .\src\EEStudio2.py
       
-    - name: compile EEStudio2 for installer
-      run: pyinstaller --add-data ".\src\lib\SSAtool\src\lib\libblast.dll;." --icon=icon128.ico .\src\EEStudio2.py
+    - name: pack EEStudio2 for installer
+      run: pyinstaller --add-data ".\src\lib\SSAtool\src\lib\blast_args.exe;." --icon=icon128.ico .\src\EEStudio2.py
 
-    - name: run compiled version
+    - name: run packed version
       run: .\dist\EEStudio2.exe -v
 
     - name: rename portable exe
@@ -87,25 +87,30 @@ jobs:
         pip install pyinstaller
         pip install PyQt5
         pip install Pillow
+        pip install cython
 
     - name: python version
       run: python --version
     - name: pyinstaller version
       run: pyinstaller --version
       
-    - name: compile C library "blast"
-      run: gcc -fPIC -shared ./src/lib/SSAtool/src/lib/libblast.c -o ./src/lib/SSAtool/src/lib/libblast.so
+
+    - name: Setup C++ environment
+      uses: kurocha/setup-cpp@v1
+
+    - name: compile C module "blast"
+      run: cd ./src/lib/SSAtool/src/lib/ && python dclgen.py build_ext --inplace
     
-    - name: run EEStudio II directly
+    - name: run source EEStudio II
       run: python ./src/EEStudio2.py -v
       
-    - name: compile EEStudio2
-      run: pyinstaller --add-data "./src/lib/SSAtool/src/lib/libblast.so:." ./src/EEStudio2.py
+    - name: pack EEStudio2
+      run: pyinstaller --add-data "./src/lib/SSAtool/src/lib/cdcl.so:." ./src/EEStudio2.py
 
-    - name: run compiled version
+    - name: run packed version
       run: ./dist/EEStudio2/EEStudio2 -v
 
-    - name: save compiled executable
+    - name: save packed executable
       uses: actions/upload-artifact@master
       with:
         name: EEStudioII_Linux_Portable
