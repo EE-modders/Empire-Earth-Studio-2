@@ -36,7 +36,7 @@ jobs:
       run: pyinstaller --version
       
     - name: compile C library "blast"
-      run: gcc -fPIC -shared .\src\lib\SSAtool\src\lib\blast_args.c -o .\src\lib\SSAtool\src\lib\blast_args.exe
+      run: gcc .\src\lib\SSAtool\src\lib\blast_args.c -o .\src\lib\SSAtool\src\lib\blast_args.exe
     
     - name: run source EEStudio II
       run: python .\src\EEStudio2.py -v
