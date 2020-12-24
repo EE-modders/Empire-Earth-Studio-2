@@ -101,6 +101,9 @@ jobs:
     - name: compile C module "blast"
       run: cd ./src/lib/SSAtool/src/lib/ && python dclgen.py build_ext --inplace
     
+    - name: rename C module
+      run: mv ./src/lib/SSAtool/src/lib/cdcl* ./src/lib/SSAtool/src/lib/cdcl.so
+
     - name: run source EEStudio II
       run: python ./src/EEStudio2.py -v
       
