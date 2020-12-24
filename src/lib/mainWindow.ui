@@ -261,13 +261,6 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>options:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QCheckBox" name="tab_ssa_decompress">
                <property name="text">
                 <string>decompress</string>
