@@ -414,7 +414,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             selection = "2"
 
-            if bundling:
+            if bundling and len(filelist) > 1:
                 _msg = "Following files will get bundeled into one SST\n"
                 _msg += "please confirm this order:\n\n"
 
