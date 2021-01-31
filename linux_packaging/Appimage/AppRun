@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+
+$APPDIR/usr/lib/EEStudioII/EEStudio2 $@
