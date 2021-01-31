@@ -2,6 +2,7 @@
 
 *.ssa
 *.vscode
+*.appimage
 
 testing
 src/__pycache__
