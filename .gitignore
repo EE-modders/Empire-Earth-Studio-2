@@ -3,6 +3,7 @@
 *.ssa
 *.vscode
 *.appimage
+*.AppImage
 
 testing
 src/__pycache__
@@ -10,3 +11,5 @@ src/lib/__pycache__
 
 src/assets/
 src/venv
+
+linux_packaging/Appimage/usr/lib
