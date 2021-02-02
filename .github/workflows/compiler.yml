@@ -134,11 +134,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install appimage-builder
         pip install PyQt5
         pip install Pillow
         pip install cython
-
+        
     - name: python version
       run: python --version
     
@@ -154,10 +153,13 @@ jobs:
     - name: run source EEStudio II
       run: python ./src/EEStudio2.py -v
       
-    - name: create AppImage
-      run: |
-        cp ./linux_packaging/AppImageBuilder.yml .
-        appimage-builder --skip-test
+    - name: prepare AppImage build script
+      run: cp ./linux_packaging/AppImageBuilder.yml .
+
+    - name: Build AppImage
+      uses: AppImageCrafters/build-appimage@v1
+      with:
+        recipe: ./AppImageBuilder.yml
 
     - name: save AppImage
       uses: actions/upload-artifact@master
