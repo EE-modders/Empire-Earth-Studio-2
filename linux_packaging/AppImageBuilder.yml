@@ -72,4 +72,6 @@ AppDir:
       use_host_x: false
 
 AppImage:
+  update-information: None
+  sign-key: None
   arch: x86_64
