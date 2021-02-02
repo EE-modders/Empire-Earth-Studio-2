@@ -157,7 +157,7 @@ jobs:
     - name: create AppImage
       run: |
         cp ./linux_packaging/AppImageBuilder.yml .
-        appimage-builder
+        appimage-builder --skip-test
 
     - name: save AppImage
       uses: actions/upload-artifact@master
