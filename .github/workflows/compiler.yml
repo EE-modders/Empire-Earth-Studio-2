@@ -139,13 +139,13 @@ jobs:
         pip install Pillow
         pip install cython
 
-        python3-setuptools
-        patchelf
-        desktop-file-utils
-        libgdk-pixbuf2.0-dev
-        fakeroot
-        strace
-        wget
+        apt install -y python3-setuptools \
+          patchelf \
+          desktop-file-utils \
+          libgdk-pixbuf2.0-dev \
+          fakeroot \
+          strace \
+          wget
 
     - name: install appimagetool
       run: |
