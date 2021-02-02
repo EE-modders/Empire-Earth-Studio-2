@@ -143,8 +143,8 @@ jobs:
 
     - name: install appimagetool
       run: |
-        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
-        chmod +x /usr/local/bin/appimagetool
+        sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool        chmod +x /usr/local/bin/appimagetool
+        sudo chmod +x /usr/local/bin/appimagetool
 
     - name: python version
       run: python --version
