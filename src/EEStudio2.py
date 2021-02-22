@@ -566,6 +566,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.tab_slc_label_in.setText(f"{len(files)} file(s) imported")
 
+        # move vertical scroll bar all the way to the right
+        #self.tab_slc_list.horizontalScrollBar().maximum()
+        #self.tab_slc_list.verticalScrollBar().maximum()
+        #self.tab_slc_list.horizontalScrollBar().setValue(self.tab_slc_list.horizontalScrollBar())
+
     def SLCinSelector(self):
         dlg = QFileDialog.getOpenFileNames(
             self,
