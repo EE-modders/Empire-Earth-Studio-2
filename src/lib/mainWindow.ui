@@ -1034,7 +1034,7 @@ border-radius: 10;
     <item>
      <widget class="QLabel" name="main_infotext">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by the Empire Earth: Reborn Team - EE-modders - $$$ | GPLv3 | 2020&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by zocker_160 from &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; - $$$ | GPLv3 | 2020 - 2021&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

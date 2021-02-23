@@ -64,7 +64,7 @@
      <item>
       <widget class="QLabel" name="about_maintext">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empire Earth Studio II - $$$&lt;/p&gt;&lt;p&gt;made by zocker_160 from the &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; team&lt;/p&gt;&lt;p&gt;licensed under GPLv3 | 2020&lt;/p&gt;&lt;p&gt;source code: &lt;a href=&quot;https://github.com/EE-modders/Empire-Earth-Studio-2&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders/Empire-Earth-Studio-2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empire Earth Studio II - $$$&lt;/p&gt;&lt;p&gt;made by zocker_160 from the &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; team&lt;/p&gt;&lt;p&gt;licensed under GPLv3 | 2020 - 2021&lt;/p&gt;&lt;p&gt;source code: &lt;a href=&quot;https://github.com/EE-modders/Empire-Earth-Studio-2&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders/Empire-Earth-Studio-2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
