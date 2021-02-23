@@ -58,7 +58,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -391,7 +391,7 @@ border-radius: 10;
           <item row="1" column="1">
            <widget class="QCheckBox" name="tab_sst_firstonly">
             <property name="text">
-             <string>first resolution only</string>
+             <string>highest resolution only (SST)</string>
             </property>
            </widget>
           </item>
@@ -412,7 +412,7 @@ border-radius: 10;
           <item row="0" column="1">
            <widget class="QCheckBox" name="tab_sst_bundling">
             <property name="text">
-             <string>disable bundling (TGA only)</string>
+             <string>disable bundling (TGA)</string>
             </property>
            </widget>
           </item>
@@ -509,6 +509,9 @@ border-radius: 10;
           </item>
           <item row="4" column="0">
            <widget class="QPushButton" name="tab_sst_select_out">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>220</width>
@@ -531,6 +534,9 @@ border-radius: 10;
            <widget class="QCheckBox" name="tab_sst_input_checkbox">
             <property name="text">
              <string>use input location for output</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
