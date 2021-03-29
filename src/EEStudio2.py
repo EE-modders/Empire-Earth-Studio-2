@@ -25,7 +25,7 @@ from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
-VERSION = "v0.2.4"
+VERSION = "v0.2.5"
 PLACEHOLDER_STR = "$$$"
 
 class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
