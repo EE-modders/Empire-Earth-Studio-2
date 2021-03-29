@@ -625,7 +625,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 outputlocation=self.tab_slc_label_out.text(),
                 filetype=fileType,
                 xTiles=int(self.tab_slc_col_count.text()),
-                yTiles=int(self.tab_slc_row_count.text())
+                yTiles=int(self.tab_slc_row_count.text()),
+                reversed=self.tab_slc_switchCoords.isChecked()
             )
         except Exception as e:
             self.showErrorMSG(e.args[0])
