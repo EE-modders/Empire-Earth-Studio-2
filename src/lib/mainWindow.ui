@@ -850,7 +850,7 @@ border-radius: 10;
                   </size>
                  </property>
                  <property name="text">
-                  <string>3</string>
+                  <string>4</string>
                  </property>
                  <property name="textFormat">
                   <enum>Qt::PlainText</enum>

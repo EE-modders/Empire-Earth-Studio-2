@@ -530,7 +530,7 @@ class Ui_MainWindow(object):
         self.tab_slc_row_count.setText(_translate("MainWindow", "3"))
         self.tab_slc_row_minus.setText(_translate("MainWindow", "-"))
         self.tab_slc_col_minus.setText(_translate("MainWindow", "-"))
-        self.tab_slc_col_count.setText(_translate("MainWindow", "3"))
+        self.tab_slc_col_count.setText(_translate("MainWindow", "4"))
         self.tab_slc_col_plus.setText(_translate("MainWindow", "+"))
         self.tab_slc_select_out.setText(_translate("MainWindow", "Ouput Folder"))
         self.label_9.setText(_translate("MainWindow", "options:"))
