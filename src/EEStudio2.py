@@ -166,8 +166,10 @@ class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
         msg.exec_()
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
-    def __init__(self) -> None:
+    def __init__(self, app: QApplication) -> None:
         super().__init__()
+
+        self.app = app
 
         self.gridMax = 10
         self.gridMin = 2
@@ -182,6 +184,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.actionReport_Issue.triggered.connect(self.showReportIssue)
         self.actionHelp_from_GitHUb.triggered.connect(self.showHelp)
         self.actionAbout_Studio_II.triggered.connect(self.showAbout)
+        self.actionabout_QT.triggered.connect(self.app.aboutQt)
 
         self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
@@ -673,7 +676,7 @@ def main():
     app = QApplication(sys.argv)
     #app.setStyleSheet(qdarkstyle.load_stylesheet())
 
-    main_Window = MainWindow()
+    main_Window = MainWindow(app)
     main_Window.show()
 
     sys.exit(app.exec_())

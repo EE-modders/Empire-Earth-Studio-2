@@ -467,9 +467,12 @@ class Ui_MainWindow(object):
         self.actionReport_Issue.setObjectName("actionReport_Issue")
         self.actionOpen_Image_Viewer = QtWidgets.QAction(MainWindow)
         self.actionOpen_Image_Viewer.setObjectName("actionOpen_Image_Viewer")
+        self.actionabout_QT = QtWidgets.QAction(MainWindow)
+        self.actionabout_QT.setObjectName("actionabout_QT")
         self.menuAbout.addAction(self.actionHelp_from_GitHUb)
         self.menuAbout.addAction(self.actionReport_Issue)
         self.menuAbout.addSeparator()
+        self.menuAbout.addAction(self.actionabout_QT)
         self.menuAbout.addAction(self.actionAbout_Studio_II)
         self.menuFile.addAction(self.actionOpen_Image_Viewer)
         self.menuFile.addSeparator()
@@ -550,5 +553,6 @@ class Ui_MainWindow(object):
         self.actionReport_Issue.setText(_translate("MainWindow", "Report Issue"))
         self.actionOpen_Image_Viewer.setText(_translate("MainWindow", "Open Image Viewer"))
         self.actionOpen_Image_Viewer.setShortcut(_translate("MainWindow", "Ctrl+O"))
+        self.actionabout_QT.setText(_translate("MainWindow", "About QT"))
 from .customwidgets import CDropLabel, CDropWidget, CGraphicsView
 from . import mainWindowAssets_rc

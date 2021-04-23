@@ -1066,6 +1066,7 @@ border-radius: 10;
     <addaction name="actionHelp_from_GitHUb"/>
     <addaction name="actionReport_Issue"/>
     <addaction name="separator"/>
+    <addaction name="actionabout_QT"/>
     <addaction name="actionAbout_Studio_II"/>
    </widget>
    <widget class="QMenu" name="menuFile">
@@ -1112,6 +1113,11 @@ border-radius: 10;
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionabout_QT">
+   <property name="text">
+    <string>About QT</string>
    </property>
   </action>
  </widget>
