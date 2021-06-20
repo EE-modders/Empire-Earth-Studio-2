@@ -286,7 +286,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         if self.tab_ssa_label_in.text() and self.tab_ssa_label_out.text():
             self.tab_ssa_unpack.setEnabled(True)
         else:
-            self.tab_ssa_unpack.setEnabled(False)
+            self.tab_ssa_unpack.setDisabled(True)
 
     def SSAinSelector(self, event):
         # event is not False, when called from CDropWidget
