@@ -124,20 +124,56 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="tab_ssa_label_clear">
-          <property name="maximumSize">
-           <size>
-            <width>75</width>
-            <height>20</height>
-           </size>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="leftMargin">
+           <number>6</number>
           </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(255, 0, 0);</string>
-          </property>
-          <property name="text">
-           <string>clear</string>
-          </property>
-         </widget>
+          <item>
+           <widget class="QPushButton" name="tab_ssa_label_clear">
+            <property name="maximumSize">
+             <size>
+              <width>75</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 0, 0);</string>
+            </property>
+            <property name="text">
+             <string>clear</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="tab_ssa_list_export">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>export list to CSV</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QWidget" name="widget" native="true">
@@ -1165,12 +1201,12 @@ border-radius: 10;
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>71</x>
-     <y>477</y>
+     <x>87</x>
+     <y>396</y>
     </hint>
     <hint type="destinationlabel">
-     <x>464</x>
-     <y>519</y>
+     <x>637</x>
+     <y>440</y>
     </hint>
    </hints>
   </connection>
@@ -1181,12 +1217,12 @@ border-radius: 10;
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>93</x>
-     <y>428</y>
+     <x>114</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
-     <x>54</x>
-     <y>402</y>
+     <x>66</x>
+     <y>360</y>
     </hint>
    </hints>
   </connection>
@@ -1197,12 +1233,12 @@ border-radius: 10;
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>434</y>
+     <x>114</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
-     <x>229</x>
-     <y>516</y>
+     <x>396</x>
+     <y>466</y>
     </hint>
    </hints>
   </connection>
@@ -1213,12 +1249,12 @@ border-radius: 10;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>477</y>
+     <x>74</x>
+     <y>396</y>
     </hint>
     <hint type="destinationlabel">
-     <x>410</x>
-     <y>611</y>
+     <x>426</x>
+     <y>555</y>
     </hint>
    </hints>
   </connection>
@@ -1229,12 +1265,12 @@ border-radius: 10;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>433</y>
+     <x>114</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>606</y>
+     <x>775</x>
+     <y>560</y>
     </hint>
    </hints>
   </connection>
@@ -1245,12 +1281,12 @@ border-radius: 10;
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>73</x>
-     <y>550</y>
+     <x>84</x>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
-     <x>120</x>
-     <y>591</y>
+     <x>131</x>
+     <y>516</y>
     </hint>
    </hints>
   </connection>
@@ -1261,12 +1297,12 @@ border-radius: 10;
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>61</x>
-     <y>477</y>
+     <x>77</x>
+     <y>396</y>
     </hint>
     <hint type="destinationlabel">
-     <x>203</x>
-     <y>393</y>
+     <x>213</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1277,12 +1313,12 @@ border-radius: 10;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>442</y>
+     <x>114</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
-     <x>126</x>
-     <y>606</y>
+     <x>137</x>
+     <y>560</y>
     </hint>
    </hints>
   </connection>
@@ -1293,12 +1329,28 @@ border-radius: 10;
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>172</x>
-     <y>548</y>
+     <x>183</x>
+     <y>480</y>
     </hint>
     <hint type="destinationlabel">
-     <x>339</x>
-     <y>576</y>
+     <x>587</x>
+     <y>516</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_ssa_label_clear</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>tab_ssa_list_export</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>62</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>717</x>
+     <y>387</y>
     </hint>
    </hints>
   </connection>
