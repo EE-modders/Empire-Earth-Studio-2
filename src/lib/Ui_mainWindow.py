@@ -60,6 +60,8 @@ class Ui_MainWindow(object):
         self.tab_ssa_list.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.tab_ssa_list.setAcceptDrops(True)
         self.tab_ssa_list.setDragDropMode(QtWidgets.QAbstractItemView.DragDrop)
+        self.tab_ssa_list.setAlternatingRowColors(True)
+        self.tab_ssa_list.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.tab_ssa_list.setObjectName("tab_ssa_list")
         self.verticalLayout.addWidget(self.tab_ssa_list)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
