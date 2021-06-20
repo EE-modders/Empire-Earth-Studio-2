@@ -187,6 +187,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.actionabout_QT.triggered.connect(self.app.aboutQt)
 
         self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
+        self.tab_ssa_list_export.clicked.connect(self.SSAexportList)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
         self.tab_ssa_unpack.clicked.connect(self.SSAconvert)
@@ -288,6 +289,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             self.tab_ssa_unpack.setDisabled(True)
 
+        if self.tab_ssa_list.count() > 0:
+            self.tab_ssa_list_export.setEnabled(True)
+        else:
+            self.tab_ssa_list_export.setDisabled(True)
+
     def SSAinSelector(self, event):
         # event is not False, when called from CDropWidget
         if not event:
@@ -306,10 +312,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         # add file list to listWidget
         try:
             if self.tab_ssa_kyrillicencode.isChecked():
-                filelist = SSAtool.getFileList(filepath, encoding="CP1251")
+                self.tab_ssa_filelist = SSAtool.getFileList(filepath, encoding="CP1251")
             else:
-                filelist = SSAtool.getFileList(filepath)
-            #print(filelist)
+                self.tab_ssa_filelist = SSAtool.getFileList(filepath)
         except ImportError as e:
             self.showErrorMSG(e.args[0])
             return
@@ -320,7 +325,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         # add files to file list
         self.tab_ssa_list.clear()
-        for file in filelist:
+        for file in self.tab_ssa_filelist:
             self.tab_ssa_list.addItem(file[0])
 
         self.SSAcheckButton()
@@ -357,6 +362,24 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.showInfoMSG("Done!")
         #self.tab_ssa_label_clear.click()
 
+    def SSAexportList(self):
+        if self.tab_ssa_filelist:
+            dlg = QFileDialog.getSaveFileName(
+                self,
+                caption="Save file",
+                filter="CSV files (*.csv)"
+            )
+            if not dlg[0]: return
+            try:
+                with open(dlg[0], "w") as csvfile:
+                    csvfile.write(";".join(["filename", "start offset", "end offset", "size in B"]) + "\n")
+                    for file in self.tab_ssa_filelist:
+                        csvfile.write(";".join( [ str(x) for x in file ] ) + "\n")
+            except Exception as e:
+                self.showErrorMSG(e.args[0])
+                return
+        else:
+            self.showErrorMSG("Could not read filelist, are there any elements?")
 
     ### SST
     def SSTinSelector(self):
