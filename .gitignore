@@ -1,15 +1,18 @@
 .directory 
 
+*.deb
+*.tar.gz
 *.ssa
 *.vscode
 *.appimage
 *.AppImage
+*__pycache__
 
 testing
-src/__pycache__
-src/lib/__pycache__
 
 src/assets/
 src/venv
 
-linux_packaging/Appimage/usr/lib
+linux_packaging/pkg/*
+linux_packaging/src/*
+linux_packaging/EE*
