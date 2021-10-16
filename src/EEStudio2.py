@@ -25,7 +25,7 @@ from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
-VERSION = "v0.2.8"
+VERSION = "v0.2.9"
 PLACEHOLDER_STR = "$$$"
 
 class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
@@ -689,6 +689,13 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     ### CEM
 
+    ### other ui stuff
+    def center(self):
+        qr = self.frameGeometry()
+        qr.moveCenter(
+            self.app.primaryScreen().availableGeometry().center())
+        self.move(qr.topLeft())
+
     ### TEST
     def test(self, event=None):
         print("nice")
@@ -700,6 +707,7 @@ def main():
     #app.setStyleSheet(qdarkstyle.load_stylesheet())
 
     main_Window = MainWindow(app)
+    main_Window.center()
     main_Window.show()
 
     sys.exit(app.exec_())
