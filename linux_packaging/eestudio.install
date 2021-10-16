@@ -1,17 +1,15 @@
  
-pre_install() {
-    pip3 install --upgrade pip
-    pip3 install --upgrade Pillow
-    pip3 install --upgrade cython
-}
+#pre_install() {
+    #pip3 install --upgrade pip
+    #pip3 install --upgrade Pillow
+    #pip3 install --upgrade cython
+#}
 
 post_install() {
-    ln -fs "/usr/lib/EEStudio2/EEStudio2.py" "/usr/bin/EEStudio2"
     python3 -m compileall /usr/lib/EEStudio2
 }
 
 pre_remove() {
-    rm -f "/usr/bin/EEStudio2"
     find /usr/lib/EEStudio2 -type f -iname \*.pyc -delete
     find /usr/lib/EEStudio2 -type d -iname __pycache__ -delete
 }
