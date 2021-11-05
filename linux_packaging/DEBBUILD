@@ -1,8 +1,8 @@
 # Maintainer: zocker_160 <zocker1600 at posteo dot net>
 
 pkgname=EEStudio2
-pkgver=0.2.9
-pkgrel=3
+pkgver=0.2.10
+pkgrel=1
 pkgdesc="Empire Earth Studio II is a modding tool for Empire Earth made by zocker_160 that allows you to view SST / TGA images, split them and unpack SSA archives."
 arch=('x86_64')
 url="https://github.com/EE-modders/Empire-Earth-Studio-2"
