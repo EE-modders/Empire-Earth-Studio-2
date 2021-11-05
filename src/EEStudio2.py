@@ -171,7 +171,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.app = app
 
-        self.gridMax = 10
+        self.gridMax = 50
         self.gridMin = 2
 
         self.setupUi(self)
