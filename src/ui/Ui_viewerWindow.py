@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/ui/viewerWindow.ui'
+# Form implementation generated from reading ui file 'ui/viewerWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #

@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 """
 Created on 10.11.2020 22:17 CET
@@ -10,160 +9,30 @@ Created on 10.11.2020 22:17 CET
 
 import os
 import sys
-import webbrowser
 from io import BytesIO
 from PIL import Image
-from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent
-from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QGraphicsScene, QListWidget, QMainWindow, QMessageBox
 
-#import qdarkstyle
+from PyQt5.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QGraphicsScene,
+    QMainWindow
+)
 
-from lib import Ui_mainWindow, Ui_viewerWindow, Ui_aboutWindow
+from PyQt5.QtGui import QIcon, QPixmap
+
+from ui import Ui_mainWindow
+from ui.ViewerWindow import ViewerWindow
+from ui.AboutWindow import AboutWindow
 
 from lib.SSTtool.src.lib.SST import SST
 from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
-VERSION = "v0.2.10"
-PLACEHOLDER_STR = "$$$"
+from lib import Util
+from lib.constants import PLACEHOLDER_STR, VERSION
 
-class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
-    def __init__(self, parent) -> None:
-        super().__init__(parent)
-
-        self.setupUi(self)
-
-        self.about_maintext.setText( self.about_maintext.text().replace(PLACEHOLDER_STR, VERSION) )
-
-class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
-    def __init__(self, parent, images: list, filename: str = "") -> None:
-        super().__init__(parent)
-
-        self.setupUi(self)
-        self.view_nextTile.clicked.connect(self.nextIndex)
-        self.view_prevTile.clicked.connect(self.prevIndex)
-
-        self.currImageIndex = 0
-        self.images = images
-
-        self.initImage(images, filename)
-
-    def initImage(self, images: list, filename: str):
-        if filename:
-            self.view_label_filename.setText(filename)
-        else:
-            self.view_label_filename.setText("DRAG & DROP the image!")
-
-        if images:
-            # convert 24bit images to 32bit (weird bugs otherwise)
-            for i, img in enumerate(images):
-                if img.mode == "RGB":
-                    a_channel = Image.new('L', img.size, 255)
-                    images[i].putalpha(a_channel)
-
-            self.images = images
-            self.showImage(images[0]) # show the first tile of the image list
-            self.currImageIndex = 1
-            self._setIndexLabel()
-
-    def showImage(self, image: Image):
-        #imagePath = os.path.join("/home/bene", "800px-TuxFlat.svg.png")
-        #image = Image.open(imagepath)
-
-        self.view_image_rgb.setImage(image)
-        self.view_image_alpha.setImage(image.split()[-1])
-
-        self._setResLabel(image)
-
-
-    ### mouse move and drop events
-    def dragEnterEvent(self, a0: QDragEnterEvent) -> None:
-        if a0.mimeData().hasUrls():
-            a0.accept()
-
-    def dragMoveEvent(self, a0: QDragMoveEvent) -> None:
-        a0.accept()
-
-    def dropEvent(self, a0: QDropEvent) -> None:
-        files = [u.toLocalFile() for u in a0.mimeData().urls()]
-        imagepath = files[0]
-
-        # check if file tye is SST
-        if imagepath:
-            imageList = list()
-            if imagepath.endswith("sst"):
-                SSText = SST()
-                SSText.read_from_file(imagepath)
-                imageData = SSText.unpack()
-                imageTiles = imageData.get_Image_parts()
-
-                for img in imageTiles:
-                    if isinstance(img, tuple):
-                        self.showErrorMSG("ERROR: SST Images from EE BETA are not supported in the viewer!")
-                        return
-                    imageList.append( Image.open(BytesIO(img)) )
-            else:
-                imageList.append( Image.open(imagepath) )
-        else:
-            imagepath = ""
-            imageList = None
-
-        self.initImage(images=imageList, filename=os.path.basename(imagepath))
-
-    ###
-
-    def _setResLabel(self, image):
-        xRes, yRes = image.width, image.height
-
-        self.view_res_rgb.setText(f"{xRes} x {yRes}")
-        self.view_res_alpha.setText(f"{xRes} x {yRes}")
-
-    def _setIndexLabel(self):
-        self.view_label_tiles.setText(f"{self.currImageIndex} / {len(self.images)}")
-        self._checkButtons()
-
-    def _checkButtons(self):
-        # check buttons
-        if self.currImageIndex == 1:
-            self.view_prevTile.setEnabled(False)
-            self.view_nextTile.setEnabled(True)
-        elif self.currImageIndex == len(self.images):
-            self.view_prevTile.setEnabled(True)
-            self.view_nextTile.setEnabled(False)
-        else:
-            self.view_prevTile.setEnabled(True)
-            self.view_nextTile.setEnabled(True)
-        
-        # disable all buttons, when image has only one tile
-        if len(self.images) == 1:
-            self.view_prevTile.setEnabled(False)
-            self.view_nextTile.setEnabled(False)
-
-    def nextIndex(self):
-        if self.currImageIndex + 1 <= len(self.images):
-            self.currImageIndex += 1
-            self.showImage(self.images[self.currImageIndex-1]) # currImageIndex starts at 1 and the array starts at 0
-            self._setIndexLabel()
-        else:
-            self._checkButtons()
-
-    def prevIndex(self):
-        if self.currImageIndex - 1 >= 1:
-            self.currImageIndex -= 1
-            self.showImage(self.images[self.currImageIndex-1]) # currImageIndex starts at 1 and the array starts at 0
-            self._setIndexLabel()
-        else:
-            self._checkButtons()
-
-
-    def showErrorMSG(self, msg_str: str, title_msg="ERROR"):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setText(msg_str)
-        msg.setWindowTitle(title_msg)
-        msg.setDefaultButton(QMessageBox.Close)
-        msg.exec_()
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     def __init__(self, app: QApplication) -> None:
@@ -175,14 +44,15 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.gridMin = 2
 
         self.setupUi(self)
+        self.setWindowIcon(QIcon("assets/icon128.ico"))
         self.initGUIControls()
         self.SLCupdateGridview()
-        self.main_infotext.setText( self.main_infotext.text().replace(PLACEHOLDER_STR, VERSION) )
+        self.main_infotext.setText(self.main_infotext.text().replace(PLACEHOLDER_STR, VERSION))
 
     def initGUIControls(self):
         self.actionOpen_Image_Viewer.triggered.connect(self.showImageViewer)
-        self.actionReport_Issue.triggered.connect(self.showReportIssue)
-        self.actionHelp_from_GitHUb.triggered.connect(self.showHelp)
+        self.actionReport_Issue.triggered.connect(Util.showReportIssue)
+        self.actionHelp_from_GitHUb.triggered.connect(Util.showHelp)
         self.actionAbout_Studio_II.triggered.connect(self.showAbout)
         self.actionabout_QT.triggered.connect(self.app.aboutQt)
 
@@ -200,7 +70,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.tab_slc_gridview.onResize.connect(self.SLCupdateGridview)
 
-        self.tab_slc_row_plus.clicked.connect(self._SLCaddRow)            
+        self.tab_slc_row_plus.clicked.connect(self._SLCaddRow)
         self.tab_slc_row_minus.clicked.connect(self._SLCsubRow)
         self.tab_slc_col_plus.clicked.connect(self._SLCaddCol)
         self.tab_slc_col_minus.clicked.connect(self._SLCsubCol)
@@ -212,47 +82,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_slc_join.clicked.connect(self.SLCjoiner)
         self.tab_slc_slice.clicked.connect(self.SLCslicer)
 
-        #self.testbutton.clicked.connect(self.clickedTestButton)
-
-    ### menu actions
-    def showHelp(self):
-        webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2")
-
-    def showReportIssue(self):
-        webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
-
-    ### windows
-    def showErrorMSG(self, msg_str, title_msg="ERROR"):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setText(str(msg_str))
-        msg.setWindowTitle(title_msg)
-        msg.setDefaultButton(QMessageBox.Close)
-        msg.exec_()
-
-    def showInfoMSG(self, msg_str: str, title_msg="INFO"):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText(msg_str)
-        msg.setWindowTitle(title_msg)
-        msg.setDefaultButton(QMessageBox.Close)
-        msg.exec_()
-
-    def showQuestionMSG(self, msg_str: str, title_msg="QUESTION"):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Question)
-        msg.setText(msg_str)
-        msg.setWindowTitle(title_msg)
-        msg.addButton(QMessageBox.Yes)
-        msg.addButton(QMessageBox.No)
-        msg.setDefaultButton(QMessageBox.Yes)
-        
-        reply = msg.exec_()
-
-        if reply == QMessageBox.Yes:
-            return True
-        else:
-            return False
+        # self.testbutton.clicked.connect(self.clickedTestButton)
 
     def showImageViewer(self, imagepath: str):
         # check if file tye is SST
@@ -267,9 +97,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 for img in imageTiles:
                     if isinstance(img, tuple):
                         raise TypeError("ERROR: SST Images from EE BETA are not supported in the viewer!")
-                    imageList.append( Image.open(BytesIO(img)) )
+                    imageList.append(Image.open(BytesIO(img)))
             else:
-                imageList.append( Image.open(imagepath) )
+                imageList.append(Image.open(imagepath))
             filename = os.path.basename(imagepath)
         else:
             filename = ""
@@ -279,7 +109,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         Viewer.show()
 
     def showAbout(self):
-        About = AboutWindow(self)
+        About = AboutWindow(self, QIcon("assets/icon128.ico"), QPixmap("assets/icon128.png"))
         About.show()
 
     ### SSA
@@ -316,7 +146,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             else:
                 self.tab_ssa_filelist = SSAtool.getFileList(filepath)
         except ImportError as e:
-            self.showErrorMSG(e.args[0])
+            Util.showErrorMSG(e.args[0])
             return
         except FileNotFoundError:
             return
@@ -356,11 +186,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 encoding=encoding
             )
         except Exception as e:
-            self.showErrorMSG(e.args[0])
+            Util.showErrorMSG(e.args[0])
             return
 
-        self.showInfoMSG("Done!")
-        #self.tab_ssa_label_clear.click()
+        Util.showInfoMSG("Done!")
+        # self.tab_ssa_label_clear.click()
 
     def SSAexportList(self):
         if self.tab_ssa_filelist:
@@ -369,17 +199,19 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 caption="Save file",
                 filter="CSV files (*.csv)"
             )
-            if not dlg[0]: return
+            if not dlg[0]:
+                return
+
             try:
                 with open(dlg[0], "w") as csvfile:
                     csvfile.write(";".join(["filename", "start offset", "end offset", "size in B"]) + "\n")
                     for file in self.tab_ssa_filelist:
-                        csvfile.write(";".join( [ str(x) for x in file ] ) + "\n")
+                        csvfile.write(";".join([str(x) for x in file]) + "\n")
             except Exception as e:
-                self.showErrorMSG(e.args[0])
+                Util.showErrorMSG(e.args[0])
                 return
         else:
-            self.showErrorMSG("Could not read filelist, are there any elements?")
+            Util.showErrorMSG("Could not read filelist, are there any elements?")
 
     ### SST
     def SSTinSelector(self):
@@ -405,7 +237,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.SSTcheckButton()
 
     def SSTconvert(self):
-        filelist = [ self.tab_sst_label_in.text() ]
+        filelist = [self.tab_sst_label_in.text()]
         print(filelist)
 
         if self.tab_sst_radio_1.isChecked():
@@ -425,11 +257,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 bundling=False
             )
         except Exception as e:
-            self.showErrorMSG(e.args[0])
+            Util.showErrorMSG(e.args[0])
             return
 
         if not self.tab_sst_donemessage.isChecked():
-            self.showInfoMSG("Done!")
+            Util.showInfoMSG("Done!")
 
     def _SSTdropConvert(self, filelist: list, ext: str):
         output = self.SSTcheckOutput()
@@ -445,9 +277,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 _msg += "please confirm this order:\n\n"
 
                 for i, file in enumerate(filelist):
-                    _msg += f"[{i+1}] => {os.path.basename(file)}\n"
+                    _msg += f"[{i + 1}] => {os.path.basename(file)}\n"
 
-                if not self.showQuestionMSG(_msg):
+                if not Util.showQuestionMSG(_msg):
                     return
 
         try:
@@ -460,11 +292,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 bundling=bundling
             )
         except Exception as e:
-            self.showErrorMSG(e.args[0])
+            Util.showErrorMSG(e.args[0])
             return
 
         if not self.tab_sst_donemessage.isChecked():
-            self.showInfoMSG("Done!")
+            Util.showInfoMSG("Done!")
 
     def SSTdropHandler(self, event):
         print(event)
@@ -472,32 +304,31 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         # check if view only is set
         if self.tab_sst_viewonly.isChecked():
             try:
-                self.showImageViewer(event[0]) # open only the first dropped file
+                self.showImageViewer(event[0])  # open only the first dropped file
             except Exception as e:
-                self.showErrorMSG(e.args[0])
+                Util.showErrorMSG(e.args[0])
             finally:
                 return
 
         # check if output is set
         if not self.tab_sst_input_checkbox.isChecked():
             if not self.tab_sst_label_out.text():
-                self.showErrorMSG("No output destination specified!")
+                Util.showErrorMSG("No output destination specified!")
                 return
 
         # check if all files have the same ext otherwise show error
         ext = os.path.splitext(event[0])[1]
 
-        if any( os.path.splitext(f)[1] != ext for f in event ):
-            self.showErrorMSG("All files have to have the same file type!")
+        if any(os.path.splitext(f)[1] != ext for f in event):
+            Util.showErrorMSG("All files have to have the same file type!")
             return
         elif ext not in [".sst", ".tga"]:
-            self.showErrorMSG("only TGA and SST files are supported")
+            Util.showErrorMSG("only TGA and SST files are supported")
             return
         else:
             print(ext)
 
         self._SSTdropConvert(filelist=event, ext=ext)
-
 
     def SSTcheckButton(self):
         self.tab_sst_convert.setEnabled(False)
@@ -516,12 +347,12 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         maxX = self.tab_slc_gridview.width()
         maxY = self.tab_slc_gridview.height()
 
-        #print(maxX, maxY)
+        # print(maxX, maxY)
 
         # update aspect ratio of the GridView, target is 4:3 # does not work for some reason :(
-        #if maxX >= maxY:
+        # if maxX >= maxY:
         #    self.tab_slc_gridview.setMaximumSize(5000, round( (maxX / 4) * 3 ))
-        #else:
+        # else:
         #    self.tab_slc_gridview.setMaximumSize(round( (maxY / 3) * 4 ))
 
         scene = QGraphicsScene(self)
@@ -533,17 +364,17 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         boxH = maxY // rows
         boxB = maxX // colums
 
-        #scene.addRect(100, -50, maxX, maxY)
-        #scene.addLine(0, 0, 0, maxY)
-        #scene.addLine(0, 0, 50, 50)
-        #scene.addLine(50, 0, 0, 50)
-        #scene.addLine(0, 0, 50, 50)
+        # scene.addRect(100, -50, maxX, maxY)
+        # scene.addLine(0, 0, 0, maxY)
+        # scene.addLine(0, 0, 50, 50)
+        # scene.addLine(50, 0, 0, 50)
+        # scene.addLine(0, 0, 50, 50)
 
         for r in range(rows):
-            scene.addLine( 0, r*boxH, maxX, r*boxH )
+            scene.addLine(0, r * boxH, maxX, r * boxH)
 
         for c in range(colums):
-            scene.addLine( c*boxB, 0, c*boxB, maxY )
+            scene.addLine(c * boxB, 0, c * boxB, maxY)
 
     def _SLCaddRow(self):
         c = int(self.tab_slc_row_count.text()) + 1
@@ -582,7 +413,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         if "tga" in filetype:
             self.tab_slc_label_in.setText(os.path.basename(files[0]))
         else:
-            #self.tab_slc_label_in.setText('; '.join( [ os.path.basename(p) for p in files ] ) )
+            # self.tab_slc_label_in.setText('; '.join( [ os.path.basename(p) for p in files ] ) )
             # or maybe this is better
             pass
 
@@ -593,9 +424,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_slc_label_in.setText(f"{len(files)} file(s) imported")
 
         # move vertical scroll bar all the way to the right
-        #self.tab_slc_list.horizontalScrollBar().maximum()
-        #self.tab_slc_list.verticalScrollBar().maximum()
-        #self.tab_slc_list.horizontalScrollBar().setValue(self.tab_slc_list.horizontalScrollBar())
+        # self.tab_slc_list.horizontalScrollBar().maximum()
+        # self.tab_slc_list.verticalScrollBar().maximum()
+        # self.tab_slc_list.horizontalScrollBar().setValue(self.tab_slc_list.horizontalScrollBar())
 
     def SLCinSelector(self):
         dlg = QFileDialog.getOpenFileNames(
@@ -604,7 +435,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             filter="SST Image (*.sst);;TGA Image (*.tga)"
         )
 
-        #print(dlg)
+        # print(dlg)
         print(dlg[1])
 
         self._SLCnewInfiles(files=dlg[0], filetype=dlg[1])
@@ -622,22 +453,21 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.SLCcheckButtons()
 
     def SLCjoiner(self):
-        inputfiles = [ self.tab_slc_list.item(i).text() for i in range(self.tab_slc_list.count()) ]
+        inputfiles = [self.tab_slc_list.item(i).text() for i in range(self.tab_slc_list.count())]
 
         _msg = "Following files will be joined:\n"
         _msg += "Please confirm this order.\n\n"
 
         for i, file in enumerate(inputfiles):
-            _msg += f"[{i+1}] => {os.path.basename(file)}\n"
+            _msg += f"[{i + 1}] => {os.path.basename(file)}\n"
 
-        if not self.showQuestionMSG(msg_str=_msg, title_msg="Please confirm"):
+        if not Util.showQuestionMSG(msg_str=_msg, title_msg="Please confirm"):
             return
         else:
             self.SLCslicer()
 
-
     def SLCslicer(self):
-        inputfiles = [ self.tab_slc_list.item(i).text() for i in range(self.tab_slc_list.count()) ]
+        inputfiles = [self.tab_slc_list.item(i).text() for i in range(self.tab_slc_list.count())]
 
         # all files have to have the same file type at this point, so we can do this
         if ".sst" in inputfiles[0]:
@@ -655,10 +485,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 reversed=self.tab_slc_switchCoords.isChecked()
             )
         except Exception as e:
-            self.showErrorMSG(e.args[0])
+            Util.showErrorMSG(e.args[0])
             return
 
-        self.showInfoMSG("Done!")
+        Util.showInfoMSG("Done!")
 
     def SLCcheckButtons(self):
         nListItems = self.tab_slc_list.count()
@@ -704,11 +534,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    #app.setStyleSheet(qdarkstyle.load_stylesheet())
 
-    main_Window = MainWindow(app)
-    main_Window.center()
-    main_Window.show()
+    mainWindow = MainWindow(app)
+    mainWindow.center()
+    mainWindow.show()
 
     sys.exit(app.exec_())
 

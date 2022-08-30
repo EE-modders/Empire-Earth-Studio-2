@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/media/bene/Windows_Daten/Programmierung_Modding/Empire Earth/GitHub/Empire-Earth-Studio-2/src/ui/aboutWindow.ui'
+# Form implementation generated from reading ui file 'ui/aboutWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -37,11 +37,11 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.label)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_3 = QtWidgets.QLabel(Dialog)
-        self.label_3.setText("")
-        self.label_3.setPixmap(QtGui.QPixmap(":/icons/assets/icon128.png"))
-        self.label_3.setObjectName("label_3")
-        self.horizontalLayout.addWidget(self.label_3)
+        self.icon_label = QtWidgets.QLabel(Dialog)
+        self.icon_label.setText("")
+        self.icon_label.setPixmap(QtGui.QPixmap(":/icons/assets/icon128.png"))
+        self.icon_label.setObjectName("icon_label")
+        self.horizontalLayout.addWidget(self.icon_label)
         self.about_maintext = QtWidgets.QLabel(Dialog)
         self.about_maintext.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.about_maintext.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction|QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
@@ -57,4 +57,3 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.label.setText(_translate("Dialog", "ABOUT"))
         self.about_maintext.setText(_translate("Dialog", "<html><head/><body><p>Empire Earth Studio II - $$$</p><p>made by zocker_160 from the <span style=\" font-weight:600;\">Empire Earth: Reborn</span> team</p><p>licensed under GPLv3 | 2020 - 2021</p><p>source code: <a href=\"https://github.com/EE-modders/Empire-Earth-Studio-2\"><span style=\" text-decoration: underline; color:#2980b9;\">https://github.com/EE-modders/Empire-Earth-Studio-2</span></a></p></body></html>"))
-from . import mainWindowAssets_rc

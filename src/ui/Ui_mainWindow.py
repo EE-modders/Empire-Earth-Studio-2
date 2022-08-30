@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainWindow.ui'
+# Form implementation generated from reading ui file 'ui/mainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/assets/icon128.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/assets/EmpireEarthStudio2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -495,7 +495,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.MainTabs.setCurrentIndex(0)
+        self.MainTabs.setCurrentIndex(2)
         self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear) # type: ignore
         self.clear.clicked.connect(self.tab_slc_list.clear) # type: ignore
@@ -571,4 +571,3 @@ class Ui_MainWindow(object):
         self.actionOpen_Image_Viewer.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionabout_QT.setText(_translate("MainWindow", "About QT"))
 from .customwidgets import CDropLabel, CDropWidget, CGraphicsView
-import mainWindowAssets_rc
