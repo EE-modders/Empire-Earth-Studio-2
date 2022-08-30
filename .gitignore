@@ -4,6 +4,7 @@
 *.tar.gz
 *.ssa
 *.vscode
+*.idea
 *.appimage
 *.AppImage
 *__pycache__
