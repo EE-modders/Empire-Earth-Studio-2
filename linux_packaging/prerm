@@ -1,4 +1,0 @@
-#! /usr/bin/env bash
-
-find /usr/lib/EEStudio2 -type f -iname \*.pyc -delete
-find /usr/lib/EEStudio2 -type d -iname __pycache__ -delete
