@@ -8,19 +8,23 @@ Created on 28.08.2022 00:19 CET
 
 import os
 from io import BufferedReader
+from typing import Callable
 
-from lib.DCL import DCL
-from lib.Util import readInt
+from lib.SSA.DCL import DCL
+from lib.SSA.Util import readInt
 
 
 class ParseException(Exception):
     pass
 
+
 class ExtractException(Exception):
     pass
 
+
 class DecompressException(Exception):
     pass
+
 
 class Header:
     magic: bytes = b'rass'
@@ -45,8 +49,9 @@ class Header:
 
     def __str__(self) -> str:
         return f"magic: {self.magic}, " \
-            + f"version: {self.version_major}.{self.version_minor}, " \
-            + f"dso: {self.data_start_offset}"
+               + f"version: {self.version_major}.{self.version_minor}, " \
+               + f"dso: {self.data_start_offset}"
+
 
 class FileEntry:
     path_length: int
@@ -81,6 +86,7 @@ class FileEntry:
     def __str__(self) -> str:
         return f"path: {self.path}, start: {self.start_offset}, end: {self.end_offset}, size: {self.size}"
 
+
 class Attribute:
     key_length: int
     key: bytes
@@ -106,6 +112,7 @@ class Attribute:
     def __str__(self) -> str:
         return f"key: {self.key}, value: {self.value}"
 
+
 class Intermediate:
     num_attributes: int
     attributes: list[Attribute]
@@ -128,14 +135,15 @@ class Intermediate:
     def __str__(self) -> str:
         return "\n".join([str(x) for x in self.attributes])
 
+
 class FileData:
     length: int
     data: bytes
 
     @staticmethod
-    def parse(f: BufferedReader, start: int, len: int):
+    def parse(f: BufferedReader, start: int, length: int):
         f.seek(start, 0)
-        data = f.read(len)
+        data = f.read(length)
 
         return FileData(data)
 
@@ -157,7 +165,6 @@ class FileData:
 
 
 class SSA:
-
     header: Header
     file_index: list[FileEntry]
     intermediate: Intermediate
@@ -189,22 +196,22 @@ class SSA:
 
             return SSA(header, entries, intermediate, files, archive)
 
-    def __init__(self, 
-            header: Header, 
-            fileIndex: list[FileEntry], 
-            intermediate: Intermediate, 
-            fileData: list[FileData],
-            archiveName: str = ""):
-        
+    def __init__(self,
+                 header: Header,
+                 fileIndex: list[FileEntry],
+                 intermediate: Intermediate,
+                 fileData: list[FileData],
+                 archiveName: str = ""):
+
         self.header = header
         self.file_index = fileIndex
         self.intermediate = intermediate
         self.file_data = fileData
         self.archiveName = archiveName
-    
-    def extract(self, outputFolder: str, decompress=False):
+
+    def extract(self, outputFolder: str, decompress=False, progressCallback: Callable = None, finishCallback: Callable = None):
         outputFolder = os.path.join(outputFolder, self.archiveName)
-        
+
         if decompress:
             outputFolder += ".decompressed"
         else:
@@ -221,9 +228,22 @@ class SSA:
                 else:
                     f.write(data.data)
 
+            if progressCallback:
+                progressCallback(i + 1, len(self.file_index), file.getPath(self.encoding))
+
             print(
-                f"({i+1}/{len(self.file_index)})",
+                f"({i + 1}/{len(self.file_index)})",
                 "compressed" if data.isCompressed() else "raw")
+
+        if finishCallback:
+            finishCallback()
+
+    def getFileList(self) -> list[str]:
+        files = list()
+        for file in self.file_index:
+            files.append(file.getPath(self.encoding))
+
+        return files
 
     def printFileIndex(self):
         print("\n".join([str(x) for x in self.file_index]))

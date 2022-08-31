@@ -7,6 +7,7 @@ Created on 30.08.2022 22:42 CET
 @author: zocker_160
 """
 
+import traceback
 import webbrowser
 
 from PyQt5.QtWidgets import QMessageBox
@@ -20,14 +21,27 @@ def showReportIssue():
     webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
 
 
-def showErrorMSG(msg_str, title_msg="ERROR"):
+def showErrorMSG(message, title="ERROR", detail=""):
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Critical)
-    msg.setText(str(msg_str))
-    msg.setWindowTitle(title_msg)
+    msg.setText(str(message))
+    if detail:
+        msg.setDetailedText(detail)
+    msg.setWindowTitle(title)
     msg.setDefaultButton(QMessageBox.Close)
     msg.exec()
 
+def showExceptionMSG(e: Exception, title="ERROR"):
+    msg = QMessageBox()
+    msg.setIcon(QMessageBox.Critical)
+    msg.setText(f"An error ({type(e).__name__}) occured!")
+
+    tbStr = traceback.format_exception(type(e), e, e.__traceback__)
+    msg.setDetailedText(''.join(tbStr))
+
+    msg.setWindowTitle(title)
+    msg.setDefaultButton(QMessageBox.Close)
+    msg.exec()
 
 def showInfoMSG(msg_str: str, title_msg="INFO"):
     msg = QMessageBox()

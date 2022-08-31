@@ -19,19 +19,22 @@ from PyQt5.QtWidgets import (
     QMainWindow
 )
 
+from PyQt5.QtCore import QThread
 from PyQt5.QtGui import QIcon, QPixmap
 
 from ui import Ui_mainWindow
 from ui.ViewerWindow import ViewerWindow
 from ui.AboutWindow import AboutWindow
+from ui.ProgressWindow import ProgressWindow
+
+from lib.SSA.SSA import SSA
 
 from lib.SSTtool.src.lib.SST import SST
-from lib.SSAtool.src import SSAtool
 from lib.SSTtool.src import SSTtool
 from lib.SSTslicer.src import SSTslicer
 
 from lib import Util
-from lib.constants import PLACEHOLDER_STR, VERSION
+from lib import constants as c
 
 
 class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
@@ -47,7 +50,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.setWindowIcon(QIcon("assets/icon128.ico"))
         self.initGUIControls()
         self.SLCupdateGridview()
-        self.main_infotext.setText(self.main_infotext.text().replace(PLACEHOLDER_STR, VERSION))
+        self.main_infotext.setText(self.main_infotext.text().replace(c.PLACEHOLDER_STR, c.VERSION))
+
+        # fields for parsed data instances
+        self.tab_ssa_SSA: SSA = None
 
     def initGUIControls(self):
         self.actionOpen_Image_Viewer.triggered.connect(self.showImageViewer)
@@ -130,41 +136,40 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             dlg = QFileDialog.getOpenFileName(
                 self,
                 caption="Select SSA file",
-                filter="SSA Archive (*.ssa)",
-            )
+                filter="SSA Archive (*.ssa)")
         else:
             dlg = event
 
         print(dlg)
-
         filepath = dlg[0]
 
-        # add file list to listWidget
-        try:
-            if self.tab_ssa_kyrillicencode.isChecked():
-                self.tab_ssa_filelist = SSAtool.getFileList(filepath, encoding="CP1251")
-            else:
-                self.tab_ssa_filelist = SSAtool.getFileList(filepath)
-        except ImportError as e:
-            Util.showErrorMSG(e.args[0])
+        if not filepath:
             return
+
+        # parse SSA file create instance
+        try:
+            self.tab_ssa_SSA = SSA.parseFile(filepath)
+
+            if self.tab_ssa_kyrillicencode.isChecked():
+                self.tab_ssa_SSA.encoding = c.RUS_ENCODING
+
         except FileNotFoundError:
+            Util.showErrorMSG("File not found!")
+            return
+        except Exception as e:
+            Util.showExceptionMSG(e)
             return
 
         self.tab_ssa_label_in.setText(filepath)
 
-        # add files to file list
+        # SSA file index to ListWidget
         self.tab_ssa_list.clear()
-        for file in self.tab_ssa_filelist:
-            self.tab_ssa_list.addItem(file[0])
+        self.tab_ssa_list.addItems(self.tab_ssa_SSA.getFileList())
 
         self.SSAcheckButton()
 
     def SSAoutSelector(self):
-        dlg = QFileDialog.getExistingDirectory(
-            self,
-            caption="Select output folder"
-        )
+        dlg = QFileDialog.getExistingDirectory(self, caption="Select output folder")
 
         self.tab_ssa_label_out.setText(dlg)
         print(dlg)
@@ -172,25 +177,49 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.SSAcheckButton()
 
     def SSAconvert(self):
-        if self.tab_ssa_kyrillicencode.isChecked():
-            encoding = "CP1251"
-        else:
-            encoding = None
+        class Extractor(QThread):
+            from PyQt5.QtCore import pyqtSignal
+            onFinished = pyqtSignal()
+            onError = pyqtSignal(Exception)
 
-        try:
-            SSAtool.main(
-                inputfile=self.tab_ssa_label_in.text(),
-                outputfolder=self.tab_ssa_label_out.text(),
-                decompress=self.tab_ssa_decompress.isChecked(),
-                log=False,
-                encoding=encoding
-            )
-        except Exception as e:
-            Util.showErrorMSG(e.args[0])
-            return
+            def __init__(self, ssa: SSA, outputFolder: str, decompress: str, progress: ProgressWindow):
+                QThread.__init__(self)
 
-        Util.showInfoMSG("Done!")
-        # self.tab_ssa_label_clear.click()
+                self.ssa = ssa
+                self.outputFolder = outputFolder
+                self.decompress = decompress
+                self.progressbar = progress
+
+            def run(self):
+                self.progressbar.onShow.emit()
+                try:
+                    self.ssa.extract(
+                        self.outputFolder,
+                        self.decompress,
+                        progressCallback=self._updateProgress,
+                        finishCallback=self._finished
+                    )
+                except Exception as e:
+                    self.onError.emit(e)
+                finally:
+                    self.progressbar.onClose.emit()
+
+            def _updateProgress(self, curr: int, total: int, filename: str):
+                self.progressbar.onNewProgress.emit(curr, total, filename)
+
+            def _finished(self):
+                self.onFinished.emit()
+
+        progressbar = ProgressWindow()
+        self.extractor = Extractor(
+            self.tab_ssa_SSA,
+            self.tab_ssa_label_out.text(),
+            self.tab_ssa_decompress.isChecked(),
+            progressbar
+        )
+        self.extractor.onError.connect(Util.showExceptionMSG)
+        self.extractor.onFinished.connect(lambda: Util.showInfoMSG("Done!"))
+        self.extractor.start()
 
     def SSAexportList(self):
         if self.tab_ssa_filelist:

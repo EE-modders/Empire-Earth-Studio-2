@@ -12,7 +12,7 @@ import ctypes
 
 from io import BytesIO
 
-from lib.Util import readInt
+from lib.SSA.Util import readInt
 
 class DecompressException(Exception):
     pass
@@ -50,7 +50,7 @@ class DCL:
             os.path.join(os.path.dirname(__file__), dll))
 
         self.libblast.decompressBytes.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
-        self.libblast.decompressBytes.restype = ctypes.c_int        
+        self.libblast.decompressBytes.restype = ctypes.c_int
 
     def decompress(self) -> bytes:
         output = bytes(self.uncompressed_size)
