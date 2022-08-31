@@ -66,7 +66,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_ssa_list_export.clicked.connect(self.SSAexportList)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
-        self.tab_ssa_unpack.clicked.connect(self.SSAconvert)
+        self.tab_ssa_unpack_all.clicked.connect(self.SSAconvertAll)
+        self.tab_ssa_unpack_one.clicked.connect(self.SSAconvertOne)
 
         self.tab_sst_select_in.clicked.connect(self.SSTinSelector)
         self.tab_sst_select_out.clicked.connect(self.SSToutSelector)
@@ -121,14 +122,16 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
     ### SSA
     def SSAcheckButton(self):
         if self.tab_ssa_label_in.text() and self.tab_ssa_label_out.text():
-            self.tab_ssa_unpack.setEnabled(True)
+            self.tab_ssa_unpack_all.setEnabled(True)
         else:
-            self.tab_ssa_unpack.setDisabled(True)
+            self.tab_ssa_unpack_all.setDisabled(True)
 
         if self.tab_ssa_list.count() > 0:
             self.tab_ssa_list_export.setEnabled(True)
+            self.tab_ssa_unpack_one.setEnabled(True)
         else:
             self.tab_ssa_list_export.setDisabled(True)
+            self.tab_ssa_unpack_one.setDisabled(True)
 
     def SSAinSelector(self, event):
         # event is not False, when called from CDropWidget
@@ -176,7 +179,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.SSAcheckButton()
 
-    def SSAconvert(self):
+    def SSAconvertAll(self):
         class Extractor(QThread):
             from PyQt5.QtCore import pyqtSignal
             onFinished = pyqtSignal()
@@ -221,23 +224,53 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.extractor.onFinished.connect(lambda: Util.showInfoMSG("Done!"))
         self.extractor.start()
 
+    def SSAconvertOne(self):
+        try:
+            itemIndex = self.tab_ssa_list.selectedIndexes()[0].row()
+        except IndexError:
+            Util.showInfoMSG("Please select a file to export", "NOTE")
+            return
+
+        if not (outputFolder := self.tab_ssa_label_out.text()):
+            outputFolder = QFileDialog.getExistingDirectory(self, caption="Select output folder")
+        print(outputFolder)
+
+        if not outputFolder:
+            return
+
+        if not self.tab_ssa_SSA:
+            Util.showErrorMSG("Failed to read filelist :(")
+            return
+
+        try:
+            self.tab_ssa_SSA.extractSingle(outputFolder, itemIndex, self.tab_ssa_decompress.isChecked())
+        except Exception as e:
+            Util.showExceptionMSG(e)
+
     def SSAexportList(self):
-        if self.tab_ssa_filelist:
+        if self.tab_ssa_SSA:
             dlg = QFileDialog.getSaveFileName(
                 self,
                 caption="Save file",
                 filter="CSV files (*.csv)"
             )
-            if not dlg[0]:
+            if not (filename := dlg[0]):
                 return
 
             try:
-                with open(dlg[0], "w") as csvfile:
+                with open(filename, "w") as csvfile:
                     csvfile.write(";".join(["filename", "start offset", "end offset", "size in B"]) + "\n")
-                    for file in self.tab_ssa_filelist:
-                        csvfile.write(";".join([str(x) for x in file]) + "\n")
+
+                    for file in self.tab_ssa_SSA.file_index:
+                        csvfile.write(";".join([
+                            file.getPath(self.tab_ssa_SSA.encoding),
+                            str(file.start_offset),
+                            str(file.end_offset),
+                            str(file.size)
+                        ]) + "\n")
+
             except Exception as e:
-                Util.showErrorMSG(e.args[0])
+                Util.showExceptionMSG(e)
                 return
         else:
             Util.showErrorMSG("Could not read filelist, are there any elements?")

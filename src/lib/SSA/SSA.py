@@ -238,6 +238,16 @@ class SSA:
         if finishCallback:
             finishCallback()
 
+    def extractSingle(self, outputFolder: str, index: int, decompress=False):
+        file = self.file_index[index]
+        filename = os.path.basename(file.getPath(self.encoding))
+
+        with open(os.path.join(outputFolder, filename), "wb") as f:
+            if decompress:
+                f.write(self.file_data[index].getDecompressedData())
+            else:
+                f.write(self.file_data[index].data)
+
     def getFileList(self) -> list[str]:
         files = list()
         for file in self.file_index:
