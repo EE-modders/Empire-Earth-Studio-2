@@ -45,10 +45,9 @@ class DCL:
         if sys.platform.startswith("win"):
             dll = "libblast"
         else:
-            dll = "libblast.so"         
-        self.libblast = ctypes.CDLL(
-            os.path.join(os.path.dirname(__file__), dll))
+            dll = "libblast.so"
 
+        self.libblast = ctypes.CDLL(os.path.join(os.path.dirname(__file__), dll))
         self.libblast.decompressBytes.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
         self.libblast.decompressBytes.restype = ctypes.c_int
 
