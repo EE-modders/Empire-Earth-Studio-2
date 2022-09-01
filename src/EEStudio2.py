@@ -21,7 +21,6 @@ from PyQt5.QtWidgets import (
 )
 
 from PyQt5.QtCore import QThread
-from PyQt5.QtGui import QIcon, QPixmap
 
 from ui import Ui_mainWindow
 from ui.ViewerWindow import ViewerWindow
