@@ -21,6 +21,7 @@ from PyQt5.QtWidgets import (
 )
 
 from PyQt5.QtCore import QThread
+from PyQt5.QtGui import QIcon, QPixmap
 
 from ui import Ui_mainWindow
 from ui.ViewerWindow import ViewerWindow
@@ -47,7 +48,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.gridMin = 2
 
         self.setupUi(self)
-        self.setWindowIcon(Util.getWindowIcon())
+        self.setWindowIcon(QIcon(c.ICON_PATH))
         self.initGUIControls()
         self.SLCupdateGridview()
         self.main_infotext.setText(Util.setPlaceholders(self.main_infotext.text()))
@@ -119,7 +120,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         Viewer.show()
 
     def showAbout(self):
-        AboutWindow(self).show()
+        AboutWindow(self, QPixmap(c.LOGO_PATH)).show()
 
     ### SSA
     def SSAcheckButton(self):

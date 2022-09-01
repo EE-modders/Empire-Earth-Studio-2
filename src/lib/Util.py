@@ -75,16 +75,3 @@ def showQuestionMSG(msg_str: str, title_msg="QUESTION"):
         return True
     else:
         return False
-
-
-def getWindowIcon() -> QIcon:
-    return QIcon(_getAssetPath("EESicon.ico"))
-
-def getLogoPixmap() -> QPixmap:
-    return QPixmap(_getAssetPath("EESicon.png"))
-
-def _getBaseDir() -> Path:
-    return Path(os.path.basename(os.path.abspath(__file__))).parent
-
-def _getAssetPath(name: str) -> str:
-    return os.path.join(_getBaseDir(), "assets", name)
