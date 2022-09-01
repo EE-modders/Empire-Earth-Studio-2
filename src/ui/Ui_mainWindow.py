@@ -205,6 +205,58 @@ class Ui_MainWindow(object):
         self.tab_ssa_pack_unpack.addTab(self.subtab_pack, "")
         self.verticalLayout.addWidget(self.tab_ssa_pack_unpack)
         self.MainTabs.addTab(self.tab_ssa, "")
+        self.tab_dcl = QtWidgets.QWidget()
+        self.tab_dcl.setObjectName("tab_dcl")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.tab_dcl)
+        self.gridLayout_5.setVerticalSpacing(30)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.tab_dcl_label_in = QtWidgets.QLabel(self.tab_dcl)
+        self.tab_dcl_label_in.setStyleSheet("border: 2px dotted rgb(50, 50, 50);\n"
+"border-radius: 10;\n"
+"")
+        self.tab_dcl_label_in.setText("")
+        self.tab_dcl_label_in.setWordWrap(True)
+        self.tab_dcl_label_in.setObjectName("tab_dcl_label_in")
+        self.gridLayout_5.addWidget(self.tab_dcl_label_in, 0, 1, 1, 1)
+        self.tab_dcl_select_in = QtWidgets.QPushButton(self.tab_dcl)
+        self.tab_dcl_select_in.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.tab_dcl_select_in.setObjectName("tab_dcl_select_in")
+        self.gridLayout_5.addWidget(self.tab_dcl_select_in, 0, 2, 1, 1)
+        self.tab_dcl_decompress = QtWidgets.QPushButton(self.tab_dcl)
+        self.tab_dcl_decompress.setEnabled(False)
+        self.tab_dcl_decompress.setObjectName("tab_dcl_decompress")
+        self.gridLayout_5.addWidget(self.tab_dcl_decompress, 2, 1, 1, 1)
+        self.label_7 = QtWidgets.QLabel(self.tab_dcl)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_7.setFont(font)
+        self.label_7.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_7.setObjectName("label_7")
+        self.gridLayout_5.addWidget(self.label_7, 1, 0, 1, 1)
+        self.tab_dcl_label_out = QtWidgets.QLabel(self.tab_dcl)
+        self.tab_dcl_label_out.setStyleSheet("border: 2px dotted rgb(50, 50, 50);\n"
+"border-radius: 10;\n"
+"")
+        self.tab_dcl_label_out.setText("")
+        self.tab_dcl_label_out.setWordWrap(True)
+        self.tab_dcl_label_out.setObjectName("tab_dcl_label_out")
+        self.gridLayout_5.addWidget(self.tab_dcl_label_out, 1, 1, 1, 1)
+        self.label_4 = QtWidgets.QLabel(self.tab_dcl)
+        self.label_4.setMaximumSize(QtCore.QSize(100, 16777215))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_4.setFont(font)
+        self.label_4.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_4.setObjectName("label_4")
+        self.gridLayout_5.addWidget(self.label_4, 0, 0, 1, 1)
+        self.tab_dcl_select_out = QtWidgets.QPushButton(self.tab_dcl)
+        self.tab_dcl_select_out.setObjectName("tab_dcl_select_out")
+        self.gridLayout_5.addWidget(self.tab_dcl_select_out, 1, 2, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem1, 3, 1, 1, 1)
+        self.MainTabs.addTab(self.tab_dcl, "")
         self.tab_sst = QtWidgets.QWidget()
         self.tab_sst.setAcceptDrops(True)
         self.tab_sst.setObjectName("tab_sst")
@@ -349,12 +401,18 @@ class Ui_MainWindow(object):
 "")
         self.clear.setObjectName("clear")
         self.horizontalLayout_7.addWidget(self.clear)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem2)
         self.tab_slc_moveup = QtWidgets.QPushButton(self.tab_slicer)
-        self.tab_slc_moveup.setMaximumSize(QtCore.QSize(30, 25))
+        self.tab_slc_moveup.setMaximumSize(QtCore.QSize(25, 25))
+        icon = QtGui.QIcon.fromTheme("go-up")
+        self.tab_slc_moveup.setIcon(icon)
         self.tab_slc_moveup.setObjectName("tab_slc_moveup")
         self.horizontalLayout_7.addWidget(self.tab_slc_moveup)
         self.tab_slc_movedown = QtWidgets.QPushButton(self.tab_slicer)
-        self.tab_slc_movedown.setMaximumSize(QtCore.QSize(45, 25))
+        self.tab_slc_movedown.setMaximumSize(QtCore.QSize(25, 25))
+        icon = QtGui.QIcon.fromTheme("go-down")
+        self.tab_slc_movedown.setIcon(icon)
         self.tab_slc_movedown.setObjectName("tab_slc_movedown")
         self.horizontalLayout_7.addWidget(self.tab_slc_movedown)
         self.verticalLayout_8.addLayout(self.horizontalLayout_7)
@@ -387,8 +445,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.tab_slc_gridview)
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem1)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem3)
         self.tab_slc_row_plus = QtWidgets.QPushButton(self.widget_2)
         self.tab_slc_row_plus.setMinimumSize(QtCore.QSize(30, 30))
         self.tab_slc_row_plus.setMaximumSize(QtCore.QSize(30, 30))
@@ -410,17 +468,17 @@ class Ui_MainWindow(object):
         self.tab_slc_row_minus.setMaximumSize(QtCore.QSize(30, 30))
         self.tab_slc_row_minus.setObjectName("tab_slc_row_minus")
         self.verticalLayout_7.addWidget(self.tab_slc_row_minus)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem2)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem4)
         self.horizontalLayout_3.addLayout(self.verticalLayout_7)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem3)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem5)
         self.verticalLayout_9.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setContentsMargins(-1, 0, -1, -1)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem4)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem6)
         self.tab_slc_col_minus = QtWidgets.QPushButton(self.widget_2)
         self.tab_slc_col_minus.setMinimumSize(QtCore.QSize(30, 30))
         self.tab_slc_col_minus.setMaximumSize(QtCore.QSize(30, 30))
@@ -442,10 +500,10 @@ class Ui_MainWindow(object):
         self.tab_slc_col_plus.setMaximumSize(QtCore.QSize(30, 30))
         self.tab_slc_col_plus.setObjectName("tab_slc_col_plus")
         self.horizontalLayout_5.addWidget(self.tab_slc_col_plus)
-        spacerItem5 = QtWidgets.QSpacerItem(30, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem5)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem6)
+        spacerItem7 = QtWidgets.QSpacerItem(30, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem7)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem8)
         self.verticalLayout_9.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_6.addWidget(self.widget_2)
         self.verticalLayout_6.addLayout(self.horizontalLayout_6)
@@ -544,24 +602,24 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.MainTabs.setCurrentIndex(1)
-        self.tab_ssa_pack_unpack.setCurrentIndex(1)
+        self.MainTabs.setCurrentIndex(2)
+        self.tab_ssa_pack_unpack.setCurrentIndex(0)
         self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear) # type: ignore
-        self.clear.clicked.connect(self.tab_slc_list.clear) # type: ignore
-        self.clear.clicked.connect(self.tab_slc_label_in.clear) # type: ignore
-        self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_unpack_all.setEnabled) # type: ignore
-        self.clear.clicked['bool'].connect(self.tab_slc_join.setEnabled) # type: ignore
+        self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_keylist.clear) # type: ignore
         self.tab_sst_input_checkbox.clicked['bool'].connect(self.tab_sst_select_out.setDisabled) # type: ignore
-        self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_list.clear) # type: ignore
+        self.clear.clicked.connect(self.tab_slc_list.clear) # type: ignore
+        self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_unpack_all.setEnabled) # type: ignore
+        self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_list_export.setEnabled) # type: ignore
+        self.tab_ssa_label_clear.clicked['bool'].connect(self.subtab_ssa_save.setEnabled) # type: ignore
         self.clear.clicked['bool'].connect(self.tab_slc_slice.setEnabled) # type: ignore
         self.tab_sst_input_checkbox.clicked['bool'].connect(self.tab_sst_label_out.setDisabled) # type: ignore
-        self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_list_export.setEnabled) # type: ignore
-        self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_unpack_one.setEnabled) # type: ignore
-        self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_keylist.clear) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_value.clear) # type: ignore
+        self.clear.clicked.connect(self.tab_slc_label_in.clear) # type: ignore
+        self.clear.clicked['bool'].connect(self.tab_slc_join.setEnabled) # type: ignore
+        self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_unpack_one.setEnabled) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_label.clear) # type: ignore
-        self.tab_ssa_label_clear.clicked['bool'].connect(self.subtab_ssa_save.setEnabled) # type: ignore
+        self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_list.clear) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -589,6 +647,12 @@ class Ui_MainWindow(object):
         self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_metadata), _translate("MainWindow", "metadata"))
         self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_pack), _translate("MainWindow", "pack (soonTM)"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_ssa), _translate("MainWindow", "Archives (SSA)"))
+        self.tab_dcl_select_in.setText(_translate("MainWindow", "Browse"))
+        self.tab_dcl_decompress.setText(_translate("MainWindow", "Decompress"))
+        self.label_7.setText(_translate("MainWindow", "Output file:"))
+        self.label_4.setText(_translate("MainWindow", "Input file:"))
+        self.tab_dcl_select_out.setText(_translate("MainWindow", "Browse"))
+        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_dcl), _translate("MainWindow", "Decompressor (DCL)"))
         self.tab_sst_droplabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">DRAG &amp; DROP HERE!!</span></p><p align=\"center\"><br/>You can drop TGA and SST files!</p><p align=\"center\">(autoconvert on drop)</p></body></html>"))
         self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">options:</span></p></body></html>"))
         self.tab_sst_viewonly.setText(_translate("MainWindow", "view only (first dropped)"))
@@ -606,8 +670,6 @@ class Ui_MainWindow(object):
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_sst), _translate("MainWindow", "Textures (SST)"))
         self.label.setText(_translate("MainWindow", "imported files:"))
         self.clear.setText(_translate("MainWindow", "clear"))
-        self.tab_slc_moveup.setText(_translate("MainWindow", "up"))
-        self.tab_slc_movedown.setText(_translate("MainWindow", "down"))
         self.tab_slc_row_plus.setText(_translate("MainWindow", "+"))
         self.tab_slc_row_count.setText(_translate("MainWindow", "3"))
         self.tab_slc_row_minus.setText(_translate("MainWindow", "-"))

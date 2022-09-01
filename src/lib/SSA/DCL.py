@@ -36,6 +36,17 @@ class DCL:
             f.read(-1)
         )
 
+    @staticmethod
+    def parseFile(filename: str):
+        with open(filename, "rb") as f:
+            assert f.read(4) == DCL.magic
+
+            return DCL(
+                readInt(f),
+                readInt(f),
+                f.read(-1)
+            )
+
     def __init__(self, uncompressedSize: int, unknown: int, data: bytes):
         self.uncompressed_size = uncompressedSize
         self.unknown = unknown
@@ -63,6 +74,10 @@ class DCL:
             raise DecompressException(f"decompressor returned error code {ret}")
 
         return output
+
+    def decompressToFile(self, filename: str):
+        with open(filename, "wb") as f:
+            f.write(self.decompress())
 
     def __str__(self) -> str:
         return f"magic: {self.magic}, uncompressed size: {self.uncompressed_size}, data length: {len(self.data)}"

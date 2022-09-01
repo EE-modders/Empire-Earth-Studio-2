@@ -16,8 +16,7 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsScene,
-    QMainWindow,
-    QTableWidgetItem
+    QMainWindow
 )
 
 from PyQt5.QtCore import QThread
@@ -29,6 +28,7 @@ from ui.AboutWindow import AboutWindow
 from ui.ProgressWindow import ProgressWindow
 
 from lib.SSA.SSA import SSA
+from lib.SSA.DCL import DCL
 
 from lib.SSTtool.src.lib.SST import SST
 from lib.SSTtool.src import SSTtool
@@ -72,6 +72,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.subtab_ssa_keylist.itemSelectionChanged.connect(self.SSAmetadataUpdate)
         self.subtab_ssa_load.clicked.connect(self.SSAinSelector)
+
+        self.tab_dcl_select_in.clicked.connect(self.DCLinSelector)
+        self.tab_dcl_select_out.clicked.connect(self.DCLoutSelector)
+        self.tab_dcl_decompress.clicked.connect(self.DCLdecompress)
 
         self.tab_sst_select_in.clicked.connect(self.SSTinSelector)
         self.tab_sst_select_out.clicked.connect(self.SSToutSelector)
@@ -298,6 +302,38 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         value = self.tab_ssa_SSA.getMetadata()[itemIndex][1]
         self.subtab_ssa_value.setPlainText(value)
+
+    ### DCL
+    def DCLinSelector(self):
+        dlg = QFileDialog.getOpenFileName(self, caption="Select compressed file")
+        if not (file := dlg[0]):
+            return
+
+        self.tab_dcl_label_in.setText(file)
+        self.DCLcheckButtons()
+
+    def DCLoutSelector(self):
+        dlg = QFileDialog.getSaveFileName(self, caption="Save decompressed file")
+        if not (file := dlg[0]):
+            return
+
+        self.tab_dcl_label_out.setText(file)
+        self.DCLcheckButtons()
+
+    def DCLdecompress(self):
+        try:
+            dcl = DCL.parseFile(self.tab_dcl_label_in.text())
+            dcl.decompressToFile(self.tab_dcl_label_out.text())
+
+            Util.showInfoMSG("Done")
+        except AssertionError:
+            Util.showErrorMSG("Selected file is not compressed or not supported!")
+        except Exception as e:
+            Util.showExceptionMSG(e)
+
+    def DCLcheckButtons(self):
+        if self.tab_dcl_label_in.text() and self.tab_dcl_label_out.text():
+            self.tab_dcl_decompress.setEnabled(True)
 
     ### SST
     def SSTinSelector(self):
