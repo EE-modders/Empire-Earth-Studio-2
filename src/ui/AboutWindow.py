@@ -11,12 +11,13 @@ from ui import Ui_aboutWindow
 from lib import Util
 
 from PyQt5.QtWidgets import QDialog
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QIcon, QPixmap
 
 class AboutWindow(QDialog, Ui_aboutWindow.Ui_Dialog):
-    def __init__(self, parent, logo: QPixmap):
+    def __init__(self, parent, icon: QIcon, logo: QPixmap):
         super().__init__(parent)
 
         self.setupUi(self)
+        self.setWindowIcon(icon)
         self.icon_label.setPixmap(logo)
         self.about_maintext.setText(Util.setPlaceholders(self.about_maintext.text()))

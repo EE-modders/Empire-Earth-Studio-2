@@ -120,7 +120,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         Viewer.show()
 
     def showAbout(self):
-        AboutWindow(self, QPixmap(c.LOGO_PATH)).show()
+        AboutWindow(self, QIcon(c.LOGO_PATH), QPixmap(c.LOGO_PATH)).show()
 
     ### SSA
     def SSAcheckButton(self):
