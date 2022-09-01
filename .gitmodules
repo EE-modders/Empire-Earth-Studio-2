@@ -1,6 +1,3 @@
-[submodule "src/lib/SSAtool"]
-	path = src/lib/SSAtool
-	url = https://github.com/EE-modders/SSA-tool.git
 [submodule "src/lib/SSTtool"]
 	path = src/lib/SSTtool
 	url = https://github.com/EE-modders/SST-tool.git
