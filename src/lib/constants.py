@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 
-VERSION = "v0.2.10"
-PLACEHOLDER_STR = "$$$"
+VERSION = "v0.3.0-beta"
+YEAR = "2020 - 2022"
+
+PLACEHOLDER_VERSION = "%v%"
+PLACEHOLDER_YEAR = "%year%"
 
 RUS_ENCODING = "CP1251"

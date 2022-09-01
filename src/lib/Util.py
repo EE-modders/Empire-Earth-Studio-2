@@ -7,15 +7,24 @@ Created on 30.08.2022 22:42 CET
 @author: zocker_160
 """
 
+import os
 import traceback
 import webbrowser
+from pathlib import Path
 
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMessageBox
+
+from lib import constants as c
+
+def setPlaceholders(text: str) -> str:
+    text = text.replace(c.PLACEHOLDER_VERSION, c.VERSION)
+    text = text.replace(c.PLACEHOLDER_YEAR, c.YEAR)
+    return text
 
 
 def showHelp():
     webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2")
-
 
 def showReportIssue():
     webbrowser.open("https://github.com/EE-modders/Empire-Earth-Studio-2/issues")
@@ -51,7 +60,6 @@ def showInfoMSG(msg_str: str, title_msg="INFO"):
     msg.setDefaultButton(QMessageBox.Close)
     msg.exec()
 
-
 def showQuestionMSG(msg_str: str, title_msg="QUESTION"):
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Question)
@@ -67,3 +75,16 @@ def showQuestionMSG(msg_str: str, title_msg="QUESTION"):
         return True
     else:
         return False
+
+
+def getWindowIcon() -> QIcon:
+    return QIcon(_getAssetPath("EESicon.ico"))
+
+def getLogoPixmap() -> QPixmap:
+    return QPixmap(_getAssetPath("EESicon.png"))
+
+def _getBaseDir() -> Path:
+    return Path(os.path.basename(os.path.abspath(__file__))).parent
+
+def _getAssetPath(name: str) -> str:
+    return os.path.join(_getBaseDir(), "assets", name)

@@ -56,4 +56,4 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.label.setText(_translate("Dialog", "ABOUT"))
-        self.about_maintext.setText(_translate("Dialog", "<html><head/><body><p>Empire Earth Studio II - $$$</p><p>made by zocker_160 from the <span style=\" font-weight:600;\">Empire Earth: Reborn</span> team</p><p>licensed under GPLv3 | 2020 - 2021</p><p>source code: <a href=\"https://github.com/EE-modders/Empire-Earth-Studio-2\"><span style=\" text-decoration: underline; color:#2980b9;\">https://github.com/EE-modders/Empire-Earth-Studio-2</span></a></p></body></html>"))
+        self.about_maintext.setText(_translate("Dialog", "<html><head/><body><p>Empire Earth Studio II - %v%</p><p>made by zocker_160 from the <span style=\" font-weight:600;\">Empire Earth: Reborn</span> team</p><p>licensed under GPLv3 | %year%</p><p>source code: <a href=\"https://github.com/EE-modders/Empire-Earth-Studio-2\"><span style=\" text-decoration: underline; color:#2980b9;\">https://github.com/EE-modders/Empire-Earth-Studio-2</span></a></p></body></html>"))

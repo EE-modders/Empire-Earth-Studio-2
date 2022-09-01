@@ -48,10 +48,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.gridMin = 2
 
         self.setupUi(self)
-        self.setWindowIcon(QIcon("assets/icon128.ico"))
+        self.setWindowIcon(Util.getWindowIcon())
         self.initGUIControls()
         self.SLCupdateGridview()
-        self.main_infotext.setText(self.main_infotext.text().replace(c.PLACEHOLDER_STR, c.VERSION))
+        self.main_infotext.setText(Util.setPlaceholders(self.main_infotext.text()))
 
         # fields for parsed data instances
         self.tab_ssa_SSA: SSA = None
@@ -120,8 +120,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         Viewer.show()
 
     def showAbout(self):
-        About = AboutWindow(self, QIcon("assets/icon128.ico"), QPixmap("assets/icon128.png"))
-        About.show()
+        AboutWindow(self).show()
 
     ### SSA
     def SSAcheckButton(self):

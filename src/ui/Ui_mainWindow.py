@@ -621,7 +621,7 @@ class Ui_MainWindow(object):
         self.tab_slc_slice.setText(_translate("MainWindow", "SLICE"))
         self.tab_slc_join.setText(_translate("MainWindow", "JOIN"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_slicer), _translate("MainWindow", "Slicer (SST)"))
-        self.main_infotext.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Empire Earth Studio II</span> by zocker_160 from <span style=\" font-weight:600;\">Empire Earth: Reborn</span> - $$$ | GPLv3 | 2020 - 2021</p></body></html>"))
+        self.main_infotext.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Empire Earth Studio II</span> by zocker_160 from <span style=\" font-weight:600;\">Empire Earth: Reborn</span> - %v% | GPLv3 | %year%</p></body></html>"))
         self.menuAbout.setTitle(_translate("MainWindow", "About"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionAbout_Studio_II.setText(_translate("MainWindow", "About EEStudio II"))

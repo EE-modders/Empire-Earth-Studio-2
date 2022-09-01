@@ -11,9 +11,4 @@
 
 testing
 
-src/assets/
 src/venv
-
-linux_packaging/pkg/*
-linux_packaging/src/*
-linux_packaging/EE*
