@@ -624,13 +624,8 @@ def main():
 
 if __name__ == "__main__":
     # this is only needed for the CI / CD
-    try:
-        testmode = sys.argv[1] == "-v"
-    except:
-        testmode = False
-
-    if testmode:
-        print("STARTED!")
+    if "-v" in sys.argv:
+        print(c.VERSION)
         sys.exit()
-    else:
-        main()
+
+    main()
