@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+VERSION="v0.3.0-beta3"
+
 function cleanup {
 	echo "cleaning up"
 	rm -rf ~/Downloads/EES2 || true
@@ -23,5 +25,9 @@ mkdir -p dist/EEStudio2/lib/SSA
 cp lib/SSA/libblast.dll dist/EEStudio2/lib/SSA
 
 cp -r dist/EEStudio2 ~/Downloads
+
+echo "creating archive"
+cd ~/Downloads
+7z a EEStudioII-$VERSION-Portable.zip EEStudio2/
 
 cleanup
