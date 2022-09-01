@@ -16,7 +16,8 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsScene,
-    QMainWindow
+    QMainWindow,
+    QTableWidgetItem
 )
 
 from PyQt5.QtCore import QThread
@@ -68,6 +69,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_ssa_select_out.clicked.connect(self.SSAoutSelector)
         self.tab_ssa_unpack_all.clicked.connect(self.SSAconvertAll)
         self.tab_ssa_unpack_one.clicked.connect(self.SSAconvertOne)
+
+        self.subtab_ssa_keylist.itemSelectionChanged.connect(self.SSAmetadataUpdate)
+        self.subtab_ssa_load.clicked.connect(self.SSAinSelector)
 
         self.tab_sst_select_in.clicked.connect(self.SSTinSelector)
         self.tab_sst_select_out.clicked.connect(self.SSToutSelector)
@@ -129,9 +133,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         if self.tab_ssa_list.count() > 0:
             self.tab_ssa_list_export.setEnabled(True)
             self.tab_ssa_unpack_one.setEnabled(True)
+            self.subtab_ssa_save.setEnabled(True)
         else:
             self.tab_ssa_list_export.setDisabled(True)
             self.tab_ssa_unpack_one.setDisabled(True)
+            self.subtab_ssa_save.setDisabled(True)
 
     def SSAinSelector(self, event):
         # event is not False, when called from CDropWidget
@@ -168,6 +174,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         # SSA file index to ListWidget
         self.tab_ssa_list.clear()
         self.tab_ssa_list.addItems(self.tab_ssa_SSA.getFileList())
+
+        # fill SSA metadata
+        self.subtab_ssa_label.setText(self.tab_ssa_SSA.archiveName)
+        for (key, _) in self.tab_ssa_SSA.getMetadata():
+            self.subtab_ssa_keylist.addItem(key)
 
         self.SSAcheckButton()
 
@@ -274,6 +285,15 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                 return
         else:
             Util.showErrorMSG("Could not read filelist, are there any elements?")
+
+    def SSAmetadataUpdate(self):
+        try:
+            itemIndex = self.subtab_ssa_keylist.selectedIndexes()[0].row()
+        except IndexError:
+            return
+
+        value = self.tab_ssa_SSA.getMetadata()[itemIndex][1]
+        self.subtab_ssa_value.setPlainText(value)
 
     ### SST
     def SSTinSelector(self):

@@ -161,7 +161,46 @@ class Ui_MainWindow(object):
         self.tab_ssa_unpack_all.setObjectName("tab_ssa_unpack_all")
         self.verticalLayout_10.addWidget(self.tab_ssa_unpack_all)
         self.tab_ssa_pack_unpack.addTab(self.subtab_unpack, "")
+        self.subtab_metadata = QtWidgets.QWidget()
+        self.subtab_metadata.setEnabled(True)
+        self.subtab_metadata.setObjectName("subtab_metadata")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.subtab_metadata)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.subtab_ssa_label = QtWidgets.QLabel(self.subtab_metadata)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.subtab_ssa_label.setFont(font)
+        self.subtab_ssa_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.subtab_ssa_label.setObjectName("subtab_ssa_label")
+        self.verticalLayout_4.addWidget(self.subtab_ssa_label)
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.subtab_ssa_keylist = QtWidgets.QListWidget(self.subtab_metadata)
+        self.subtab_ssa_keylist.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.subtab_ssa_keylist.setAlternatingRowColors(True)
+        self.subtab_ssa_keylist.setObjectName("subtab_ssa_keylist")
+        self.horizontalLayout_10.addWidget(self.subtab_ssa_keylist)
+        self.subtab_ssa_value = QtWidgets.QPlainTextEdit(self.subtab_metadata)
+        self.subtab_ssa_value.setAcceptDrops(False)
+        self.subtab_ssa_value.setReadOnly(True)
+        self.subtab_ssa_value.setBackgroundVisible(True)
+        self.subtab_ssa_value.setObjectName("subtab_ssa_value")
+        self.horizontalLayout_10.addWidget(self.subtab_ssa_value)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_10)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.subtab_ssa_load = QtWidgets.QPushButton(self.subtab_metadata)
+        self.subtab_ssa_load.setObjectName("subtab_ssa_load")
+        self.horizontalLayout_11.addWidget(self.subtab_ssa_load)
+        self.subtab_ssa_save = QtWidgets.QPushButton(self.subtab_metadata)
+        self.subtab_ssa_save.setEnabled(False)
+        self.subtab_ssa_save.setObjectName("subtab_ssa_save")
+        self.horizontalLayout_11.addWidget(self.subtab_ssa_save)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_11)
+        self.tab_ssa_pack_unpack.addTab(self.subtab_metadata, "")
         self.subtab_pack = QtWidgets.QWidget()
+        self.subtab_pack.setEnabled(False)
         self.subtab_pack.setObjectName("subtab_pack")
         self.tab_ssa_pack_unpack.addTab(self.subtab_pack, "")
         self.verticalLayout.addWidget(self.tab_ssa_pack_unpack)
@@ -506,7 +545,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.MainTabs.setCurrentIndex(1)
-        self.tab_ssa_pack_unpack.setCurrentIndex(0)
+        self.tab_ssa_pack_unpack.setCurrentIndex(1)
         self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear) # type: ignore
         self.clear.clicked.connect(self.tab_slc_list.clear) # type: ignore
@@ -519,6 +558,10 @@ class Ui_MainWindow(object):
         self.tab_sst_input_checkbox.clicked['bool'].connect(self.tab_sst_label_out.setDisabled) # type: ignore
         self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_list_export.setEnabled) # type: ignore
         self.tab_ssa_label_clear.clicked['bool'].connect(self.tab_ssa_unpack_one.setEnabled) # type: ignore
+        self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_keylist.clear) # type: ignore
+        self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_value.clear) # type: ignore
+        self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_label.clear) # type: ignore
+        self.tab_ssa_label_clear.clicked['bool'].connect(self.subtab_ssa_save.setEnabled) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -539,6 +582,11 @@ class Ui_MainWindow(object):
         self.tab_ssa_kyrillicencode.setText(_translate("MainWindow", "use CP1251 encoding"))
         self.tab_ssa_unpack_all.setText(_translate("MainWindow", "UNPACK ALL"))
         self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_unpack), _translate("MainWindow", "unpack"))
+        self.subtab_ssa_label.setText(_translate("MainWindow", "nothing loaded"))
+        self.subtab_ssa_value.setPlaceholderText(_translate("MainWindow", "value"))
+        self.subtab_ssa_load.setText(_translate("MainWindow", "Load SSA"))
+        self.subtab_ssa_save.setText(_translate("MainWindow", "Save SSA (soonTM)"))
+        self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_metadata), _translate("MainWindow", "metadata"))
         self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_pack), _translate("MainWindow", "pack (soonTM)"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_ssa), _translate("MainWindow", "Archives (SSA)"))
         self.tab_sst_droplabel.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">DRAG &amp; DROP HERE!!</span></p><p align=\"center\"><br/>You can drop TGA and SST files!</p><p align=\"center\">(autoconvert on drop)</p></body></html>"))

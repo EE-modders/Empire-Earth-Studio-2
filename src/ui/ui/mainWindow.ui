@@ -100,7 +100,7 @@
         <item>
          <widget class="QTabWidget" name="tab_ssa_pack_unpack">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="subtab_unpack">
            <attribute name="title">
@@ -368,7 +368,90 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="subtab_metadata">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <attribute name="title">
+            <string>metadata</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="subtab_ssa_label">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>nothing loaded</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <widget class="QListWidget" name="subtab_ssa_keylist">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPlainTextEdit" name="subtab_ssa_value">
+                <property name="acceptDrops">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="backgroundVisible">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>value</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QPushButton" name="subtab_ssa_load">
+                <property name="text">
+                 <string>Load SSA</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="subtab_ssa_save">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Save SSA (soonTM)</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="subtab_pack">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <attribute name="title">
             <string>pack (soonTM)</string>
            </attribute>
@@ -1100,7 +1183,7 @@ border-radius: 10;
     <item>
      <widget class="QLabel" name="main_infotext">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by zocker_160 from &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; - $$$ | GPLv3 | 2020 - 2021&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth Studio II&lt;/span&gt; by zocker_160 from &lt;span style=&quot; font-weight:600;&quot;&gt;Empire Earth: Reborn&lt;/span&gt; - %v% | GPLv3 | %year%&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1394,6 +1477,70 @@ border-radius: 10;
     <hint type="destinationlabel">
      <x>567</x>
      <y>388</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_ssa_label_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>subtab_ssa_keylist</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_ssa_label_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>subtab_ssa_value</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_ssa_label_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>subtab_ssa_label</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tab_ssa_label_clear</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>subtab_ssa_save</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>531</y>
     </hint>
    </hints>
   </connection>

@@ -109,6 +109,12 @@ class Attribute:
 
         self.key, self.value = key, value
 
+    def getKey(self, encoding: str):
+        return self.key.strip(b"\0").decode(encoding)
+
+    def getValue(self, encoding: str):
+        return self.value.strip(b"\0").decode(encoding)
+
     def __str__(self) -> str:
         return f"key: {self.key}, value: {self.value}"
 
@@ -254,6 +260,13 @@ class SSA:
             files.append(file.getPath(self.encoding))
 
         return files
+
+    def getMetadata(self) -> list[tuple[str, str]]:
+        attributes = list()
+        for attr in self.intermediate.attributes:
+            attributes.append((attr.getKey(self.encoding), attr.getValue(self.encoding)))
+
+        return attributes
 
     def printFileIndex(self):
         print("\n".join([str(x) for x in self.file_index]))
