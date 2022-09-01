@@ -181,6 +181,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         for (key, _) in self.tab_ssa_SSA.getMetadata():
             self.subtab_ssa_keylist.addItem(key)
 
+        if self.subtab_ssa_keylist.count() > 0:
+            self.subtab_ssa_keylist.setCurrentRow(0)
+
         self.SSAcheckButton()
 
     def SSAoutSelector(self):
