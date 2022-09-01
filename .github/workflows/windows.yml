@@ -1,0 +1,71 @@
+name: Python packager
+
+on: [push]
+jobs:
+
+  delete-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.ARTIFACT_CLEANER }}
+          expire-in: 0days # Set this to 0 to delete all artifacts
+
+  Windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: clone repo
+      uses: actions/checkout@v1
+      with:
+        submodules: 'true'
+    - name: Set up Python 3
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.10.4
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install PyQt5
+        pip install Pillow
+
+    - name: python version
+      run: python --version
+    - name: pyinstaller version
+      run: pyinstaller --version
+
+    - name: run source EEStudio II
+      run: python .\src\EEStudio2.py -v
+    
+    - name: pyinstaller icon workaround
+      run: copy .\src\assets\EESicon.ico .
+
+#    - name: pack EE Studio II standalone
+#      run: pyinstaller -F --add-data ".\src\lib\SSAtool\src\lib\blast_args.exe;." --icon=icon128.ico .\src\EEStudio2.py
+
+    - name: pack EE Studio II
+      run: pyinstaller --icon=EESicon.ico .\src\EEStudio2.py
+
+    - name: move needed assets
+      run: |
+        copy .\src\assets .\dist\EEStudio2
+        copy .\src\lib\SSA\libblast.dll .\dist\EEStudio2
+
+    - name: run packed version
+      run: .\dist\EEStudio2\EEStudio2.exe -v
+
+#    - name: rename portable exe
+#      run: copy .\dist\EEStudio2.exe .\dist\EEStudioII-Portable.exe
+
+#    - name: save portable exe
+#      uses: actions/upload-artifact@master
+#      with:
+#        name: EEStudioII_windows
+#        path: .\dist\EEStudioII-Portable.exe
+
+    - name: save installer data
+      uses: actions/upload-artifact@master
+      with:
+        name: EEStudioII_windows_forInstaller
+        path: .\dist\EEStudio2
