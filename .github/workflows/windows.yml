@@ -49,7 +49,7 @@ jobs:
 
     - name: move needed assets
       run: |
-        copy .\src\assets .\dist\EEStudio2
+        copy .\src\assets\*¸ .\dist\EEStudio2
         copy .\src\lib\SSA\libblast.dll .\dist\EEStudio2
 
     - name: run packed version
