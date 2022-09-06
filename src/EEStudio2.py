@@ -120,11 +120,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             filename = ""
             imageList = None
 
-        Viewer = ViewerWindow(self, images=imageList, filename=filename)
-        Viewer.show()
+        ViewerWindow(self, images=imageList, filename=filename).exec()
 
     def showAbout(self):
-        AboutWindow(self, QIcon(c.LOGO_PATH), QPixmap(c.LOGO_PATH)).show()
+        AboutWindow(self, QIcon(c.LOGO_PATH), QPixmap(c.LOGO_PATH)).exec()
 
     ### SSA
     def SSAcheckButton(self):
