@@ -181,7 +181,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.subtab_ssa_keylist.clear()
         self.subtab_ssa_value.clear()
         self.subtab_ssa_label.setText(self.tab_ssa_SSA.archiveName)
-        for (key, _) in self.tab_ssa_SSA.getMetadata():
+        for key, _ in self.tab_ssa_SSA.getMetadata():
             self.subtab_ssa_keylist.addItem(key)
 
         if self.subtab_ssa_keylist.count() > 0:
