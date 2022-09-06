@@ -21,6 +21,7 @@ pyinstaller --icon=EESicon.ico --noconsole EEStudio2.py
 
 echo "copy files post installation"
 cp -r ./assets dist/EEStudio2
+
 mkdir -p dist/EEStudio2/lib/SSA
 cp lib/SSA/libblast.dll dist/EEStudio2/lib/SSA
 
