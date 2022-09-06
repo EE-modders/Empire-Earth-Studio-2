@@ -7,11 +7,11 @@ Created on 28.08.2022 00:19 CET
 """
 
 import os
-from io import BufferedReader
+from io import BufferedReader, BufferedWriter
 from typing import Callable
 
 from lib.SSA.DCL import DCL
-from lib.SSA.Util import readInt
+from lib.SSA.Util import readInt, writeInt, checkNullTerminator
 
 
 class ParseException(Exception):
@@ -47,6 +47,15 @@ class Header:
     def __init__(self, data_start_offset: int):
         self.data_start_offset = data_start_offset
 
+    def assemble(self, f: BufferedWriter):
+        f.write(self.magic)
+        writeInt(f, self.version_major)
+        writeInt(f, self.version_minor)
+        writeInt(f, self.data_start_offset)
+
+    def __len__(self) -> int:
+        return self.length
+
     def __str__(self) -> str:
         return f"magic: {self.magic}, " \
                + f"version: {self.version_major}.{self.version_minor}, " \
@@ -71,7 +80,13 @@ class FileEntry:
             readInt(f)
         )
 
+    @staticmethod
+    def calcLength(path: str, encoding: str) -> int:
+        return len(path.encode(encoding)) + 1 + 4*4
+
     def __init__(self, path: bytes, start: int, end: int, size: int):
+        path = checkNullTerminator(path)
+
         self.path_length = len(path)
         self.path = path
         self.start_offset = start
@@ -82,6 +97,16 @@ class FileEntry:
         return self.path.strip(b"\0") \
             .decode(encoding) \
             .replace("\\", os.sep)
+
+    def assemble(self, f: BufferedWriter):
+        writeInt(f, self.path_length)
+        f.write(self.path)
+        writeInt(f, self.start_offset)
+        writeInt(f, self.end_offset)
+        writeInt(f, self.size)
+
+    def __len__(self) -> int:
+        return len(self.path) + 4*4
 
     def __str__(self) -> str:
         return f"path: {self.path}, start: {self.start_offset}, end: {self.end_offset}, size: {self.size}"
@@ -104,6 +129,9 @@ class Attribute:
         return Attribute(key, value)
 
     def __init__(self, key: bytes, value: bytes):
+        key = checkNullTerminator(key)
+        value = checkNullTerminator(value)
+
         self.key_length = len(key)
         self.value_length = len(value)
 
@@ -114,6 +142,15 @@ class Attribute:
 
     def getValue(self, encoding: str):
         return self.value.strip(b"\0").decode(encoding)
+
+    def assemble(self, f: BufferedWriter):
+        writeInt(f, self.key_length)
+        f.write(self.key)
+        writeInt(f, self.value_length)
+        f.write(self.value)
+
+    def __len__(self) -> int:
+        return len(self.key) + len(self.value) + 2*4
 
     def __str__(self) -> str:
         return f"key: {self.key}, value: {self.value}"
@@ -134,16 +171,33 @@ class Intermediate:
 
         return Intermediate(attributes)
 
+    @staticmethod
+    def fromTuples(data: list[tuple[str, str]], encoding: str):
+        attributes: list[Attribute] = list()
+
+        for key, value in data:
+            attributes.append(Attribute(key.encode(encoding), value.encode(encoding)))
+
+        return Intermediate(attributes)
+
     def __init__(self, attributes: list[Attribute]):
         self.num_attributes = len(attributes)
         self.attributes = attributes
+
+    def assemble(self, f: BufferedWriter):
+        writeInt(f, self.num_attributes)
+
+        for attr in self.attributes:
+            attr.assemble(f)
+
+    def __len__(self) -> int:
+        return sum([len(x) for x in self.attributes]) + 4
 
     def __str__(self) -> str:
         return "\n".join([str(x) for x in self.attributes])
 
 
 class FileData:
-    length: int
     data: bytes
 
     @staticmethod
@@ -154,7 +208,6 @@ class FileData:
         return FileData(data)
 
     def __init__(self, data: bytes):
-        self.length = len(data)
         self.data = data
 
     def isCompressed(self):
@@ -166,8 +219,14 @@ class FileData:
         else:
             return self.data
 
+    def assemble(self, f: BufferedWriter):
+        f.write(self.data)
+
+    def __len__(self) -> int:
+        return len(self.data)
+
     def __str__(self) -> str:
-        return f"data length: {self.length}"
+        return f"data length: {len(self)}"
 
 
 class SSA:
@@ -201,6 +260,55 @@ class SSA:
             archive = os.path.basename(filename)
 
             return SSA(header, entries, intermediate, files, archive)
+
+    @staticmethod
+    def packFolder(folderPath: str, encoding: str, metadata: list[tuple[str, str]]):
+        files: list[tuple[str, str]] = list()
+
+        for folder in os.listdir(folderPath):
+            fPath = os.path.join(folderPath, folder)
+            if not os.path.isdir(fPath):
+                continue
+
+            for file in os.listdir(fPath):
+                filePath = os.path.join(fPath, file)
+                if not os.path.isfile(filePath):
+                    continue
+
+                files.append((f"{folder}\\{file}", filePath))
+
+        fileData: list[FileData] = list()
+
+        for _, file in files:
+            with open(file, "rb") as f:
+                fileData.append(FileData(f.read()))
+
+        fileIndexLength = sum([FileEntry.calcLength(x, encoding) for x, _ in files])
+        print(fileIndexLength)
+
+        header = Header(fileIndexLength)
+        intermediate = Intermediate.fromTuples(metadata, encoding)
+
+        rawdataStartOffset = len(header) + fileIndexLength + len(intermediate)
+        print(rawdataStartOffset)
+
+        fileIndex: list[FileEntry] = list()
+
+        for i, (path, _) in enumerate(files):
+            fSize = len(fileData[i])
+            fEntry = FileEntry(
+                path.encode(encoding),
+                rawdataStartOffset,
+                rawdataStartOffset+fSize-1,
+                fSize
+            )
+            fileIndex.append(fEntry)
+
+            rawdataStartOffset += fSize
+
+        print(len(fileIndex),  sum([len(x) for x in fileIndex]), fileIndexLength)
+
+        return SSA(header, fileIndex, intermediate, fileData, os.path.dirname(folderPath))
 
     def __init__(self,
                  header: Header,
@@ -253,6 +361,18 @@ class SSA:
                 f.write(self.file_data[index].getDecompressedData())
             else:
                 f.write(self.file_data[index].data)
+
+    def assemble(self, filePath: str):
+        with open(filePath, "wb") as ssafile:
+            self.header.assemble(ssafile)
+
+            for index in self.file_index:
+                index.assemble(ssafile)
+
+            self.intermediate.assemble(ssafile)
+
+            for data in self.file_data:
+                data.assemble(ssafile)
 
     def getFileList(self) -> list[str]:
         files = list()
