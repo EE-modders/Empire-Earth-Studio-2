@@ -423,9 +423,17 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="icon">
-                 <iconset theme="list-add">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 255, 0);</string>
+                </property>
+                <property name="text">
+                 <string>＋</string>
                 </property>
                </widget>
               </item>
@@ -437,9 +445,17 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="icon">
-                 <iconset theme="list-remove">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>－</string>
                 </property>
                </widget>
               </item>
@@ -987,13 +1003,12 @@ border-radius: 10;
                <widget class="QPushButton" name="tab_slc_moveup">
                 <property name="maximumSize">
                  <size>
-                  <width>25</width>
-                  <height>25</height>
+                  <width>30</width>
+                  <height>30</height>
                  </size>
                 </property>
-                <property name="icon">
-                 <iconset theme="go-up">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="text">
+                 <string>▲</string>
                 </property>
                </widget>
               </item>
@@ -1001,13 +1016,12 @@ border-radius: 10;
                <widget class="QPushButton" name="tab_slc_movedown">
                 <property name="maximumSize">
                  <size>
-                  <width>25</width>
-                  <height>25</height>
+                  <width>30</width>
+                  <height>30</height>
                  </size>
                 </property>
-                <property name="icon">
-                 <iconset theme="go-down">
-                  <normaloff>.</normaloff>.</iconset>
+                <property name="text">
+                 <string>▼</string>
                 </property>
                </widget>
               </item>
@@ -1094,7 +1108,7 @@ border-radius: 10;
                     </size>
                    </property>
                    <property name="text">
-                    <string>+</string>
+                    <string>＋</string>
                    </property>
                   </widget>
                  </item>
@@ -1138,7 +1152,7 @@ border-radius: 10;
                     </size>
                    </property>
                    <property name="text">
-                    <string>-</string>
+                    <string>－</string>
                    </property>
                   </widget>
                  </item>
@@ -1205,7 +1219,7 @@ border-radius: 10;
                   </size>
                  </property>
                  <property name="text">
-                  <string>-</string>
+                  <string>－</string>
                  </property>
                 </widget>
                </item>
@@ -1249,7 +1263,7 @@ border-radius: 10;
                   </size>
                  </property>
                  <property name="text">
-                  <string>+</string>
+                  <string>＋</string>
                  </property>
                 </widget>
                </item>
