@@ -76,7 +76,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.subtab_ssa_meta_add.clicked.connect(self.SSAmetadataAdd)
         self.subtab_ssa_meta_sub.clicked.connect(self.SSAmetadataDel)
         self.subtab_ssa_load.clicked.connect(self.SSAinSelector)
-        self.subtab_ssa_save.clicked.connect(self.SSAsaveImported)
+        self.subtab_ssa_save.clicked.connect(self.SSAsaveSSA)
+
+        self.subtab_pack_select_in.clicked.connect(self.SSApackInSelector)
+        self.subtab_pack_load.clicked.connect(self.SSApackLoad)
+        self.subtab_pack_pack.clicked.connect(self.SSAsaveSSA)
 
         self.tab_dcl_select_in.clicked.connect(self.DCLinSelector)
         self.tab_dcl_select_out.clicked.connect(self.DCLoutSelector)
@@ -136,6 +140,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             self.tab_ssa_unpack_all.setEnabled(True)
         else:
             self.tab_ssa_unpack_all.setDisabled(True)
+
+        if self.subtab_pack_label_in.text():
+            self.subtab_pack_load.setEnabled(True)
+        else:
+            self.subtab_pack_load.setDisabled(True)
 
         if self.tab_ssa_list.count() > 0:
             self.tab_ssa_list_export.setEnabled(True)
@@ -198,9 +207,8 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     def SSAoutSelector(self):
         dlg = QFileDialog.getExistingDirectory(self, caption="Select output folder")
-
-        self.tab_ssa_label_out.setText(dlg)
         print(dlg)
+        self.tab_ssa_label_out.setText(dlg)
 
         self.SSAcheckButton()
 
@@ -341,7 +349,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         del entry
         self.tab_ssa_SSA.removeMetadata(itemIndex)
 
-    def SSAsaveImported(self):
+        if self.subtab_ssa_keylist.count() == 0:
+            self.subtab_ssa_value.clear()
+
+    def SSAsaveSSA(self):
         if not self.tab_ssa_SSA:
             Util.showErrorMSG("Failed to load imported data!")
             return
@@ -364,6 +375,81 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             return
 
         Util.showInfoMSG("Done")
+
+    def SSApackInSelector(self):
+        dlg = QFileDialog.getExistingDirectory(self, caption="Select folder for SSA packing")
+        print(dlg)
+        self.subtab_pack_label_in.setText(dlg)
+
+        self.SSAcheckButton()
+
+    def SSApackLoad(self):
+        class Extractor(QThread):
+            from PyQt5.QtCore import pyqtSignal
+            onFinished = pyqtSignal()
+            onError = pyqtSignal(Exception)
+
+            def __init__(self, mainWindow: MainWindow, folderPath: str, encoding: str, progress: ProgressWindow):
+                QThread.__init__(self)
+
+                self.mainWindow = mainWindow
+                self.folderPath = folderPath
+                self.encoding = encoding
+                self.progressbar = progress
+
+            def run(self):
+                self.progressbar.onShow.emit()
+                try:
+                    ssa = SSA.packFolder(
+                        self.folderPath, self.encoding, list(),
+                        progressCallback=self._updateProcess,
+                        finishCallback=self._finished
+                    )
+
+                    # TODO: this needs better solution
+                    if self.mainWindow.tab_ssa_SSA:
+                        ssa.intermediate = self.mainWindow.tab_ssa_SSA.intermediate
+
+                    self.mainWindow.tab_ssa_SSA = ssa
+
+                except Exception as e:
+                    self.onError.emit(e)
+                finally:
+                    self.progressbar.onClose.emit()
+
+            def _updateProcess(self, curr: int, total: int, status: str):
+                self.progressbar.onNewProgress.emit(curr, total, status)
+
+            def _finished(self):
+                self.onFinished.emit()
+
+        def _finish():
+            fileList = self.tab_ssa_SSA.getFileList()
+
+            if len(fileList) == 0:
+                Util.showErrorMSG(
+                    "No files could be found, make sure the folder structure is correct.",
+                    detail="Folder structure has to be \"folder / file\", anything else will be ignored!")
+                return
+
+            self.subtab_pack_list.clear()
+            self.subtab_pack_list.addItems(fileList)
+            self.subtab_pack_pack.setEnabled(True)
+            self.subtab_ssa_label.setText(os.path.basename(self.subtab_pack_label_in.text()))
+
+            Util.showInfoMSG(f"Folder loaded with {len(fileList)} files.", "SUCCESS")
+
+        progressbar = ProgressWindow()
+        self.extractor = Extractor(
+            self,
+            self.subtab_pack_label_in.text(),
+            c.RUS_ENCODING if self.subtab_pack_kyrillicencode.isChecked() else c.EUR_ENCODING,
+            progressbar
+        )
+        self.extractor.onError.connect(Util.showExceptionMSG)
+        self.extractor.onFinished.connect(_finish)
+        self.extractor.start()
+
 
     ### DCL
     def DCLinSelector(self):

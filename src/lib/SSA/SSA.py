@@ -13,6 +13,7 @@ from typing import Callable
 from lib.SSA.DCL import DCL
 from lib.SSA.Util import readInt, writeInt, checkNullTerminator
 
+from lib import constants as c
 
 class ParseException(Exception):
     pass
@@ -256,7 +257,8 @@ class SSA:
     file_data: list[FileData]
 
     archiveName: str
-    encoding: str = "ISO-8859-15"
+    encoding: str = c.EUR_ENCODING
+    offsetCalculationNeeded: bool = False
 
     @staticmethod
     def parseFile(filename: str):
@@ -282,7 +284,8 @@ class SSA:
             return SSA(header, entries, intermediate, files, archive)
 
     @staticmethod
-    def packFolder(folderPath: str, encoding: str, metadata: list[tuple[str, str]]):
+    def packFolder(folderPath: str, encoding: str, metadata: list[tuple[str, str]],
+                   progressCallback: Callable = None, finishCallback: Callable = None):
         files: list[tuple[str, str]] = list()
 
         for folder in os.listdir(folderPath):
@@ -299,9 +302,17 @@ class SSA:
 
         fileData: list[FileData] = list()
 
-        for _, file in files:
+        for i, (name, file) in enumerate(files):
             with open(file, "rb") as f:
                 fileData.append(FileData(f.read()))
+
+            if progressCallback:
+                progressCallback(i, len(files), name)
+
+            print("loaded", name)
+
+        if progressCallback:
+            progressCallback(len(files)-1, len(files), "calculating new archive size...")
 
         fileIndexLength = sum([FileEntry.calcLength(x, encoding) for x, _ in files])
         print(fileIndexLength)
@@ -328,7 +339,13 @@ class SSA:
 
         print(len(fileIndex),  sum([len(x) for x in fileIndex]), fileIndexLength)
 
-        return SSA(header, fileIndex, intermediate, fileData, os.path.dirname(folderPath))
+        ssa = SSA(header, fileIndex, intermediate, fileData, os.path.dirname(folderPath))
+        ssa.encoding = encoding
+
+        if finishCallback:
+            finishCallback()
+
+        return ssa
 
     def __init__(self,
                  header: Header,
@@ -343,7 +360,8 @@ class SSA:
         self.file_data = fileData
         self.archiveName = archiveName
 
-    def extract(self, outputFolder: str, decompress=False, progressCallback: Callable = None, finishCallback: Callable = None):
+    def extract(self, outputFolder: str, decompress=False,
+                progressCallback: Callable = None, finishCallback: Callable = None):
         outputFolder = os.path.join(outputFolder, self.archiveName)
 
         if decompress:
@@ -383,6 +401,9 @@ class SSA:
                 f.write(self.file_data[index].data)
 
     def assemble(self, filePath: str):
+        if self.offsetCalculationNeeded:
+            self._recalculateOffsets()
+
         with open(filePath, "wb") as ssafile:
             self.header.assemble(ssafile)
 
@@ -393,6 +414,19 @@ class SSA:
 
             for data in self.file_data:
                 data.assemble(ssafile)
+
+    def _recalculateOffsets(self):
+        self.header.data_start_offset = sum([len(x) for x in self.file_index])
+
+        rawdataStartOffset = len(self.header) + self.header.data_start_offset + len(self.intermediate)
+
+        for entry in self.file_index:
+            entry.start_offset = rawdataStartOffset
+            entry.end_offset = rawdataStartOffset + entry.size - 1
+
+            rawdataStartOffset += entry.size
+
+        self.offsetCalculationNeeded = False
 
     def getFileList(self) -> list[str]:
         files = list()
@@ -409,15 +443,19 @@ class SSA:
         return attributes
 
     def addMetadata(self, key: str, value: str):
+        self.offsetCalculationNeeded = True
         self.intermediate.addEntry(key, value, self.encoding)
 
     def removeMetadata(self, index: int):
+        self.offsetCalculationNeeded = True
         self.intermediate.removeIndex(index)
 
     def setMetadataKey(self, index: int, key: str):
+        self.offsetCalculationNeeded = True
         self.intermediate.getIndex(index).setKey(key, self.encoding)
 
     def setMetadataValue(self, index: int, value: str):
+        self.offsetCalculationNeeded = True
         self.intermediate.getIndex(index).setValue(value, self.encoding)
 
     def printFileIndex(self):
@@ -432,3 +470,15 @@ class SSA:
             encoding: {self.encoding}
         ]
         """
+
+###
+# example usage of SSA class:
+# metadata = [
+#     ("Author", "zocker_160"),
+#     ("Something", "something"),
+#     ("key", "value")
+# ]
+#
+# ssa = SSA.packFolder(INPUT_FOLDER, SSA.encoding, metadata)
+# ssa.assemble(OUTPUT_FILE)
+###
