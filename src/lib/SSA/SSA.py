@@ -143,6 +143,18 @@ class Attribute:
     def getValue(self, encoding: str):
         return self.value.strip(b"\0").decode(encoding)
 
+    def setKey(self, key: str, encoding: str):
+        key = checkNullTerminator(key.encode(encoding))
+
+        self.key_length = len(key)
+        self.key = key
+
+    def setValue(self, value: str, encoding: str):
+        value = checkNullTerminator(value.encode(encoding))
+
+        self.value_length = len(value)
+        self.value = value
+
     def assemble(self, f: BufferedWriter):
         writeInt(f, self.key_length)
         f.write(self.key)
@@ -157,7 +169,7 @@ class Attribute:
 
 
 class Intermediate:
-    num_attributes: int
+    # num_attributes: int
     attributes: list[Attribute]
 
     @staticmethod
@@ -181,11 +193,19 @@ class Intermediate:
         return Intermediate(attributes)
 
     def __init__(self, attributes: list[Attribute]):
-        self.num_attributes = len(attributes)
         self.attributes = attributes
 
+    def addEntry(self, key: str, value: str, encoding: str):
+        self.attributes.append(Attribute(key.encode(encoding), value.encode(encoding)))
+
+    def removeIndex(self, index: int):
+        del self.attributes[index]
+
+    def getIndex(self, index: int) -> Attribute:
+        return self.attributes[index]
+
     def assemble(self, f: BufferedWriter):
-        writeInt(f, self.num_attributes)
+        writeInt(f, len(self.attributes))
 
         for attr in self.attributes:
             attr.assemble(f)
@@ -387,6 +407,18 @@ class SSA:
             attributes.append((attr.getKey(self.encoding), attr.getValue(self.encoding)))
 
         return attributes
+
+    def addMetadata(self, key: str, value: str):
+        self.intermediate.addEntry(key, value, self.encoding)
+
+    def removeMetadata(self, index: int):
+        self.intermediate.removeIndex(index)
+
+    def setMetadataKey(self, index: int, key: str):
+        self.intermediate.getIndex(index).setKey(key, self.encoding)
+
+    def setMetadataValue(self, index: int, value: str):
+        self.intermediate.getIndex(index).setValue(value, self.encoding)
 
     def printFileIndex(self):
         print("\n".join([str(x) for x in self.file_index]))

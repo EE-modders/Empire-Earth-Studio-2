@@ -16,10 +16,11 @@ from PyQt5.QtWidgets import (
     QApplication,
     QFileDialog,
     QGraphicsScene,
-    QMainWindow
+    QMainWindow,
+    QListWidgetItem
 )
 
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, Qt
 from PyQt5.QtGui import QIcon, QPixmap
 
 from ui import Ui_mainWindow
@@ -70,8 +71,12 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.tab_ssa_unpack_all.clicked.connect(self.SSAconvertAll)
         self.tab_ssa_unpack_one.clicked.connect(self.SSAconvertOne)
 
-        self.subtab_ssa_keylist.itemSelectionChanged.connect(self.SSAmetadataUpdate)
+        self.subtab_ssa_keylist.itemSelectionChanged.connect(self.SSAmetadataLoadEntry)
+        self.subtab_ssa_value.textChanged.connect(self.SSAmetadataSaveEntry)
+        self.subtab_ssa_meta_add.clicked.connect(self.SSAmetadataAdd)
+        self.subtab_ssa_meta_sub.clicked.connect(self.SSAmetadataDel)
         self.subtab_ssa_load.clicked.connect(self.SSAinSelector)
+        self.subtab_ssa_save.clicked.connect(self.SSAsaveImported)
 
         self.tab_dcl_select_in.clicked.connect(self.DCLinSelector)
         self.tab_dcl_select_out.clicked.connect(self.DCLoutSelector)
@@ -182,7 +187,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.subtab_ssa_value.clear()
         self.subtab_ssa_label.setText(self.tab_ssa_SSA.archiveName)
         for key, _ in self.tab_ssa_SSA.getMetadata():
-            self.subtab_ssa_keylist.addItem(key)
+            item = QListWidgetItem(key)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)
+            self.subtab_ssa_keylist.addItem(item)
 
         if self.subtab_ssa_keylist.count() > 0:
             self.subtab_ssa_keylist.setCurrentRow(0)
@@ -293,7 +300,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         else:
             Util.showErrorMSG("Could not read filelist, are there any elements?")
 
-    def SSAmetadataUpdate(self):
+    def SSAmetadataLoadEntry(self):
         try:
             itemIndex = self.subtab_ssa_keylist.selectedIndexes()[0].row()
         except IndexError:
@@ -301,6 +308,62 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         value = self.tab_ssa_SSA.getMetadata()[itemIndex][1]
         self.subtab_ssa_value.setPlainText(value)
+
+    def SSAmetadataSaveEntry(self):
+        try:
+            itemIndex = self.subtab_ssa_keylist.selectedIndexes()[0].row()
+        except IndexError:
+            return
+
+        self.tab_ssa_SSA.setMetadataValue(itemIndex, self.subtab_ssa_value.toPlainText())
+
+    def SSAmetadataAdd(self):
+        if not self.tab_ssa_SSA:
+            return
+
+        newKey = "new key"
+        self.tab_ssa_SSA.addMetadata(newKey, "")
+
+        item = QListWidgetItem(newKey)
+        item.setFlags(item.flags() | Qt.ItemIsEditable)
+        self.subtab_ssa_keylist.addItem(item)
+
+    def SSAmetadataDel(self):
+        if not self.tab_ssa_SSA:
+            return
+
+        try:
+            itemIndex = self.subtab_ssa_keylist.selectedIndexes()[0].row()
+        except IndexError:
+            return
+
+        entry = self.subtab_ssa_keylist.takeItem(itemIndex)
+        del entry
+        self.tab_ssa_SSA.removeMetadata(itemIndex)
+
+    def SSAsaveImported(self):
+        if not self.tab_ssa_SSA:
+            Util.showErrorMSG("Failed to load imported data!")
+            return
+
+        for i in range(self.subtab_ssa_keylist.count()):
+            self.tab_ssa_SSA.setMetadataKey(i, self.subtab_ssa_keylist.item(i).text())
+
+        dlg = QFileDialog.getSaveFileName(
+            self,
+            caption="Save SSA archive",
+            filter="SSA files (*.ssa)"
+        )
+        if not (filename := dlg[0]):
+            return
+
+        try:
+            self.tab_ssa_SSA.assemble(filename)
+        except Exception as e:
+            Util.showExceptionMSG(e)
+            return
+
+        Util.showInfoMSG("Done")
 
     ### DCL
     def DCLinSelector(self):

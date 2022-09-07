@@ -58,7 +58,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -100,7 +100,7 @@
         <item>
          <widget class="QTabWidget" name="tab_ssa_pack_unpack">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="subtab_unpack">
            <attribute name="title">
@@ -412,9 +412,6 @@
                 <property name="acceptDrops">
                  <bool>false</bool>
                 </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
                 <property name="backgroundVisible">
                  <bool>true</bool>
                 </property>
@@ -428,6 +425,39 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_11">
               <item>
+               <widget class="QPushButton" name="subtab_ssa_meta_add">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="icon">
+                 <iconset theme="list-add"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="subtab_ssa_meta_sub">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="icon">
+                 <iconset theme="list-remove"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_6">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="subtab_ssa_load">
                 <property name="text">
                  <string>Load SSA</string>
@@ -440,7 +470,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Save SSA (soonTM)</string>
+                 <string>Save SSA</string>
                 </property>
                </widget>
               </item>
@@ -902,7 +932,8 @@ border-radius: 10;
                  </size>
                 </property>
                 <property name="icon">
-                 <iconset theme="go-up"/>
+                 <iconset theme="go-up">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -915,7 +946,8 @@ border-radius: 10;
                  </size>
                 </property>
                 <property name="icon">
-                 <iconset theme="go-down"/>
+                 <iconset theme="go-down">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
