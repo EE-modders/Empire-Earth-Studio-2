@@ -195,7 +195,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.subtab_ssa_meta_add.sizePolicy().hasHeightForWidth())
         self.subtab_ssa_meta_add.setSizePolicy(sizePolicy)
         self.subtab_ssa_meta_add.setMaximumSize(QtCore.QSize(30, 30))
-        self.subtab_ssa_meta_add.setStyleSheet("color: rgb(0, 255, 0);")
         self.subtab_ssa_meta_add.setObjectName("subtab_ssa_meta_add")
         self.horizontalLayout_11.addWidget(self.subtab_ssa_meta_add)
         self.subtab_ssa_meta_sub = QtWidgets.QPushButton(self.subtab_metadata)
@@ -205,7 +204,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.subtab_ssa_meta_sub.sizePolicy().hasHeightForWidth())
         self.subtab_ssa_meta_sub.setSizePolicy(sizePolicy)
         self.subtab_ssa_meta_sub.setMaximumSize(QtCore.QSize(30, 30))
-        self.subtab_ssa_meta_sub.setStyleSheet("color: rgb(255, 0, 0);")
         self.subtab_ssa_meta_sub.setObjectName("subtab_ssa_meta_sub")
         self.horizontalLayout_11.addWidget(self.subtab_ssa_meta_sub)
         self.line_6 = QtWidgets.QFrame(self.subtab_metadata)
@@ -654,7 +652,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.MainTabs.setCurrentIndex(1)
-        self.tab_ssa_pack_unpack.setCurrentIndex(2)
+        self.tab_ssa_pack_unpack.setCurrentIndex(1)
         self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_keylist.clear) # type: ignore
@@ -693,8 +691,8 @@ class Ui_MainWindow(object):
         self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_unpack), _translate("MainWindow", "unpack"))
         self.subtab_ssa_label.setText(_translate("MainWindow", "nothing loaded"))
         self.subtab_ssa_value.setPlaceholderText(_translate("MainWindow", "value"))
-        self.subtab_ssa_meta_add.setText(_translate("MainWindow", "＋"))
-        self.subtab_ssa_meta_sub.setText(_translate("MainWindow", "－"))
+        self.subtab_ssa_meta_add.setText(_translate("MainWindow", "┼"))
+        self.subtab_ssa_meta_sub.setText(_translate("MainWindow", "─"))
         self.subtab_ssa_load.setText(_translate("MainWindow", "Load SSA"))
         self.subtab_ssa_save.setText(_translate("MainWindow", "Save SSA"))
         self.tab_ssa_pack_unpack.setTabText(self.tab_ssa_pack_unpack.indexOf(self.subtab_metadata), _translate("MainWindow", "metadata"))

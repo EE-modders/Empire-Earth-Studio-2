@@ -100,7 +100,7 @@
         <item>
          <widget class="QTabWidget" name="tab_ssa_pack_unpack">
           <property name="currentIndex">
-           <number>2</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="subtab_unpack">
            <attribute name="title">
@@ -429,11 +429,8 @@
                   <height>30</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 255, 0);</string>
-                </property>
                 <property name="text">
-                 <string>＋</string>
+                 <string>┼</string>
                 </property>
                </widget>
               </item>
@@ -451,11 +448,8 @@
                   <height>30</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 0, 0);</string>
-                </property>
                 <property name="text">
-                 <string>－</string>
+                 <string>─</string>
                 </property>
                </widget>
               </item>
