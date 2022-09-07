@@ -203,6 +203,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         if self.subtab_ssa_keylist.count() > 0:
             self.subtab_ssa_keylist.setCurrentRow(0)
 
+        self.subtab_pack_pack.setDisabled(True)
         self.SSAcheckButton()
 
     def SSAoutSelector(self):
