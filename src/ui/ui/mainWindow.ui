@@ -430,7 +430,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>┼</string>
+                 <string>+</string>
                 </property>
                </widget>
               </item>
@@ -1102,7 +1102,7 @@ border-radius: 10;
                     </size>
                    </property>
                    <property name="text">
-                    <string>＋</string>
+                    <string>+</string>
                    </property>
                   </widget>
                  </item>
@@ -1146,7 +1146,7 @@ border-radius: 10;
                     </size>
                    </property>
                    <property name="text">
-                    <string>－</string>
+                    <string>─</string>
                    </property>
                   </widget>
                  </item>
@@ -1213,7 +1213,7 @@ border-radius: 10;
                   </size>
                  </property>
                  <property name="text">
-                  <string>－</string>
+                  <string>─</string>
                  </property>
                 </widget>
                </item>
@@ -1257,7 +1257,7 @@ border-radius: 10;
                   </size>
                  </property>
                  <property name="text">
-                  <string>＋</string>
+                  <string>+</string>
                  </property>
                 </widget>
                </item>
