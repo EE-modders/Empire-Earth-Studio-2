@@ -29,6 +29,11 @@ class ProgressWindow(QDialog, Ui_progressWindow.Ui_Dialog):
         self.onClose.connect(self.close)
         self.onNewProgress.connect(self.setProgress)
 
-    def setProgress(self, current: int, total: int, filename: str):
-        self.progressBar.setValue(int((current / total)*100))
-        self.label_filename.setText(filename)
+    def setProgress(self, current: int, total: int, status: str):
+        try:
+            percentage = int((current / total)*100)
+        except ZeroDivisionError:
+            percentage = 0
+
+        self.progressBar.setValue(percentage)
+        self.label_filename.setText(status)
