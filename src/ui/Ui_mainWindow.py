@@ -652,7 +652,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.MainTabs.setCurrentIndex(1)
-        self.tab_ssa_pack_unpack.setCurrentIndex(1)
+        self.tab_ssa_pack_unpack.setCurrentIndex(2)
         self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_keylist.clear) # type: ignore
