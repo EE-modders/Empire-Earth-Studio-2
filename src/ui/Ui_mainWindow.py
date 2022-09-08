@@ -176,7 +176,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.subtab_ssa_keylist = QtWidgets.QListWidget(self.subtab_metadata)
-        self.subtab_ssa_keylist.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.subtab_ssa_keylist.setMaximumSize(QtCore.QSize(250, 16777215))
         self.subtab_ssa_keylist.setAlternatingRowColors(True)
         self.subtab_ssa_keylist.setObjectName("subtab_ssa_keylist")
         self.horizontalLayout_10.addWidget(self.subtab_ssa_keylist)
@@ -652,7 +652,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.MainTabs.setCurrentIndex(0)
-        self.tab_ssa_pack_unpack.setCurrentIndex(0)
+        self.tab_ssa_pack_unpack.setCurrentIndex(1)
         self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.tab_ssa_label_in.clear) # type: ignore
         self.tab_ssa_label_clear.clicked.connect(self.subtab_ssa_keylist.clear) # type: ignore

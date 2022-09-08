@@ -100,7 +100,7 @@
         <item>
          <widget class="QTabWidget" name="tab_ssa_pack_unpack">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="subtab_unpack">
            <attribute name="title">
@@ -389,7 +389,7 @@
                <widget class="QListWidget" name="subtab_ssa_keylist">
                 <property name="maximumSize">
                  <size>
-                  <width>200</width>
+                  <width>250</width>
                   <height>16777215</height>
                  </size>
                 </property>
