@@ -58,7 +58,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -80,7 +80,7 @@
         <item>
          <widget class="QLabel" name="main_description">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Empire Earth Studio II&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Empire Earth Studio II is an unofficial successor and replacement for the old EEStudio.&lt;/p&gt;&lt;p&gt;Here a quick overview of what you can do:&lt;/p&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;Archives (SSA):&lt;/span&gt; extracting ssa game files&lt;/p&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;Textures (SST):&lt;/span&gt; view, convert sst texture files&lt;/p&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;Slicer (SST):&lt;/span&gt; join/split sst/tga textures (mainly used for backgrounds)&lt;/p&gt;&lt;p&gt;-------------------------&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CREDITS:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;programming by zocker_160 and thanks to Philla007 for additional help&lt;br/&gt;-------------------------&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LINKS:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;- join our Discord server: &lt;a href=&quot;https://discord.gg/BjUXbFB&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://discord.gg/BjUXbFB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;- our GitHub page: &lt;a href=&quot;https://github.com/EE-modders&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;- report an issue: &lt;a href=&quot;https://github.com/EE-modders/Empire-Earth-Studio-2/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders/Empire-Earth-Studio-2/issues&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Empire Earth Studio II&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Empire Earth Studio II is an unofficial successor and replacement for the old EEStudio.&lt;/p&gt;&lt;p&gt;Here a quick overview of what you can do:&lt;/p&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;Archives (SSA):&lt;/span&gt; extracting, editing and packing ssa game files&lt;/p&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;Textures (SST):&lt;/span&gt; view and convert sst texture files&lt;/p&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600;&quot;&gt;Slicer (SST):&lt;/span&gt; join/split sst/tga textures (mainly used for backgrounds)&lt;/p&gt;&lt;p&gt;-------------------------&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CREDITS:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;programming by zocker_160 and thanks to Philla007 for additional help&lt;br/&gt;-------------------------&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LINKS:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;- join our Discord server: &lt;a href=&quot;https://discord.gg/BjUXbFB&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://discord.gg/BjUXbFB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;- our GitHub page: &lt;a href=&quot;https://github.com/EE-modders&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;- report an issue: &lt;a href=&quot;https://github.com/EE-modders/Empire-Earth-Studio-2/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;https://github.com/EE-modders/Empire-Earth-Studio-2/issues&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -100,7 +100,7 @@
         <item>
          <widget class="QTabWidget" name="tab_ssa_pack_unpack">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="subtab_unpack">
            <attribute name="title">
