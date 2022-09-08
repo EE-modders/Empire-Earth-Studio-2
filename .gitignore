@@ -13,3 +13,5 @@ testing
 
 doc/
 src/venv
+packaging/E*
+packaging/F*
