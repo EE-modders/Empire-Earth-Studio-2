@@ -1,0 +1,56 @@
+app-id: com.github.EEmodders.EEstudioII
+runtime: org.kde.Platform
+runtime-version: '5.15-21.08'
+sdk: org.kde.Sdk 
+command: EEstudioII
+
+rename-icon: eestudio
+rename-desktop-file: EEStudioII.desktop
+
+finish-args:
+    - --socket=wayland
+    - --socket=x11
+    - --share=ipc
+    - --device=dri
+    - --filesystem=host
+
+cleanup:
+    - "*.code-workspace"
+    - "*.ssa"
+    - "*.pyc"
+    - "*.ui"
+    - "*.csv"
+    - "*.ods"
+
+modules:
+    - python3-Pillow.json
+    - python3-pyqt5.yml
+        
+    - name: EEStudio
+      buildsystem: simple
+      build-options:
+        build-args:
+          - --share=network
+      build-commands:
+        #- pip3 install Pillow PyQt5==5.12 cython --prefix=${FLATPAK_DEST} --no-build-isolation
+
+        - git clone --recursive -b 0.3.0-beta3 https://github.com/EE-modders/Empire-Earth-Studio-2.git
+
+        - install -D -m755 EEStudioII.sh /app/bin/EEstudioII
+        - install -d /app/lib/EEStudioII
+        - install -D -m755 Empire-Earth-Studio-2/src/EEStudio2.py -t /app/lib/EEStudioII
+        - cp -r Empire-Earth-Studio-2/src/assets /app/lib/EEStudioII
+        - cp -r Empire-Earth-Studio-2/src/lib /app/lib/EEStudioII
+        - cp -r Empire-Earth-Studio-2/src/ui /app/lib/EEStudioII
+      post-install:
+        - install -D -m644 Empire-Earth-Studio-2/packaging/assets/eestudio.png -t /app/share/icons/hicolor/512x512/apps
+        - install -D -m644 Empire-Earth-Studio-2/packaging/assets/EEStudioII.desktop -t /app/share/applications
+#        - install -D -m644 com.github.EEmodders.EEstudioII.metainfo.xml -t /app/share/metainfo
+      sources:
+        #- type: git
+        #  url: https://github.com/EE-modders/Empire-Earth-Studio-2.git
+        #  tag: 0.2.10
+        - type: file 
+          path: EEStudioII.sh
+#        - type: file
+#          path: com.github.EEmodders.EEstudioII.metainfo.xml
