@@ -2,12 +2,23 @@
 
 A better version of the original EEStudio, that hopefully will finally no longer be used. :)
 
+### Supported games
+
+- Empire Earth BETA
+- Empire Earth DEMO
+- Empire Earth (CD / Retail)
+- Empire Earth AoC (Addon)
+- Empire Earth Gold Edition (GOG)
+- Empire Earth DOMW (SST only)
+
 ### How to install
 
 - Download the version you need from the [release page](https://github.com/EE-modders/Empire-Earth-Studio-2/releases).
 - Run the portable version or install it using the installer.
 
-A tutorial on how to use is in the works, but it should be self explanatory.
+### How to use
+
+Tutorials can be found in our [Empire Earth wiki](https://github.com/EE-modders/Empire-Earth-toolbox/wiki).
 
 ### How to run from source code
 
