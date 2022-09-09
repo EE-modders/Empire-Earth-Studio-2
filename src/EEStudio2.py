@@ -251,7 +251,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             def _finished(self):
                 self.onFinished.emit()
 
-        progressbar = ProgressWindow()
+        progressbar = ProgressWindow(self)
         self.extractor = Extractor(
             self.tab_ssa_SSA,
             self.tab_ssa_label_out.text(),
@@ -444,7 +444,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
             Util.showInfoMSG(f"Folder loaded with {len(fileList)} files.", "SUCCESS")
 
-        progressbar = ProgressWindow()
+        progressbar = ProgressWindow(self)
         self.extractor = Extractor(
             self,
             self.subtab_pack_label_in.text(),
