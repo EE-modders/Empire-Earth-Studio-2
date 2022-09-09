@@ -64,6 +64,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.actionAbout_Studio_II.triggered.connect(self.showAbout)
         self.actionabout_QT.triggered.connect(self.app.aboutQt)
 
+        self.tab_ssa_label_clear.clicked.connect(self._SSAclear)
         self.tab_ssa_list.onDrop.connect(self.SSAinSelector)
         self.tab_ssa_list_export.clicked.connect(self.SSAexportList)
         self.tab_ssa_select_in.clicked.connect(self.SSAinSelector)
@@ -154,6 +155,9 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             self.tab_ssa_list_export.setDisabled(True)
             self.tab_ssa_unpack_one.setDisabled(True)
             self.subtab_ssa_save.setDisabled(True)
+
+    def _SSAclear(self):
+        self.tab_ssa_SSA = None
 
     def SSAinSelector(self, event):
         # event is not False, when called from CDropWidget
