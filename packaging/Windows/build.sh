@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-VERSION="v0.3.0-beta3"
+VERSION="v1.0"
 
 function cleanup {
 	echo "cleaning up"
