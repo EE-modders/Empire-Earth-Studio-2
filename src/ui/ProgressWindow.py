@@ -26,7 +26,7 @@ class ProgressWindow(QDialog, Ui_progressWindow.Ui_Dialog):
         self.progressBar.setRange(0, 100)
         self.progressBar.setValue(0)
 
-        self.onShow.connect(self.show)
+        self.onShow.connect(self.exec)
         self.onClose.connect(self.close)
         self.onNewProgress.connect(self.setProgress)
 
