@@ -21,8 +21,8 @@ class ProgressWindow(QDialog, Ui_progressWindow.Ui_Dialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # TODO: fix title name and icon not being set
         self.setupUi(self)
+        self.setWindowTitle("Processing...please wait")
         self.progressBar.setRange(0, 100)
         self.progressBar.setValue(0)
 
