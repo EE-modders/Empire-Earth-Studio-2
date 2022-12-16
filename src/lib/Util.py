@@ -60,7 +60,7 @@ def showInfoMSG(msg_str: str, title_msg="INFO"):
     msg.setDefaultButton(QMessageBox.Close)
     msg.exec()
 
-def showQuestionMSG(msg_str: str, title_msg="QUESTION"):
+def showQuestionMSG(msg_str: str, title_msg="QUESTION") -> bool:
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Question)
     msg.setText(msg_str)
@@ -71,7 +71,4 @@ def showQuestionMSG(msg_str: str, title_msg="QUESTION"):
 
     reply = msg.exec()
 
-    if reply == QMessageBox.Yes:
-        return True
-    else:
-        return False
+    return reply == QMessageBox.Yes
