@@ -85,6 +85,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.tab_dcl_select_in.clicked.connect(self.DCLinSelector)
         self.tab_dcl_select_out.clicked.connect(self.DCLoutSelector)
+        self.tab_dcl_compress.clicked.connect(self.DCLcompress)
         self.tab_dcl_decompress.clicked.connect(self.DCLdecompress)
 
         self.tab_sst_select_in.clicked.connect(self.SSTinSelector)
@@ -458,7 +459,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
     ### DCL
     def DCLinSelector(self):
-        dlg = QFileDialog.getOpenFileName(self, caption="Select compressed file")
+        dlg = QFileDialog.getOpenFileName(self, caption="Select input file")
         if not (file := dlg[0]):
             return
 
@@ -466,7 +467,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.DCLcheckButtons()
 
     def DCLoutSelector(self):
-        dlg = QFileDialog.getSaveFileName(self, caption="Save decompressed file")
+        dlg = QFileDialog.getSaveFileName(self, caption="Select output file")
         if not (file := dlg[0]):
             return
 
@@ -484,9 +485,20 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         except Exception as e:
             Util.showExceptionMSG(e)
 
+    def DCLcompress(self):
+        try:
+            dcl = DCL.parseFile(self.tab_dcl_label_in.text(), raw=True)
+            dcl.compress()
+            dcl.writeToFile(self.tab_dcl_label_out.text())
+
+            Util.showInfoMSG("Done")
+        except Exception as e:
+            Util.showExceptionMSG(e)
+
     def DCLcheckButtons(self):
         if self.tab_dcl_label_in.text() and self.tab_dcl_label_out.text():
             self.tab_dcl_decompress.setEnabled(True)
+            self.tab_dcl_compress.setEnabled(True)
 
     ### SST
     def SSTinSelector(self):
