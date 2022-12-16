@@ -11,7 +11,7 @@ from io import BufferedReader, BufferedWriter
 from typing import Callable
 
 from lib.SSA.DCL import DCL
-from lib.SSA.Util import readInt, writeInt, checkNullTerminator
+from lib.Util import readInt, writeInt, checkNullTerminator
 
 from lib import constants as c
 

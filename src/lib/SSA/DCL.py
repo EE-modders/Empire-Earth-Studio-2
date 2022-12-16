@@ -12,7 +12,7 @@ import ctypes
 
 from io import BytesIO
 
-from lib.SSA.Util import readInt
+from lib.Util import readInt
 
 class DecompressException(Exception):
     pass
