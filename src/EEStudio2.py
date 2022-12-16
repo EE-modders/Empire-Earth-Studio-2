@@ -29,7 +29,7 @@ from ui.AboutWindow import AboutWindow
 from ui.ProgressWindow import ProgressWindow
 
 from lib.SSA.SSA import SSA
-from lib.SSA.DCL import DCL
+from lib.DCL.DCL import DCL
 
 from lib.SSTtool.src.lib.SST import SST
 from lib.SSTtool.src import SSTtool
