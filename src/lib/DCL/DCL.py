@@ -112,7 +112,7 @@ class DCL:
         with open(filename, "wb") as f:
             f.write(self.decompress())
 
-    def compress(self) -> bytes:
+    def compress(self):
         output = bytes(len(self.data)*2)  # we double the output buffer, that should always be enough
         oLength = ctypes.c_int()
 
@@ -133,6 +133,11 @@ class DCL:
                 f.write(self.data)
                 return
             self.assemble(f)
+
+    def getRawData(self) -> bytes:
+        with BytesIO() as b:
+            self.assemble(b)
+            return b.getvalue()
 
     def assemble(self, f: BufferedWriter):
         f.write(self.magic)

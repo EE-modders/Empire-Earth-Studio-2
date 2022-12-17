@@ -18,11 +18,12 @@ class ProgressWindow(QDialog, Ui_progressWindow.Ui_Dialog):
     onClose = pyqtSignal()
     onNewProgress = pyqtSignal(int, int, str)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, title="Progress"):
         super().__init__(parent)
 
         self.setupUi(self)
-        self.setWindowTitle("Processing...please wait")
+        self.setWindowTitle("Processing...")
+        self.label.setText(title)
         self.progressBar.setRange(0, 100)
         self.progressBar.setValue(0)
 

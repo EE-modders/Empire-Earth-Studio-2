@@ -228,13 +228,23 @@ class FileData:
 
         return FileData(data)
 
+    @staticmethod
+    def loadFromFile(filename: str, compress=False):
+        if compress:
+            dcl = DCL.parseFile(filename, True)
+            dcl.compress()
+            return FileData(dcl.getRawData())
+
+        with open(filename, "rb") as f:
+            return FileData(f.read(-1))
+
     def __init__(self, data: bytes):
         self.data = data
 
-    def isCompressed(self):
-        return self.data.startswith(b"PK01")
+    def isCompressed(self) -> bool:
+        return self.data.startswith(DCL.magic)
 
-    def getDecompressedData(self):
+    def getDecompressedData(self) -> bytes:
         if self.isCompressed():
             return DCL.parse(self.data).decompress()
         else:
@@ -284,7 +294,7 @@ class SSA:
             return SSA(header, entries, intermediate, files, archive)
 
     @staticmethod
-    def packFolder(folderPath: str, encoding: str, metadata: list[tuple[str, str]],
+    def packFolder(folderPath: str, encoding: str, metadata: list[tuple[str, str]], compress=False,
                    progressCallback: Callable = None, finishCallback: Callable = None):
         files: list[tuple[str, str]] = list()
 
@@ -303,8 +313,7 @@ class SSA:
         fileData: list[FileData] = list()
 
         for i, (name, file) in enumerate(files):
-            with open(file, "rb") as f:
-                fileData.append(FileData(f.read()))
+            fileData.append(FileData.loadFromFile(file, compress))
 
             if progressCallback:
                 progressCallback(i, len(files), name)
