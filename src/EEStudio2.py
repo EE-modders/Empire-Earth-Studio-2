@@ -252,7 +252,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             def _finished(self):
                 self.onFinished.emit()
 
-        progressbar = ProgressWindow(self)
+        decompress = self.tab_ssa_decompress.isChecked()
+        title = "decompressing data" if decompress else "unpacking data"
+
+        progressbar = ProgressWindow(self, title)
         self.extractor = Extractor(
             self.tab_ssa_SSA,
             self.tab_ssa_label_out.text(),
