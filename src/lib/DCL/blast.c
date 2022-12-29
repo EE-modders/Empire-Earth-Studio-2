@@ -1,9 +1,31 @@
-/* blast.c
- * Copyright (C) 2003, 2012, 2013 Mark Adler
- * For conditions of distribution and use, see copyright notice in blast.h
- * version 1.3, 24 Aug 2013
- * 
- * updated by zocker_160 for SSA-tool, 8 Sept 2020
+/*
+  Copyright (C) 2003, 2012, 2013 Mark Adler
+  version 1.3, 24 Aug 2013
+
+  updated by Zocker_160 for SSA-tool, 8 Sep 2020
+  updated again by Zocker_160 for libDCL, 15 Dec 2022
+  
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the author be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Mark Adler    madler@alumni.caltech.edu
+ */
+
+/*
+ * For conditions of distribution and use
  *
  * blast.c decompresses data compressed by the PKWare Compression Library.
  * This function provides functionality similar to the explode() function of
@@ -31,16 +53,24 @@
  *                      - Enable the provision of initial input to blast()
  * 1.3.1 8 Sep 2020     - Replace inf with inarray function
  *                      - Add glue code for usage of ctypes from Python
+ * 1.3.2 16 Dec 2022    - Changed signature of decompressBytes function
  */
 
 #include <stddef.h>             /* for NULL */
 #include <setjmp.h>             /* for setjmp(), longjmp(), and jmp_buf */
 #include <string.h>
-#include "blast.h"              /* prototype for blast() */
+#include <stdio.h>
+#include <stdlib.h>
 
 #define local static            /* for local function definitions */
 #define MAXBITS 13              /* maximum code length */
 #define MAXWIN 4096             /* maximum window size */
+
+#define CHUNK 16384
+//#define CHUNK 32768
+
+typedef unsigned (*blast_in)(void* how, unsigned char** buf);
+typedef int (*blast_out)(void* how, unsigned char* buf, unsigned len);
 
 /* input and output state */
 struct state {
@@ -428,16 +458,6 @@ int blast(blast_in infun, void *inhow, blast_out outfun, void *outhow,
 }
 
 
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#define CHUNK 16384
-//#define CHUNK 32768
-
-unsigned long CHUNKSIZE;
-
 /* Decompress a PKWare Compression Library stream
 *  #####
 *  decompress_bytes( length_of_inputbytes, char_array_of_inputbytes, char_array_of_string_for_filename )
@@ -448,8 +468,9 @@ struct raw_buffer {
     unsigned char* data;
 };
 
-unsigned int infunc(void* how, unsigned char** buf)
-{
+unsigned long CHUNKSIZE;
+
+unsigned int infunc(void* how, unsigned char** buf) {
     struct raw_buffer* iBuffer = (struct raw_buffer*)how;
     int tSize;
 
@@ -469,8 +490,7 @@ unsigned int infunc(void* how, unsigned char** buf)
     return tSize;
 }
 
-int outfunc(void* how, unsigned char* buf, unsigned len)
-{
+int outfunc(void* how, unsigned char* buf, unsigned len) {
     struct raw_buffer* oBuffer = (struct raw_buffer*)how;
     
     memcpy(&oBuffer->data[oBuffer->length], buf, len);
@@ -479,8 +499,7 @@ int outfunc(void* how, unsigned char* buf, unsigned len)
     return 0;
 }
 
-int decompressBytes(char* input, int inLength, char* output, int outLength)
-{
+int decompressBytes(char* input, int inLength, char* output, int* outLength) {
     if (inLength < CHUNK)
         CHUNKSIZE = inLength;
     else
@@ -498,17 +517,20 @@ int decompressBytes(char* input, int inLength, char* output, int outLength)
     if (ret != 0)
         printf("ERROR CODE: %i \n\n", ret);
 
+    *outLength = outBuffer.length;
+
     return ret;    
 }
 
-// main function for testing and debugging only
 
-void main()
-{
+// example usage
+
+void example_decompress__() {
 	char inputArray[] = { 0x00, 0x04, 0x82, 0x24, 0x25, 0x8F, 0x80, 0x7F };
     char outputArray[100];
+    int decompressedLength = 0;
 
-    int value = decompressBytes(inputArray, sizeof(inputArray), outputArray, sizeof(outputArray));
+    int value = decompressBytes(inputArray, sizeof(inputArray), outputArray, &decompressedLength);
     printf("return value: %i \n", value);
 
     FILE* f;

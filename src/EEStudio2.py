@@ -29,7 +29,7 @@ from ui.AboutWindow import AboutWindow
 from ui.ProgressWindow import ProgressWindow
 
 from lib.SSA.SSA import SSA
-from lib.SSA.DCL import DCL
+from lib.DCL.DCL import DCL
 
 from lib.SSTtool.src.lib.SST import SST
 from lib.SSTtool.src import SSTtool
@@ -85,6 +85,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         self.tab_dcl_select_in.clicked.connect(self.DCLinSelector)
         self.tab_dcl_select_out.clicked.connect(self.DCLoutSelector)
+        self.tab_dcl_compress.clicked.connect(self.DCLcompress)
         self.tab_dcl_decompress.clicked.connect(self.DCLdecompress)
 
         self.tab_sst_select_in.clicked.connect(self.SSTinSelector)
@@ -375,11 +376,10 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
 
         try:
             self.tab_ssa_SSA.assemble(filename)
+
+            Util.showInfoMSG("Done")
         except Exception as e:
             Util.showExceptionMSG(e)
-            return
-
-        Util.showInfoMSG("Done")
 
     def SSApackInSelector(self):
         dlg = QFileDialog.getExistingDirectory(self, caption="Select folder for SSA packing")
@@ -389,24 +389,26 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.SSAcheckButton()
 
     def SSApackLoad(self):
-        class Extractor(QThread):
+        class Loader(QThread):
             from PyQt5.QtCore import pyqtSignal
             onFinished = pyqtSignal()
             onError = pyqtSignal(Exception)
 
-            def __init__(self, mainWindow: MainWindow, folderPath: str, encoding: str, progress: ProgressWindow):
+            def __init__(self, mainWindow: MainWindow, folderPath: str, encoding: str, compress: bool,
+                         progress: ProgressWindow):
                 QThread.__init__(self)
 
                 self.mainWindow = mainWindow
                 self.folderPath = folderPath
                 self.encoding = encoding
+                self.compress = compress
                 self.progressbar = progress
 
             def run(self):
                 self.progressbar.onShow.emit()
                 try:
                     ssa = SSA.packFolder(
-                        self.folderPath, self.encoding, list(),
+                        self.folderPath, self.encoding, list(), self.compress,
                         progressCallback=self._updateProcess,
                         finishCallback=self._finished
                     )
@@ -442,23 +444,27 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             self.subtab_pack_pack.setEnabled(True)
             self.subtab_ssa_label.setText(os.path.basename(self.subtab_pack_label_in.text()))
 
-            Util.showInfoMSG(f"Folder loaded with {len(fileList)} files.", "SUCCESS")
+            Util.showInfoMSG(f"Folder loaded with {len(fileList)} file(s)", "SUCCESS")
 
-        progressbar = ProgressWindow(self)
-        self.extractor = Extractor(
+        compress = self.subtab_pack_compress.isChecked()
+        title = "compressing data" if compress else "packing data"
+
+        progressbar = ProgressWindow(self, title)
+        self.loader = Loader(
             self,
             self.subtab_pack_label_in.text(),
             c.RUS_ENCODING if self.subtab_pack_kyrillicencode.isChecked() else c.EUR_ENCODING,
+            compress,
             progressbar
         )
-        self.extractor.onError.connect(Util.showExceptionMSG)
-        self.extractor.onFinished.connect(_finish)
-        self.extractor.start()
+        self.loader.onError.connect(Util.showExceptionMSG)
+        self.loader.onFinished.connect(_finish)
+        self.loader.start()
 
 
     ### DCL
     def DCLinSelector(self):
-        dlg = QFileDialog.getOpenFileName(self, caption="Select compressed file")
+        dlg = QFileDialog.getOpenFileName(self, caption="Select input file")
         if not (file := dlg[0]):
             return
 
@@ -466,7 +472,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         self.DCLcheckButtons()
 
     def DCLoutSelector(self):
-        dlg = QFileDialog.getSaveFileName(self, caption="Save decompressed file")
+        dlg = QFileDialog.getSaveFileName(self, caption="Select output file")
         if not (file := dlg[0]):
             return
 
@@ -484,9 +490,20 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         except Exception as e:
             Util.showExceptionMSG(e)
 
+    def DCLcompress(self):
+        try:
+            dcl = DCL.parseFile(self.tab_dcl_label_in.text(), raw=True)
+            dcl.compress()
+            dcl.writeToFile(self.tab_dcl_label_out.text())
+
+            Util.showInfoMSG("Done")
+        except Exception as e:
+            Util.showExceptionMSG(e)
+
     def DCLcheckButtons(self):
         if self.tab_dcl_label_in.text() and self.tab_dcl_label_out.text():
             self.tab_dcl_decompress.setEnabled(True)
+            self.tab_dcl_compress.setEnabled(True)
 
     ### SST
     def SSTinSelector(self):

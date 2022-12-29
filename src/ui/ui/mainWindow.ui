@@ -528,6 +528,13 @@
                 </property>
                </widget>
               </item>
+              <item row="1" column="1">
+               <widget class="QCheckBox" name="subtab_pack_compress">
+                <property name="text">
+                 <string>compress data on load</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -562,7 +569,7 @@
       </widget>
       <widget class="QWidget" name="tab_dcl">
        <attribute name="title">
-        <string>Decompressor (DCL)</string>
+        <string>De/Compressor (DCL)</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
         <property name="verticalSpacing">
@@ -630,6 +637,16 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="tab_dcl_compress">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Compress</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

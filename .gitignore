@@ -8,6 +8,8 @@
 *.appimage
 *.AppImage
 *__pycache__
+*.dll
+*.so
 
 testing
 
