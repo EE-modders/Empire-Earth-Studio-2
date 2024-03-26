@@ -535,10 +535,16 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         filelist = [self.tab_sst_label_in.text()]
         print(filelist)
 
-        if self.tab_sst_radio_1.isChecked():
+        # FIXME: this is horrible, but I have no time to fix it
+        # 1: SST -> TGA / JFIF
+        # 2: TGA -> SST
+        if self.tab_sst_radio_3.isChecked():
             selection = "1"
-        else:
+        elif self.tab_sst_radio_4.isChecked():
             selection = "2"
+        else:
+            Util.showErrorMSG("Bulk convert selection is broken, pls report as bug")
+            return
 
         output = self.SSTcheckOutput()
 
@@ -631,11 +637,11 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             if self.tab_sst_input_checkbox.isChecked() or self.tab_sst_label_out.text():
                 self.tab_sst_convert.setEnabled(True)
 
-    def SSTcheckOutput(self):
-        if not self.tab_sst_input_checkbox.isChecked():
-            return self.tab_sst_label_out.text()
-        else:
+    def SSTcheckOutput(self) -> str:
+        if self.tab_sst_input_checkbox.isChecked():
             return ""
+        else:
+            return self.tab_sst_label_out.text()
 
     ### SST Slicer
     def SLCupdateGridview(self):
