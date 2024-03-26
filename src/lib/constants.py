@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
-VERSION = "v1.1"
-YEAR = "2020 - 2022"
+VERSION = "v1.2"
+YEAR = "2020 - 2024"
 
 PLACEHOLDER_VERSION = "%v%"
 PLACEHOLDER_YEAR = "%year%"

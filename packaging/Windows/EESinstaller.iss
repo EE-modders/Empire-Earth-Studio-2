@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "EEStudio II"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "EE-modders"
 #define MyAppURL "https://github.com/EE-modders/Empire-Earth-Studio-2"
 #define MyAppExeName "EEStudio2.exe"

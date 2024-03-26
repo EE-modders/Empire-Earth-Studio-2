@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-VERSION="v1.1"
+VERSION="v1.2"
 
 function cleanup {
 	echo "cleaning up"
@@ -22,8 +22,8 @@ pyinstaller --icon=EESicon.ico --noconsole EEStudio2.py
 echo "copy files post installation"
 cp -r ./assets dist/EEStudio2
 
-mkdir -p dist/EEStudio2/lib/DCL
-cp ~/Downloads/libDCL.dll dist/EEStudio2/lib/DCL
+mkdir -p dist/EEStudio2/_internal/lib/DCL
+cp ~/Downloads/libDCL.dll dist/EEStudio2/_internal/lib/DCL
 cp ~/Downloads/LICENSE.txt dist/EEStudio2
 
 cp -r dist/EEStudio2 ~/Downloads
