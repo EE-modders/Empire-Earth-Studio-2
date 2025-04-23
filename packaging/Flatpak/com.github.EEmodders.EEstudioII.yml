@@ -52,9 +52,11 @@ modules:
         - install -D -m644 packaging/assets/metainfo.xml -t /app/share/metainfo
         - install -D -m644 packaging/assets/eestudio.png -t /app/share/icons/hicolor/512x512/apps
       sources:
-        - type: git
-          url: https://github.com/EE-modders/Empire-Earth-Studio-2.git
-          tag: "1.2.1"
+        #- type: git
+        #  url: https://github.com/EE-modders/Empire-Earth-Studio-2.git
+        #  tag: "1.2.1"
+        - type: dir
+          path: ../../
         - type: script
           dest-filename: EEStudioII.sh
           commands:
