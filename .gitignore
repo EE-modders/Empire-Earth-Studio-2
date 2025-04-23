@@ -10,10 +10,9 @@
 *__pycache__
 *.dll
 *.so
+*.flatpak
 
 testing
+venv
 
 doc/
-src/venv
-packaging/E*
-packaging/F*
