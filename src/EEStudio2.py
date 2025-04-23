@@ -224,7 +224,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             onFinished = pyqtSignal()
             onError = pyqtSignal(Exception)
 
-            def __init__(self, ssa: SSA, outputFolder: str, decompress: str, progress: ProgressWindow):
+            def __init__(self, ssa: SSA, outputFolder: str, decompress: bool, progress: ProgressWindow):
                 QThread.__init__(self)
 
                 self.ssa = ssa
