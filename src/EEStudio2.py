@@ -28,12 +28,10 @@ from ui.ViewerWindow import ViewerWindow
 from ui.AboutWindow import AboutWindow
 from ui.ProgressWindow import ProgressWindow
 
-from lib.SSA.SSA import SSA
-from lib.DCL.DCL import DCL
-
-from lib.SSTtool.src.lib.SST import SST
-from lib.SSTtool.src import SSTtool
-from lib.SSTslicer.src import SSTslicer
+from lib.DCL import DCL
+from lib.SSA import SSA
+from lib.SST import SST, SSTconvert
+from lib.SSTslicer import SSTslice
 
 from lib import Util
 from lib import constants as c
@@ -549,7 +547,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
         output = self.SSTcheckOutput()
 
         try:
-            SSTtool.main(
+            SSTconvert(
                 inputfiles=filelist,
                 outputlocation=output,
                 selection=selection,
@@ -584,7 +582,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
                     return
 
         try:
-            SSTtool.main(
+            SSTconvert(
                 inputfiles=filelist,
                 outputlocation=output,
                 selection=selection,
@@ -777,7 +775,7 @@ class MainWindow(QMainWindow, Ui_mainWindow.Ui_MainWindow):
             fileType = "tga"
 
         try:
-            SSTslicer.main(
+            SSTslice(
                 inputfiles=inputfiles,
                 outputlocation=self.tab_slc_label_out.text(),
                 filetype=fileType,

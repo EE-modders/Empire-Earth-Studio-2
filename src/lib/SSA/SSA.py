@@ -10,19 +10,16 @@ import os
 from io import BufferedReader, BufferedWriter
 from typing import Callable
 
-from lib.DCL.DCL import DCL
+from lib.DCL import DCL
 from lib.Util import readInt, writeInt, checkNullTerminator
 
 from lib import constants as c
 
+
 class ParseException(Exception):
     pass
-
-
 class ExtractException(Exception):
     pass
-
-
 class DecompressException(Exception):
     pass
 

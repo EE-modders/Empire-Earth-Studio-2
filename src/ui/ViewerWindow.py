@@ -10,15 +10,13 @@ Created on 10.11.2020 22:17 CET
 import os
 from io import BytesIO
 
-from ui import Ui_viewerWindow
-
-from lib.SSTtool.src.lib.SST import SST
-
 from PIL import Image
 
 from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
+from ui import Ui_viewerWindow
+from lib.SST import SST
 
 class ViewerWindow(QDialog, Ui_viewerWindow.Ui_Dialog):
     def __init__(self, parent, images: list, filename: str = "") -> None:

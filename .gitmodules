@@ -1,6 +1,0 @@
-[submodule "src/lib/SSTtool"]
-	path = src/lib/SSTtool
-	url = https://github.com/EE-modders/SST-tool.git
-[submodule "src/lib/SSTslicer"]
-	path = src/lib/SSTslicer
-	url = https://github.com/EE-modders/SST-image_slicer.git
