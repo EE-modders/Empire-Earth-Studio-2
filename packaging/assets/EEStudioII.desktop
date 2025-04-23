@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=EE Studio II
+Exec=EEstudioII %f
+Comment=Modding tool for Empire Earth
+Icon=eestudio
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=UTF-8
+Categories=Utility;Viewer;

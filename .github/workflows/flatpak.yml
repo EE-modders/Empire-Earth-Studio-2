@@ -1,0 +1,30 @@
+name: Build Flatpak
+
+on:
+  push:
+    paths:
+      - "packaging/Flatpak/com.github.EEmodders.EEstudioII.yml"
+      - ".github/workflows/flatpak.yml"
+  workflow_dispatch:
+
+env:
+  VERSION: "1.2"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-47
+      options: --privileged
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Flatpak Builder
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: EEStudioII-${{ env.VERSION }}.flatpak
+          manifest-path: packaging/Flatpak/com.github.EEmodders.EEstudioII.yml
