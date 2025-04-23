@@ -3,6 +3,9 @@ runtime: org.kde.Platform
 runtime-version: '5.15-24.08'
 sdk: org.kde.Sdk
 
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '5.15-24.08'
+
 rename-icon: eestudio
 rename-appdata-file: metainfo.xml
 rename-desktop-file: EEStudioII.desktop
@@ -24,9 +27,15 @@ cleanup:
     - "*.ods"
     - "*.dll"
 
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+
+build-options:
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
+
 modules:
     - python3-Pillow.json
-    - python3-pyqt5.yml
 
     - name: EEStudio
       buildsystem: simple
