@@ -379,8 +379,7 @@ class SSA:
             outputFolder += ".extracted"
 
         for i, (file, data) in enumerate(zip(self.file_index, self.file_data)):
-            path = os.path.join(
-                outputFolder, file.getPath(self.encoding))
+            path = os.path.join(outputFolder, file.getPath(self.encoding))
             os.makedirs(os.path.dirname(path), exist_ok=True)
 
             with open(path, "wb") as f:
